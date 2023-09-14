@@ -1,6 +1,6 @@
 import Layout from '../../../layouts/layout'
 import './sign-in.css'
-import { THEME, initTheme, toggleTheme, setTheme, resetTheme } from '../../../Theme'
+import { THEME, initTheme, toggleTheme, setTheme, resetTheme } from '../../../utils/theme'
 
 const LoginPage = () => {
 
