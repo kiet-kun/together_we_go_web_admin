@@ -1,0 +1,20 @@
+.page {
+  /* background-color: yellow; */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  width: 400px;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 24px;
+}
+
+.title {
+  text-align: center;
+}
