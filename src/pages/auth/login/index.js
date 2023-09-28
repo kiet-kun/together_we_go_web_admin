@@ -1,9 +1,12 @@
-import Layout from '../../../layouts/layout'
 import './sign-in.css'
 import { THEME, initTheme, toggleTheme, setTheme, resetTheme } from '../../../utils/theme'
+import LayoutHeader from '../../../layouts/headers/index.js';
 
 const LoginPage = () => {
     return (
+        <div>
+         <LayoutHeader></LayoutHeader>
+        
         <div class="d-flex align-items-center py-4 bg-body-tertiary"  >
             <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
                 <symbol id="check2" viewBox="0 0 16 16">
@@ -65,7 +68,7 @@ const LoginPage = () => {
             <main class="form-signin w-100 m-auto" >
                 <form  >
                     <img class="mb-4"
-                        src={require('../../../assets/image/icon-trung-thu-2.png')}
+                        src='/assets/image/icon-trung-thu-2.png'
                         alt="" width="72"
                     />
                     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -89,6 +92,7 @@ const LoginPage = () => {
                     <p class="mt-5 mb-3 text-body-secondary">&copy;2023</p>
                 </form>
             </main>
+        </div>
         </div>
     );
 }
