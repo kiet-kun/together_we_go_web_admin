@@ -1,8 +1,8 @@
-import './index.css'
+import './login.css'
 
 const LoginPage = () => {
     return (
-        <div class="page">
+        <div class="login-page">
             <form class="container form-control login-form">
                 <h3 class="title" >Trang đăng nhập</h3>
                 <div class="">

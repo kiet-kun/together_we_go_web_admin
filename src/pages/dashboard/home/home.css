@@ -1,0 +1,11 @@
+.my-card{
+    position: inherit;
+    width: 30vw;
+    height: calc(30vw + 50px);
+    display: flex;
+    align-items: center;
+}
+
+.image{
+    width: 20vw;
+}

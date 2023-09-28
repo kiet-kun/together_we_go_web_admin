@@ -1,14 +1,15 @@
-import { Routes, Route } from "react-router-dom";
 import {
     useRoutes
 } from 'react-router-dom';
-import UserPage from "../pages/home/user";
+import UserPage from "../pages/dashboard/user";
 import LoginPage from "../pages/auth/login";
+import HomePage from "../pages/dashboard/home";
 
 export const AppRoutes = () => {
     let element = useRoutes([
-        {path: '/', element: <LoginPage />},
-        {path: '/home/user', element: <UserPage />},
+        {path: '/dang-nhap', element: <LoginPage />},
+        {path: '/trang-chu', element: <HomePage />},
+        {path: '/trang-chu/quan-ly-nguoi-dung', element: <UserPage />},
     ]);
     
     return element;
