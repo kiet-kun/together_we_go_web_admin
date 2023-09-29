@@ -1,3 +1,20 @@
-.kiet {
-    /* height: 1000px; */
+.data-table {
+    position: inherit;
+}
+
+.button-group {
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.button-edit {
+    height: 36px;
+    width: 100px;
+}
+
+.button-delete {
+    height: 36px;
+    width: 100px;
 }

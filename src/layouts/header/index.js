@@ -11,7 +11,7 @@ const LayoutHeader = () => {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Trang chủ</a>
+                <a class="nav-link active" aria-current="page" href="/trang-chu">Trang chủ</a>
               </li>
         
               <li class="nav-item dropdown">
@@ -19,21 +19,18 @@ const LayoutHeader = () => {
                   Quản lý
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Tài khoản</a></li>
-                  <li><a class="dropdown-item" href="#">Chuyến đi</a></li>
-                  <li><a class="dropdown-item" href="#">Apply</a></li>
-                  <li><a class="dropdown-item" href="#">Thông báo</a></li>
-                  <li><a class="dropdown-item" href="#">Tin nhắn</a></li>
-                  <li><a class="dropdown-item" href="#">Đánh giá</a></li>
+                  <li><a class="dropdown-item" href="/trang-chu/quan-ly-nguoi-dung">Tài khoản</a></li>
+                  <li><a class="dropdown-item" href="/trang-chu/quan-ly-nguoi-dung">Chuyến đi</a></li>
+                  <li><a class="dropdown-item" href="/trang-chu/quan-ly-nguoi-dung">Apply</a></li>
+                  <li><a class="dropdown-item" href="/trang-chu/quan-ly-nguoi-dung">Thông báo</a></li>
+                  <li><a class="dropdown-item" href="/trang-chu/quan-ly-nguoi-dung">Tin nhắn</a></li>
+                  <li><a class="dropdown-item" href="/trang-chu/quan-ly-nguoi-dung">Đánh giá</a></li>
                   <li><hr class="dropdown-divider"/></li>
-                  <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                  <li><a class="dropdown-item" href="/dang-nhap">Đăng xuất</a></li>
                 </ul>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search"/>
-              <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
-            </form>
+          
           </div>
         </div>
         </nav>

@@ -1,9 +1,15 @@
 import './login.css'
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+    const navigate = useNavigate();
+
+    function handleLogin() {
+        navigate("/trang-chu");
+    }
     return (
         <div class="login-page">
-            <form class="container form-control login-form">
+            <form class="container form-control login-form" onSubmit={handleLogin}>
                 <h3 class="title" >Trang đăng nhập</h3>
                 <div class="">
                     <label for="staticEmail2" >Email</label>
