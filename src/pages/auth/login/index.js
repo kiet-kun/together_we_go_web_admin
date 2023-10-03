@@ -64,7 +64,7 @@ const LoginPage = () => {
         </svg>
         
         {/* Change dark/light mode buttom */}
-        <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+        {/* <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
           <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
                   id="bd-theme"
                   type="button"
@@ -78,9 +78,9 @@ const LoginPage = () => {
             <li>
               <button  onClick={() => setTheme(THEME.LIGHT)} type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
                 <i class="bi bi-lightbulb me-2 opacity-50 theme-icon" width="1em" height="1em"></i>
-                {/* <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg> */}
+      
                 Light
-                {/* <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg> */}
+
               </button>
             </li>
             <li>
@@ -98,7 +98,7 @@ const LoginPage = () => {
               </button>
             </li>
           </ul>
-        </div>
+        </div> */}
     
         
     <main class="form-signin w-100 m-auto">
