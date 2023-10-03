@@ -4,37 +4,37 @@ const SideBar = () => {
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             {/* <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg> */}
             <img class="bi pe-none me-2" width="40" height="32" 
-            src="/assets/image/icon-trung-thu-2.png" alt="logo" />
+            src="/assets/image/twg_logo.png" alt="logo" />
             <span class="fs-4">TWG Admin</span>
             </a>
             <hr></hr>
             <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
+                <a href="/trang-chu" class="nav-link active" aria-current="page">
                 <i class="bi bi-house-door pe-none me-2" width="16" height="16"></i>
                 {/* <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg> */}
-                Home
+                Trang chủ
                 </a>
             </li>
             <li>
                 <a href="#" class="nav-link link-body-emphasis">
                 <i class="bi bi-speedometer2 pe-none me-2" width="16" height="16"></i>
                 {/* <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg> */}
-                Dashboard
+                Thống kê
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-body-emphasis">
+                <a href="/quan-ly-nguoi-dung" class="nav-link link-body-emphasis">
                 <i class="bi bi-person pe-none me-2" width="16" height="16"></i>
                 {/* <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg> */}
-                Users
+                Tài khoản
                 </a>
             </li>
             <li>
                 <a href="#" class="nav-link link-body-emphasis">
-                <i class="bi bi-postcard pe-none me-2" width="16" height="16" style={{color: 'black'}}></i>
+                <i class="bi bi-postcard pe-none me-2" width="16" height="16"></i>
                 {/* <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg> */}
-                Bookings
+                Chuyến đi
                 </a>
             </li>
             </ul>
@@ -45,11 +45,10 @@ const SideBar = () => {
                 <strong>Kiet Nguyen</strong>
             </a>
             <ul class="dropdown-menu text-small shadow">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Cài đặt</a></li>
+                <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
                 <li><hr class="dropdown-divider"/></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li><a class="dropdown-item" href="/dang-nhap">Đăng xuất</a></li>
             </ul>
             </div>
         </div>

@@ -9,7 +9,7 @@ export const AppRoutes = () => {
     let element = useRoutes([
         {path: '/dang-nhap', element: <LoginPage />},
         {path: '/trang-chu', element: <HomePage />},
-        {path: '/trang-chu/quan-ly-nguoi-dung', element: <UserPage />},
+        {path: '/quan-ly-nguoi-dung', element: <UserPage />},
     ]);
     
     return element;

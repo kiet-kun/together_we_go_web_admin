@@ -6,7 +6,7 @@ const LayoutFooter = () => {
     <div class="col mb-3">
       <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
         <img class="bi pe-none me-2" width="40" height="32" 
-            src="/assets/image/icon-trung-thu-2.png" alt="logo" />
+            src="/assets/image/twg_logo.png" alt="logo" />
       </a>
       <p class="text-body-secondary">&copy; 2023</p>
     </div>
