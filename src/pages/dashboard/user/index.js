@@ -165,6 +165,7 @@ const UserPage = () => {
     return (
         <>
              <Layout>
+              <div>
 
              <form class="d-flex container" role="search" style={{marginBottom: '36px'}}>
               <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search"/>
@@ -187,6 +188,7 @@ const UserPage = () => {
                 paginationTotalRows={totalRows}
                 />
             </div>
+              </div>
 
              </Layout>
         </>   
