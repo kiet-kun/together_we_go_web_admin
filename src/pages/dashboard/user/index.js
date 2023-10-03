@@ -1,25 +1,14 @@
+import React, { useEffect, useState } from "react"
+import DataTable from "react-data-table-component";
+import axios from "axios";
+
 import Layout from '../../../layouts/layout';
 import "./user.css";
-import React, { useEffect, useState } from "react"
-import ReactDOM from "react-dom";
-import DataTable from "react-data-table-component";
-import movies from "./movies";
 
-function getNumberOfPages(rowCount, rowsPerPage) {
-    return Math.ceil(rowCount / rowsPerPage);
-  }
-  
-  function toPages(pages) {
-    const results = [];
-  
-    for (let i = 1; i < pages; i++) {
-      results.push(i);
-    }
-  
-    return results;
-  }
-  
-  const columns = [
+import movies from "./movies";
+import BootyCheckbox from '../../../components/datatable_checkbox';
+import BootyPagination from '../../../components/datatable_pagination';
+const columns = [
     {
       name: "Title",
       selector: (row) => row.title,
@@ -129,96 +118,13 @@ function getNumberOfPages(rowCount, rowsPerPage) {
         
       )}
     }
-  ];
-  
-  // RDT exposes the following internal pagination properties
-  const BootyPagination = ({
-    rowsPerPage,
-    rowCount,
-    onChangePage,
-    onChangeRowsPerPage, // available but not used here
-    currentPage
-  }) => {
-    const handleBackButtonClick = () => {
-      onChangePage(currentPage - 1);
-    };
-  
-    const handleNextButtonClick = () => {
-      onChangePage(currentPage + 1);
-    };
-  
-    const handlePageNumber = (e) => {
-      onChangePage(Number(e.target.value));
-    };
-  
-    const pages = getNumberOfPages(rowCount, rowsPerPage);
-    const pageItems = toPages(pages);
-    const nextDisabled = currentPage === pageItems.length;
-    const previosDisabled = currentPage === 1;
-  
-    return (
-      <nav>
-        <ul className="pagination">
-          <li className="page-item">
-            <button
-              className="page-link"
-              onClick={handleBackButtonClick}
-              disabled={previosDisabled}
-              aria-disabled={previosDisabled}
-              aria-label="previous page"
-            >
-              Previous
-            </button>
-          </li>
-          {pageItems.map((page) => {
-            const className =
-              page === currentPage ? "page-item active" : "page-item";
-  
-            return (
-              <li key={page} className={className}>
-                <button
-                  className="page-link"
-                  onClick={handlePageNumber}
-                  value={page}
-                >
-                  {page}
-                </button>
-              </li>
-            );
-          })}
-          <li className="page-item">
-            <button
-              className="page-link"
-              onClick={handleNextButtonClick}
-              disabled={nextDisabled}
-              aria-disabled={nextDisabled}
-              aria-label="next page"
-            >
-              Next
-            </button>
-          </li>
-        </ul>
-      </nav>
-    );
-  };
-  
-  const BootyCheckbox = React.forwardRef(({ onClick, ...rest }, ref) => (
-    <div className="form-check">
-      <input
-        htmlFor="booty-check"
-        type="checkbox"
-        className="form-check-input"
-        ref={ref}
-        onClick={onClick}
-        {...rest}
-      />
-      <label className="form-check-label" id="booty-check" />
-    </div>
-  ));
-
-  
+];
+    
 const UserPage = () => {
-    const [users, setUsers] = useState([])
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [totalRows, setTotalRows] = useState(0);
+    const [perPage, setPerPage] = useState(10);
     
     const fetchUserData = () => {
         fetch("https://jsonplaceholder.typicode.com/users")
@@ -226,25 +132,36 @@ const UserPage = () => {
             return response.json()
           })
           .then(data => {
-            setUsers(data)
+            // setUsers(data)
+            
           })
       }
+
+      const fetchUsers = async page => {
+        setLoading(true);
+    
+        const response = await axios.get(`https://reqres.in/api/users?page=${page}&per_page=${perPage}&delay=1`);
+    
+        setData(response.data.data);
+        setTotalRows(response.data.total);
+
+        setData(movies);
+        setTotalRows(movies.total);
+
+        setLoading(false);
+      };
     
     useEffect(() => {
-        // fetchUserData()
-        console.log('hello world');
-        // console.log($(this.refs.myButton));
-    }, [])
+      fetchUsers(1); // fetch page 1 of users
+    }, []);
 
-    
     const handleRowChange = (state) => {
-        setUsers(state.selectedRows);
+        // setUsers(state.selectedRows);
         console.log(state.selectedRows);
         // onChangePage(Number(e.target.value));
         // setSelected
     };
-  
-      
+     
     return (
         <>
              <Layout>
@@ -257,15 +174,17 @@ const UserPage = () => {
              <div className="card container data-table" >
                 <DataTable
                 class="data-table"
-                title="Movies"
+                title="Bảng người dùng"
+                progressPending={loading}
                 columns={columns}
-                data={movies}
+                data={data}
                 defaultSortFieldID={1}
                 pagination
                 paginationComponent={BootyPagination}
                 selectableRows
                 selectableRowsComponent={BootyCheckbox}
                 onSelectedRowsChange={handleRowChange}
+                paginationTotalRows={totalRows}
                 />
             </div>
 
