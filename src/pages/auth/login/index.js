@@ -1,48 +1,49 @@
 import './login.css'
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react"
-import axios from 'axios';
 import { THEME, setTheme } from '../../../utils/theme';
+import { LoginService } from '../../../services/auth';
+import { JWT } from '../../../constanst';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      setLoading(false);
+    }, []);
 
     const navigate = useNavigate();
 
     const handleChangeEmail = event => {
-        setEmail(event.target.value);
-    
-        console.log('value is:', event.target.value);
+        setEmail(event.target.value);   
     };
 
     const handleChangePassword = event => {
         setPassword(event.target.value);
-    
-        console.log('value is:', event.target.value);
     };
 
-    async function handleLogin() {
-        // console.log(email);
-        // console.log(password);
-    
-        // const response = await axios.post(
-        //     `${process.env.REACT_APP_API_LINK}/auth/login`,
-        //     // '{\n  "email": "string",\n  "password": "string"\n}',
-        //     {
-        //       'email': 'email',
-        //       'password': 'email'
-        //     },
-        //     {
-        //       headers: {
-        //         'accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //       }
-        //     }
-        //   );
+    const  handleLogin = async event => {
+      setLoading(true);
+      try {
+        event.preventDefault();
 
-        // console.log(response);
-        navigate("/trang-chu");
+        const response = await LoginService(email, password);
+      
+        if (response.status == 200){
+          alert('Đăng nhập thành công');
+          localStorage.setItem(JWT.ACCESS_TOKEN, response.data.data[JWT.ACCESS_TOKEN]);
+          localStorage.setItem(JWT.REFRESH_TOKEN, response.data.data[JWT.REFRESH_TOKEN]);
+          navigate("/trang-chu");
+        }
+        else {
+          alert('Đăng nhập thất bại');
+        }
+      } catch (error) {
+          console.log(error);     
+      }
+      setLoading(false);
     }
 
     return (
@@ -102,16 +103,16 @@ const LoginPage = () => {
     
         
     <main class="form-signin w-100 m-auto">
-      <form onSubmit={handleLogin}>
+      <form >
         <img class="mb-4" src="/assets/image/twg_logo.png" alt="" width="72" height="57"/>
         <h1 class="h3 mb-3 fw-normal">Trang đăng nhập</h1>
     
         <div class="form-floating">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" onChange={handleChangeEmail}/>
           <label for="floatingInput">Email</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" onChange={handleChangePassword}/>
           <label for="floatingPassword">Mật khẩu</label>
         </div>
     
@@ -121,7 +122,16 @@ const LoginPage = () => {
             Nhớ mật khẩu
           </label>
         </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Đăng nhập</button>
+        {
+          (loading)  ?
+          <button class="btn btn-primary w-100 py-2" type="button" disabled="">
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Loading...</span>
+          </button>
+        :
+        <button class="btn btn-primary w-100 py-2" onClick={handleLogin}>Đăng nhập</button> 
+        }
+        
         <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
       </form>
     </main>
