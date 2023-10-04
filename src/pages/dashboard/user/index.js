@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react"
 import DataTable from "react-data-table-component";
 import axios from "axios";
-
 import Layout from '../../../layouts/layout';
 import "./user.css";
-
 import movies from "./movies";
 import BootyCheckbox from '../../../components/datatable_checkbox';
 import BootyPagination from '../../../components/datatable_pagination';
+
 const columns = [
     {
       name: "Title",
@@ -161,6 +160,16 @@ const UserPage = () => {
         // onChangePage(Number(e.target.value));
         // setSelected
     };
+
+    const handlePerRowsChange = async (newPerPage, page) => {
+      // setLoading(true);
+  
+      // const response = await axios.get(`https://reqres.in/api/users?page=${page}&per_page=${newPerPage}&delay=1`);
+  
+      // setData(response.data.data);
+      // setPerPage(newPerPage);
+      // setLoading(false);
+    };
      
     return (
         <>
@@ -186,6 +195,12 @@ const UserPage = () => {
                 selectableRowsComponent={BootyCheckbox}
                 onSelectedRowsChange={handleRowChange}
                 paginationTotalRows={totalRows}
+                paginationRowsPerPageOptions={15}
+
+                // paginationServer
+        
+                onChangeRowsPerPage={handlePerRowsChange}
+                // onChangePage={handlePageChange}
                 />
             </div>
               </div>
