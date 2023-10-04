@@ -4,3 +4,7 @@
     /* background-color: aqua; */
     margin-top: 36px;
 }
+
+.my-page{
+    width: calc(100vw - 280px);
+}

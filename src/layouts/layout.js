@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
           </div>
       </div>
       
-      <div style={{width: '100vw', height:'100px'}}>
+      <div style={{width: '100%', height:'100px'}}>
       <LayoutFooter></LayoutFooter>
       </div>
       
