@@ -1,91 +1,103 @@
-
+// https://www.zacfukuda.com/blog/pagination-algorithm
 
 function getNumberOfPages(rowCount, rowsPerPage) {
-    return Math.ceil(rowCount / rowsPerPage);
-}
-  
-function toPages(pages) {
-    const results = [];
-  
-    for (let i = 1; i < pages; i++) {
-      results.push(i);
-    }
-  
-    return results;
+  return Math.ceil(rowCount / rowsPerPage);
 }
 
+function paginate(current, max) {
+	if (!current || !max) return [1]
 
-  // RDT exposes the following internal pagination properties
-  const BootyPagination = ({
-    rowsPerPage,
-    rowCount,
-    onChangePage,
-    onChangeRowsPerPage, // available but not used here
-    currentPage
+	let prev = current === 1 ? null : current - 1,
+			next = current === max ? null : current + 1,
+			items = [1]
+
+	if (current === 1 && max === 1) return {current, prev, next, items}
+	if (current > 4) items.push('…')
+
+	let r = 2, r1 = current - r, r2 = current + r
+
+	for (let i = r1 > 2 ? r1 : 2; i <= Math.min(max, r2); i++) items.push(i)
+
+	if (r2 + 1 < max) items.push('…')
+	if (r2 < max) items.push(max)
+
+	// return {current, prev, next, items}
+  return items;
+}
+
+const MyPagination = ({
+    totalInDB, 
+    page, setPage,
+    pageSize,
+    loadPage,
+    isLoading
   }) => {
+    const numPages = getNumberOfPages(totalInDB, pageSize);
     const handleBackButtonClick = () => {
-      onChangePage(currentPage - 1);
+      if (isLoading) return;
+      if (page == 1) return;
+      setPage(page - 1);
+      loadPage();
     };
   
     const handleNextButtonClick = () => {
-      onChangePage(currentPage + 1);
+      if (isLoading) return;
+      if (page == numPages) return;
+      setPage(page + 1);
+      loadPage();
     };
   
     const handlePageNumber = (e) => {
-      onChangePage(Number(e.target.value));
+      if (isLoading) return;
+      let value = e.target.value;
+      if (value == '...' ||  numPages == Number(value)) return;
+      setPage(Number(value));
+      loadPage();
     };
-  
-    const pages = getNumberOfPages(rowCount, rowsPerPage);
-    const pageItems = toPages(pages);
-    const nextDisabled = currentPage === pageItems.length;
-    const previosDisabled = currentPage === 1;
-  
+    
+
+    let pageItems = paginate(page, numPages);
+
     return (
-      
-      <nav>
-        <ul className="pagination">
-          <li className="page-item">
-            <button
-              className="page-link"
-              onClick={handleBackButtonClick}
-              disabled={previosDisabled}
-              aria-disabled={previosDisabled}
-              aria-label="previous page"
-            >
-              Trang trước
-            </button>
-          </li>
-          {pageItems.map((page) => {
+      <nav aria-label="Page navigation example">
+
+    
+      <ul class="pagination">
+      <li class="page-item">
+              <button className="page-link" onClick={handleBackButtonClick}>
+                Trước
+              </button>
+ 
+      </li>
+
+
+      {pageItems.map((value) => {
             const className =
-              page === currentPage ? "page-item active" : "page-item";
+              value === page ? "page-item active" : "page-item";
   
             return (
-              <li key={page} className={className}>
+              <li key={value} className={className}>
                 <button
                   className="page-link"
                   onClick={handlePageNumber}
-                  value={page}
+                  value={value}
                 >
-                  {page}
+                  {value}
                 </button>
               </li>
             );
-          })}
-          <li className="page-item">
-            <button
-              className="page-link"
-              onClick={handleNextButtonClick}
-              disabled={nextDisabled}
-              aria-disabled={nextDisabled}
-              aria-label="next page"
-            >
-              Trang sau
-            </button>
-          </li>
-        </ul>
+      })}
+
+      <li class="page-item">
+              <button className="page-link" onClick={handleNextButtonClick}>
+                Sau
+              </button>
+      </li>
+      
+      </ul>
       </nav>
     );
   };
 
-  export default BootyPagination;
+  export default MyPagination;
   
