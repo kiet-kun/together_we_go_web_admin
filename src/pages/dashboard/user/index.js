@@ -5,6 +5,8 @@ import "./user.css";
 import movies from "./movies";
 import MyPagination from '../../../components/datatable_pagination';
 import { TOAST_TYPE } from "../../../constanst";
+import ViewModal from "./modal/view_modal";
+import DeleteModal from "./modal/delete_modal";
 
 const data = [{
   "_id": "65333fefdc108ea16cb4007f",
@@ -54,6 +56,9 @@ const UserPage = ({ showToast }) => {
   let [sortOptions, setSortOptions] = useState({});
   let [isLoading, setIsLoading] = useState(false);
   let [keyword, setKeyword] = useState('');
+  let [isViewModalOpen, setViewModalOpen] = useState(false);
+  let [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  let [itemFoucus, setItemFocus] = useState(null);
 
   async function loadPage() {
     console.log(page, pageSize);
@@ -67,6 +72,24 @@ const UserPage = ({ showToast }) => {
     setIsLoading(false);
   }
 
+  function openViewModel(item){
+    console.log('view', item)
+    setItemFocus(item);
+    itemFoucus = item;
+    setViewModalOpen(true);
+  }
+
+  function openDeleteModel(item){
+    setItemFocus(item);
+    itemFoucus = item;
+    setDeleteModalOpen(true);
+  }
+
+  const handleClose = () => {
+    setViewModalOpen(false);
+    setDeleteModalOpen(false);
+  }
+
   useEffect(() => {
     loadPage();
   }, [totalInDB, page, pageSize]);
@@ -75,8 +98,14 @@ const UserPage = ({ showToast }) => {
     <>
       <Layout>
         <div>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Người dùng</li>
+            </ol>
+          </nav>
 
-          <form class="d-flex container " role="search" style={{ marginBottom: '36px' }}>
+          <form class="d-flex container"  role="search" style={{ marginBottom: '36px' , padding: '0'}}>
             <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" />
             <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
           </form>
@@ -87,6 +116,7 @@ const UserPage = ({ showToast }) => {
             setPageSize={setPageSize}
           ></MyPagination>
 
+          {/* Table */}
           <div className="card container data-table" >
             <table class="table">
               <thead>
@@ -95,34 +125,69 @@ const UserPage = ({ showToast }) => {
                   <th scope="col">Mã</th>
                   <th scope="col">Tên</th>
                   <th scope="col">Trạng thái</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  isLoading && <div>Loading</div>
+                  (isLoading && datas.length == 0) && <div>Loading</div>
                 }
-                {!isLoading && datas.map(function (object, i) {
+                {datas.length > 0 && datas.map(function (object, i) {
                   // return <ObjectRow obj={object} key={i} />;
                   return <tr>
                     <th scope="row">{object.id}</th>
                     <td>{object.title}</td>
                     <td>{object.year}</td>
                     <td>{object.runtime}</td>
+                    <td>{object.runtime}</td>
+                    <td>
+                    <div class="row justify-content-start">
+                        <div class="col p-0">
+                          <button type="button px-3" class="btn btn-light" 
+                           onClick={() => openViewModel(object)}
+                    
+                          >
+                            {/* <i class="bi bi-pencil-square pe-none" width="16" height="16"/> */}
+                            Xem
+                          </button>
+                        </div>
+ 
+                      
+                        <div class="col p-0">
+                            <button type="button" class="btn btn-light" onClick={() => openDeleteModel(object)}>
+                          <i class="bi bi-trash pe-none" width="16" height="16"/>
+                          </button>
+                        </div>
+
+                        
+                    </div>
+                    
+                   
+                    
+                    </td>
                   </tr>
                 })}
-
-
-
               </tbody>
             </table>
           </div>
 
           <div class="pt-3"></div>
+
           <MyPagination
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
             setPage={setPage} loadPage={loadPage}
             setPageSize={setPageSize}
           ></MyPagination>
+
+          {/* Modal */}
+          {
+            isViewModalOpen && <ViewModal show={isViewModalOpen} data={itemFoucus} handleClose={handleClose}></ViewModal>
+          }
+          {
+            isDeleteModalOpen && <DeleteModal show={isDeleteModalOpen} data={itemFoucus} handleClose={handleClose}></DeleteModal>
+          }
+          
         </div>
       </Layout>
     </>

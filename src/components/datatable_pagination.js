@@ -91,7 +91,7 @@ const MyPagination = ({
 
           {pageItems.map((value) => {
             const className =
-              value === page ? "page-item active" : "page-item";
+              value === page ? "page-item active z-0" : "page-item";
 
             return (
               <li key={value} className={className}>
