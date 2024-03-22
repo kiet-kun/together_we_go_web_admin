@@ -5,6 +5,7 @@ import UserPage from "../pages/dashboard/user";
 import LoginPage from "../pages/auth/login";
 import HomePage from "../pages/dashboard/home";
 
+
 export const AppRoutes = () => {
     let element = useRoutes([
         {path: '/dang-nhap', element: <LoginPage />},
@@ -12,5 +13,7 @@ export const AppRoutes = () => {
         {path: '/quan-ly-nguoi-dung', element: <UserPage />},
     ]);
     
-    return element;
+    return <>{element}
+
+    </>;
 }

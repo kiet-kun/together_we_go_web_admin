@@ -48,13 +48,14 @@ function sleep(ms) {
 const UserPage = () => {
     let [totalInDB, setTotalInDB] = useState(movies.length);
     let [page, setPage] = useState(1);
-    let [pageSize, setPageSize] = useState(20);
+    let [pageSize, setPageSize] = useState(10);
     let [datas, setDatas] = useState([]);
     let [sortOptions, setSortOptions] = useState({});
     let [isLoading, setIsLoading] = useState(false);
     let [keyword, setKeyword] = useState('');
     
     async function loadPage(){
+      console.log(page, pageSize);
       setIsLoading(true);
       let end = page * pageSize - 1;
       let start = (page - 1) * pageSize;
@@ -74,7 +75,9 @@ const UserPage = () => {
         <>
              <Layout>
               <div>
-
+              
+  
+      
              <form class="d-flex container" role="search" style={{marginBottom: '36px'}}>
                 <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search"/>
                 <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
@@ -82,7 +85,13 @@ const UserPage = () => {
 
   
              <div className="card container data-table" >
-            <MyPagination totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading} setPage={setPage} loadPage={loadPage} ></MyPagination>
+
+                <MyPagination
+                  totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading} 
+                  setPage={setPage} loadPage={loadPage} 
+                  setPageSize={setPageSize}
+                ></MyPagination>
+
    
              <table class="table">
                   <thead>
