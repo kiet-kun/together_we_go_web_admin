@@ -1,33 +1,18 @@
 import './login.css'
-import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react"
-import { THEME, setTheme } from '../../../utils/theme';
 import { LoginService } from '../../../services/auth';
 import { JWT, TOAST_TYPE } from '../../../constanst';
-import NotiToast from '../../../components/noti_toast';
 
-const LoginPage = () => {
+const LoginPage = ({showToast, navigate}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [showToast, setShowToast] = useState(false);
-    const [messageToast, setMessageToast] = useState('');
-    const [typeToast, setTypeToast] = useState('');
-
-    const _showToast = (message, type) => {
-      setMessageToast(message);
-      setTypeToast(type);
-      setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-      }, 3000); // Hide the toast after 3 seconds
-    };
 
     useEffect(() => {
       setLoading(false);
     }, []);
 
-    const navigate = useNavigate();
+ 
 
     const handleChangeEmail = event => {
         setEmail(event.target.value);   
@@ -45,7 +30,7 @@ const LoginPage = () => {
         const response = await LoginService(email, password);
       
         if (response.status == 200){
-          _showToast('Đăng nhập thành công',TOAST_TYPE.success);
+          showToast('Đăng nhập thành công',TOAST_TYPE.success);
           // alert('Đăng nhập thành công');
           localStorage.setItem(JWT.ACCESS_TOKEN, response.data.data[JWT.ACCESS_TOKEN]);
           localStorage.setItem(JWT.REFRESH_TOKEN, response.data.data[JWT.REFRESH_TOKEN]);
@@ -55,11 +40,11 @@ const LoginPage = () => {
           }, 2000);
         }
         else {
-          _showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
+          showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
           // alert('Đăng nhập thất bại');
         }
       } catch (error) {
-         _showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
+         showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
           console.log(error);     
       }
       setLoading(false);
@@ -69,7 +54,7 @@ const LoginPage = () => {
        <>
       
         <div class="d-flex align-items-center py-4 bg-body-tertiary" style={{width: '100vw',height: '100vh'}}>
-        {showToast && <NotiToast message={messageToast} type={typeToast}></NotiToast>}
+       
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
           <symbol id="check2" viewBox="0 0 16 16">
             <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>

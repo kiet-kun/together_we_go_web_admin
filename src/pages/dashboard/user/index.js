@@ -4,6 +4,7 @@ import Layout from '../../../layouts/layout';
 import "./user.css";
 import movies from "./movies";
 import MyPagination from '../../../components/datatable_pagination';
+import { TOAST_TYPE } from "../../../constanst";
 
 const data = [{
   "_id": "65333fefdc108ea16cb4007f",
@@ -45,88 +46,87 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const UserPage = () => {
-    let [totalInDB, setTotalInDB] = useState(movies.length);
-    let [page, setPage] = useState(1);
-    let [pageSize, setPageSize] = useState(10);
-    let [datas, setDatas] = useState([]);
-    let [sortOptions, setSortOptions] = useState({});
-    let [isLoading, setIsLoading] = useState(false);
-    let [keyword, setKeyword] = useState('');
-    
-    async function loadPage(){
-      console.log(page, pageSize);
-      setIsLoading(true);
-      let end = page * pageSize - 1;
-      let start = (page - 1) * pageSize;
+const UserPage = ({ showToast }) => {
+  let [totalInDB, setTotalInDB] = useState(movies.length);
+  let [page, setPage] = useState(1);
+  let [pageSize, setPageSize] = useState(10);
+  let [datas, setDatas] = useState([]);
+  let [sortOptions, setSortOptions] = useState({});
+  let [isLoading, setIsLoading] = useState(false);
+  let [keyword, setKeyword] = useState('');
 
-      setDatas(movies.slice(start, end));
-      await sleep(2 * 1000);
-    
-      setIsLoading(false);
-    }
+  async function loadPage() {
+    console.log(page, pageSize);
+    setIsLoading(true);
+    let end = page * pageSize - 1;
+    let start = (page - 1) * pageSize;
 
-    useEffect(() => {      
-      loadPage();
-    }, [totalInDB, page, pageSize]);
+    setDatas(movies.slice(start, end));
+    await sleep(2 * 1000);
+    showToast('Thành công', TOAST_TYPE.success,)
+    setIsLoading(false);
+  }
 
-  
-    return (
-        <>
-             <Layout>
-              <div>
-              
-  
-      
-             <form class="d-flex container" role="search" style={{marginBottom: '36px'}}>
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search"/>
-                <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
-             </form>
+  useEffect(() => {
+    loadPage();
+  }, [totalInDB, page, pageSize]);
 
-  
-             <div className="card container data-table" >
+  return (
+    <>
+      <Layout>
+        <div>
 
-                <MyPagination
-                  totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading} 
-                  setPage={setPage} loadPage={loadPage} 
-                  setPageSize={setPageSize}
-                ></MyPagination>
+          <form class="d-flex container " role="search" style={{ marginBottom: '36px' }}>
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" />
+            <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+          </form>
 
-   
-             <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Mã</th>
-                      <th scope="col">Tên</th>
-                      <th scope="col">Trạng thái</th>                   
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      isLoading && <div>Loading</div>
-                    }
-                    { !isLoading && datas.map(function(object, i){
-                        // return <ObjectRow obj={object} key={i} />;
-                        return <tr>
-                          <th scope="row">{object.id}</th>
-                          <td>{object.title}</td>
-                          <td>{object.year}</td>
-                          <td>{object.runtime}</td>
-                        </tr>
-                    })}
-                        
-                    
-                   
-                  </tbody>
-                </table>
-              </div>
+          <MyPagination
+            totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
+            setPage={setPage} loadPage={loadPage}
+            setPageSize={setPageSize}
+          ></MyPagination>
 
-              </div>
+          <div className="card container data-table" >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Mã</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  isLoading && <div>Loading</div>
+                }
+                {!isLoading && datas.map(function (object, i) {
+                  // return <ObjectRow obj={object} key={i} />;
+                  return <tr>
+                    <th scope="row">{object.id}</th>
+                    <td>{object.title}</td>
+                    <td>{object.year}</td>
+                    <td>{object.runtime}</td>
+                  </tr>
+                })}
 
-             </Layout>
-        </>   
-    );
+
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pt-3"></div>
+          <MyPagination
+            totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
+            setPage={setPage} loadPage={loadPage}
+            setPageSize={setPageSize}
+          ></MyPagination>
+        </div>
+      </Layout>
+    </>
+  );
 }
 
 export default UserPage

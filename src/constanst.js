@@ -13,4 +13,10 @@ export const TOAST_TYPE = {
     light : 'light',
     dark : 'dark'
 }
+
+export const PAGE_NAME = {
+    login: '/dang-nhap',
+    home: '/trang-chu',
+    user: '/quan-ly-nguoi-dung'
+}
   
