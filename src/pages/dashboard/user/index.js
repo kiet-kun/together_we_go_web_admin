@@ -7,6 +7,7 @@ import MyPagination from '../../../components/datatable_pagination';
 import { TOAST_TYPE } from "../../../constanst";
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
+import AddModal from "./modal/add_modal";
 
 const data = [{
   "_id": "65333fefdc108ea16cb4007f",
@@ -49,6 +50,7 @@ function sleep(ms) {
 }
 
 const UserPage = ({ showToast }) => {
+  // Table properties
   let [totalInDB, setTotalInDB] = useState(movies.length);
   let [page, setPage] = useState(1);
   let [pageSize, setPageSize] = useState(10);
@@ -56,8 +58,10 @@ const UserPage = ({ showToast }) => {
   let [sortOptions, setSortOptions] = useState({});
   let [isLoading, setIsLoading] = useState(false);
   let [keyword, setKeyword] = useState('');
+  // Modal properties
   let [isViewModalOpen, setViewModalOpen] = useState(false);
   let [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  let [isAddModalOpen, setAddModalOpen] = useState(false);
   let [itemFoucus, setItemFocus] = useState(null);
 
   async function loadPage() {
@@ -85,9 +89,14 @@ const UserPage = ({ showToast }) => {
     setDeleteModalOpen(true);
   }
 
+  function openAddModel(){
+    setAddModalOpen(true);
+  }
+
   const handleClose = () => {
     setViewModalOpen(false);
     setDeleteModalOpen(false);
+    setAddModalOpen(false);
   }
 
   useEffect(() => {
@@ -105,10 +114,17 @@ const UserPage = ({ showToast }) => {
             </ol>
           </nav>
 
-          <form class="d-flex container"  role="search" style={{ marginBottom: '36px' , padding: '0'}}>
+          <form class="d-flex container"  role="search" style={{ marginBottom: '12px' , padding: '0'}}>
             <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" />
             <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
           </form>
+          
+          <div class="d-flex justify-content-end" style={{ marginBottom: '12px'}}>
+            <button type="button px-5" class="btn btn-success" style={{  width: '72px'}} onClick={() => openAddModel()}>
+                    <i class="bi bi-plus-square pe-none" width="16" height="16"/>
+                  </button>
+          </div>
+          
 
           <MyPagination
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
@@ -121,9 +137,15 @@ const UserPage = ({ showToast }) => {
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Mã</th>
-                  <th scope="col">Tên</th>
+                  <th scope="col">ID  
+                    {/* <i class="bi bi-sort-up" style={{width: '16px', height: '16px'}}></i> */}
+                  </th>
+                  <th scope="col">Mã 
+                    {/* <i class="bi bi-sort-up" style={{width: '16px', height: '16px'}}></i> */}
+                  </th>
+                  <th scope="col">Tên 
+                    {/* <i class="bi bi-sort-up-alt" style={{width: '16px', height: '16px'}}></i> */}
+                  </th>
                   <th scope="col">Trạng thái</th>
                   <th scope="col">Trạng thái</th>
                   <th scope="col"></th>
@@ -146,25 +168,16 @@ const UserPage = ({ showToast }) => {
                         <div class="col p-0">
                           <button type="button px-3" class="btn btn-light" 
                            onClick={() => openViewModel(object)}
-                    
                           >
-                            {/* <i class="bi bi-pencil-square pe-none" width="16" height="16"/> */}
                             Xem
                           </button>
-                        </div>
- 
-                      
+                        </div>                    
                         <div class="col p-0">
                             <button type="button" class="btn btn-light" onClick={() => openDeleteModel(object)}>
                           <i class="bi bi-trash pe-none" width="16" height="16"/>
                           </button>
-                        </div>
-
-                        
-                    </div>
-                    
-                   
-                    
+                        </div>                     
+                    </div>                
                     </td>
                   </tr>
                 })}
@@ -186,6 +199,9 @@ const UserPage = ({ showToast }) => {
           }
           {
             isDeleteModalOpen && <DeleteModal show={isDeleteModalOpen} data={itemFoucus} handleClose={handleClose}></DeleteModal>
+          }
+          {
+            isAddModalOpen && <AddModal show={isAddModalOpen} data={itemFoucus} handleClose={handleClose}></AddModal>
           }
           
         </div>
