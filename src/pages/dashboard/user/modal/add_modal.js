@@ -7,7 +7,7 @@ const AddModal = ({show, data, handleClose }) => {
       <Modal.Header closeButton>
         <Modal.Title>Thêm người dùng mới</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{data.title}</Modal.Body>
+      <Modal.Body>content</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Đóng

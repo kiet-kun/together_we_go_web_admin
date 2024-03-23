@@ -8,7 +8,7 @@ const LayoutFooter = () => {
         <img class="bi pe-none me-2" width="40" height="32" 
             src="/assets/image/twg_logo.png" alt="logo" />
       </a>
-      <p class="text-body-secondary">&copy; 2023</p>
+      <p class="text-body-secondary">&copy; 2024</p>
     </div>
 
     <div class="col mb-3">
@@ -26,7 +26,7 @@ const LayoutFooter = () => {
     <div class="col mb-3">
       <h5>Địa chỉ</h5>
       <ul class="nav flex-column">
-        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Khu phố 6, P.Linh Trung, Tp.Thủ Đức, Tp.Hồ Chí Minh.</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Đại học CNNT ĐHQG-HCM, Khu phố 6, P.Linh Trung, Tp.Thủ Đức, Tp.Hồ Chí Minh.</a></li>
       </ul>
     </div>
 

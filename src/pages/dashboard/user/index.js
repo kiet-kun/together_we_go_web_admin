@@ -4,12 +4,13 @@ import Layout from '../../../layouts/layout';
 import "./user.css";
 import movies from "./movies";
 import MyPagination from '../../../components/datatable_pagination';
-import { TOAST_TYPE } from "../../../constanst";
+import { SORT_STATE, TOAST_TYPE } from "../../../constanst";
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
+import { nextSortState, sleep } from "../../../utils/utils";
 
-const data = [{
+let data = [{
   "_id": "65333fefdc108ea16cb4007f",
   "firstName": "Nguyễn Hoàng Kiệt",
   "lastName": "string",
@@ -45,9 +46,7 @@ const data = [{
   "priorityPoint": 100
 }]
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 
 const UserPage = ({ showToast }) => {
   // Table properties
@@ -58,6 +57,8 @@ const UserPage = ({ showToast }) => {
   let [sortOptions, setSortOptions] = useState({});
   let [isLoading, setIsLoading] = useState(false);
   let [keyword, setKeyword] = useState('');
+  let [sortStateCreatedAt, setSortStateCreatedAt] = useState(SORT_STATE.none);
+  let [sortStatePoint, setSortStatePoint] = useState(SORT_STATE.none);
   // Modal properties
   let [isViewModalOpen, setViewModalOpen] = useState(false);
   let [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -76,20 +77,20 @@ const UserPage = ({ showToast }) => {
     setIsLoading(false);
   }
 
-  function openViewModel(item){
+  function openViewModel(item) {
     console.log('view', item)
     setItemFocus(item);
     itemFoucus = item;
     setViewModalOpen(true);
   }
 
-  function openDeleteModel(item){
+  function openDeleteModel(item) {
     setItemFocus(item);
     itemFoucus = item;
     setDeleteModalOpen(true);
   }
 
-  function openAddModel(){
+  function openAddModel() {
     setAddModalOpen(true);
   }
 
@@ -99,9 +100,16 @@ const UserPage = ({ showToast }) => {
     setAddModalOpen(false);
   }
 
+  const handleSearch = (event) => setKeyword(event.target.value);
+
+  const handleClickSortCreatedAt = (event) => {
+    let value = nextSortState(sortStateCreatedAt);
+    setSortStateCreatedAt(value);
+  }
+
   useEffect(() => {
     loadPage();
-  }, [totalInDB, page, pageSize]);
+  }, [totalInDB, page, pageSize, sortStateCreatedAt]);
 
   return (
     <>
@@ -114,17 +122,19 @@ const UserPage = ({ showToast }) => {
             </ol>
           </nav>
 
-          <form class="d-flex container"  role="search" style={{ marginBottom: '12px' , padding: '0'}}>
-            <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" />
-            <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+          <form class="d-flex container" role="search" style={{ marginBottom: '12px', padding: '0' }}>
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search"
+              onChange={handleSearch}
+            />
+            <button class="btn btn-outline-success" type="submit" onSubmit={() => loadPage()}>Tìm kiếm</button>
           </form>
-          
-          <div class="d-flex justify-content-end" style={{ marginBottom: '12px'}}>
-            <button type="button px-5" class="btn btn-success" style={{  width: '72px'}} onClick={() => openAddModel()}>
-                    <i class="bi bi-plus-square pe-none" width="16" height="16"/>
-                  </button>
+
+          <div class="d-flex justify-content-end" style={{ marginBottom: '12px' }}>
+            <button type="button px-5" class="btn btn-success" style={{ width: '72px' }} onClick={() => openAddModel()}>
+              <i class="bi bi-plus-square pe-none" width="16" height="16" />
+            </button>
           </div>
-          
+
 
           <MyPagination
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
@@ -137,13 +147,30 @@ const UserPage = ({ showToast }) => {
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">ID  
+                  <th scope="col">
+                    <div class="d-inline">ID</div>
+                    <div class="d-inline" onClick={handleClickSortCreatedAt}>
+                      {sortStateCreatedAt == SORT_STATE.increasing &&
+
+                        <i class="bi bi-sort-up" style={{ width: '16px', height: '16px' }}></i>
+
+
+                      }
+                      {sortStateCreatedAt == SORT_STATE.decreasing &&
+                        <i class="bi bi-sort-up-alt" style={{ width: '16px', height: '16px' }}></i>
+                      }
+                      {sortStateCreatedAt == SORT_STATE.none &&
+                        <i class="bi bi-funnel" style={{ width: '16px', height: '16px' }}></i>
+                      }
+                    </div>
+
+
+
+                  </th>
+                  <th scope="col">Mã
                     {/* <i class="bi bi-sort-up" style={{width: '16px', height: '16px'}}></i> */}
                   </th>
-                  <th scope="col">Mã 
-                    {/* <i class="bi bi-sort-up" style={{width: '16px', height: '16px'}}></i> */}
-                  </th>
-                  <th scope="col">Tên 
+                  <th scope="col">Tên
                     {/* <i class="bi bi-sort-up-alt" style={{width: '16px', height: '16px'}}></i> */}
                   </th>
                   <th scope="col">Trạng thái</th>
@@ -164,20 +191,20 @@ const UserPage = ({ showToast }) => {
                     <td>{object.runtime}</td>
                     <td>{object.runtime}</td>
                     <td>
-                    <div class="row justify-content-start">
+                      <div class="row justify-content-start">
                         <div class="col p-0">
-                          <button type="button px-3" class="btn btn-light" 
-                           onClick={() => openViewModel(object)}
+                          <button type="button px-3" class="btn btn-light"
+                            onClick={() => openViewModel(object)}
                           >
                             Xem
                           </button>
-                        </div>                    
+                        </div>
                         <div class="col p-0">
-                            <button type="button" class="btn btn-light" onClick={() => openDeleteModel(object)}>
-                          <i class="bi bi-trash pe-none" width="16" height="16"/>
+                          <button type="button" class="btn btn-light" onClick={() => openDeleteModel(object)}>
+                            <i class="bi bi-trash pe-none" width="16" height="16" />
                           </button>
-                        </div>                     
-                    </div>                
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 })}
@@ -203,7 +230,7 @@ const UserPage = ({ showToast }) => {
           {
             isAddModalOpen && <AddModal show={isAddModalOpen} data={itemFoucus} handleClose={handleClose}></AddModal>
           }
-          
+
         </div>
       </Layout>
     </>

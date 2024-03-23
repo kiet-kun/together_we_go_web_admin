@@ -19,4 +19,9 @@ export const PAGE_NAME = {
     home: '/trang-chu',
     user: '/quan-ly-nguoi-dung'
 }
-  
+
+export const SORT_STATE = {
+    increasing: 'increasing',
+    decreasing: 'decreasing',
+    none: '',
+}
