@@ -8,15 +8,17 @@ const Layout = ({ children }) => {
   return (
     <>
     <div>
-      <div style={{display: 'flex'}}>
-          <SideBar></SideBar>
-          <div style={{flexGrow : '1', padding: '24px'}}>
-          {children}
+      <div class="d-flex justify-content-between">
+          <div style={{width: '20vw'}}>
+            <SideBar></SideBar> 
+          </div>         
+          <div style={{width: '80vw', paddingTop: '5vh', paddingRight: '8px'}}>        
+              {children}
           </div>
       </div>
       
       <div style={{width: '100%', height:'100px'}}>
-      <LayoutFooter></LayoutFooter>
+          <LayoutFooter></LayoutFooter>
       </div>
       
        {/* Change dark/light mode buttom */}

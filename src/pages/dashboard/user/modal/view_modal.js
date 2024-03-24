@@ -7,7 +7,7 @@ const ViewModal = ({show, data, handleClose }) => {
       <Modal.Header closeButton>
         <Modal.Title>Thông tin người dùng</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{data.title}</Modal.Body>
+      <Modal.Body>{data.id}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Đóng

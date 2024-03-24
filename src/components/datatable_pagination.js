@@ -65,8 +65,8 @@ const MyPagination = ({
   };
 
   return (
-    <div class="row">
-      <div class="col-2 align-self-start">
+    <div class="d-flex justify-content-between">
+      <div class="">
         <select 
           onChange={handleChangeSelect}
           class="form-select" aria-label="Default select example" value={pageSize}>
@@ -77,7 +77,7 @@ const MyPagination = ({
       </div>
 
 
-      <nav class="col-10 align-self-end" aria-label="Page navigation example">
+      <nav class="" aria-label="Page navigation example">
 
 
         <ul class="pagination justify-content-end">

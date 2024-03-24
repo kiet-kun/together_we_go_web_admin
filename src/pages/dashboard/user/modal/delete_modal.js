@@ -7,7 +7,7 @@ const DeleteModal = ({show, data, handleClose }) => {
       <Modal.Header closeButton>
         <Modal.Title>Xác nhận</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Bạn muốn xóa {data.title}?</Modal.Body>
+      <Modal.Body>Bạn muốn xóa {data.id}?</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Đóng

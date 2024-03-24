@@ -9,45 +9,8 @@ import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
 import { nextSortState, sleep } from "../../../utils/utils";
-
-let data = [{
-  "_id": "65333fefdc108ea16cb4007f",
-  "firstName": "Nguyễn Hoàng Kiệt",
-  "lastName": "string",
-  "email": "skill1sp2@gmail.com",
-  "password": "$2a$10$R16.qdSmSs9f1SpL898iqeY2NmAel.oMjXaTm4dQfYq993z6KYpN.",
-  "avatarUrl": "https://res.cloudinary.com/dxoblxypq/image/upload/v1679984586/9843c460ff72ee89d791bffe667e451c_rzalqh.jpg",
-  "phoneNumber": "0961323072",
-  "online": false,
-  "gender": "male",
-  "locationId": "",
-  "locationMainText": "",
-  "locationAddress": "",
-  "role": "user",
-  "isCalling": false,
-  "__v": 0,
-  "updatedAt": {
-    "$date": "2024-03-14T08:48:32.047Z"
-  },
-  "createdAt": {
-    "$date": "2023-12-20T01:01:29.742Z"
-  },
-  "address": {
-    "level1": "",
-    "level2": "",
-    "level3": "",
-    "level4": ""
-  },
-  "addressArea": {
-    "afternoon": "level1",
-    "morning": "level3",
-    "night": "level4"
-  },
-  "priorityPoint": 100
-}]
-
-
-
+import { getUsers } from "../../../services/user_service";
+import { Table } from "react-bootstrap";
 const UserPage = ({ showToast }) => {
   // Table properties
   let [totalInDB, setTotalInDB] = useState(movies.length);
@@ -73,7 +36,16 @@ const UserPage = ({ showToast }) => {
 
     setDatas(movies.slice(start, end));
     await sleep(2 * 1000);
-    showToast('Thành công', TOAST_TYPE.success,)
+
+    let response = await getUsers(page, pageSize);
+    console.log(response);
+    if (response.status == 200) {
+      setDatas(response.data.data)
+      showToast('Thành công', TOAST_TYPE.success)
+    }
+    else {
+      showToast('Lỗi', TOAST_TYPE.danger)
+    }
     setIsLoading(false);
   }
 
@@ -135,7 +107,6 @@ const UserPage = ({ showToast }) => {
             </button>
           </div>
 
-
           <MyPagination
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
             setPage={setPage} loadPage={loadPage}
@@ -143,11 +114,14 @@ const UserPage = ({ showToast }) => {
           ></MyPagination>
 
           {/* Table */}
-          <div className="card container data-table" >
-            <table class="table">
+
+          <div className="card container data-table" 
+          // style={{width: '300px'}}
+          >
+            <Table responsive>
               <thead>
                 <tr>
-                  <th scope="col">
+                  <th>
                     <div class="d-inline">ID</div>
                     <div class="d-inline" onClick={handleClickSortCreatedAt}>
                       {sortStateCreatedAt == SORT_STATE.increasing &&
@@ -167,15 +141,15 @@ const UserPage = ({ showToast }) => {
 
 
                   </th>
-                  <th scope="col">Mã
+                  <th >Mã
                     {/* <i class="bi bi-sort-up" style={{width: '16px', height: '16px'}}></i> */}
                   </th>
-                  <th scope="col">Tên
+                  <th >Tên
                     {/* <i class="bi bi-sort-up-alt" style={{width: '16px', height: '16px'}}></i> */}
                   </th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col"></th>
+                  <th>Trạng thái</th>
+                  <th >Trạng thái</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -185,21 +159,21 @@ const UserPage = ({ showToast }) => {
                 {datas.length > 0 && datas.map(function (object, i) {
                   // return <ObjectRow obj={object} key={i} />;
                   return <tr>
-                    <th scope="row">{object.id}</th>
-                    <td>{object.title}</td>
-                    <td>{object.year}</td>
-                    <td>{object.runtime}</td>
-                    <td>{object.runtime}</td>
-                    <td>
-                      <div class="row justify-content-start">
-                        <div class="col p-0">
+                    <th >{object.id}</th>
+                    <td>{object.id}</td>
+                    <td>{object.id}</td>
+                    <td>{object.id}</td>
+                    <td>{object.id}</td>
+                    <td class="">
+                      <div class="d-flex justify-content-start">
+                        <div class="">
                           <button type="button px-3" class="btn btn-light"
                             onClick={() => openViewModel(object)}
                           >
                             Xem
                           </button>
                         </div>
-                        <div class="col p-0">
+                        <div class="">
                           <button type="button" class="btn btn-light" onClick={() => openDeleteModel(object)}>
                             <i class="bi bi-trash pe-none" width="16" height="16" />
                           </button>
@@ -209,8 +183,9 @@ const UserPage = ({ showToast }) => {
                   </tr>
                 })}
               </tbody>
-            </table>
+            </Table>
           </div>
+
 
           <div class="pt-3"></div>
 
