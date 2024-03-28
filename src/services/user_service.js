@@ -69,3 +69,24 @@ export async function updateUser(id, body) {
     } 
 }
 
+
+export async function deleteUser(id) {    
+    try {
+        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
+        const response = await axios.delete(
+            `${process.env.REACT_APP_API_LINK}/user/admin/65cdd939ac2277107f5aa3b6`, 
+            {
+               headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization' : token,
+                },
+            }
+        );
+        return response;
+    }
+    catch (err) {
+        console.log(err.response);
+        return err.response;
+    } 
+}

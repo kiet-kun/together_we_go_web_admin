@@ -51,7 +51,7 @@ const BlockModal = ({show, data, handleClose, loadPage, showToast }) => {
           Đóng
         </Button>
         {
-            isLoading &&   <Button variant="primary" disabled>
+            isLoading &&   <Button variant="danger" disabled>
               <Spinner
                 as="span"
                 animation="border"

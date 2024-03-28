@@ -231,6 +231,7 @@ const UserPage = ({ showToast }) => {
           {
             isDeleteModalOpen && <DeleteModal show={isDeleteModalOpen} data={itemFoucus} 
             handleClose={handleClose}
+            showToast={showToast}
             loadPage={loadPage}></DeleteModal>
           }
           {
