@@ -1,5 +1,7 @@
+// lib
 import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner } from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
+// logic
 import { deleteUser } from '../../../../../services/user_service';
 import { TOAST_TYPE } from '../../../../../constanst';
 

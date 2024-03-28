@@ -1,8 +1,11 @@
+// lib
 import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
+// logic
 import { formatDate } from '../../../../../utils/utils';
 import { TOAST_TYPE } from '../../../../../constanst';
 import { addUser } from '../../../../../services/user_service';
+
 const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
   const [date, setDate] = useState(formatDate(new Date().toString()));
   const [name, setName] = useState('');

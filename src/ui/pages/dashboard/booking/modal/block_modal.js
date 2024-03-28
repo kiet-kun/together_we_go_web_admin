@@ -1,6 +1,8 @@
-import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
+// lib
+import {Modal} from 'react-bootstrap';
+import React, { useState } from "react"
+// logic
 import { TOAST_TYPE } from '../../../../../constanst';
-import React, { useEffect, useState } from "react"
 import { updateUser } from '../../../../../services/user_service';
 
 const BlockModal = ({show, data, handleClose, loadPage, showToast }) => {

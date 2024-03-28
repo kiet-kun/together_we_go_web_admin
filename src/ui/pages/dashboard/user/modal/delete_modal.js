@@ -1,6 +1,8 @@
+// lib
 import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner } from 'react-bootstrap';
-import { TOAST_TYPE } from '../../../../../constanst';
 import React, { useEffect, useState } from "react"
+// logic
+import { TOAST_TYPE } from '../../../../../constanst';
 import { deleteUser } from '../../../../../services/user_service';
 
 const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {

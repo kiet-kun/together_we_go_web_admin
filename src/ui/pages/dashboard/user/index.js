@@ -1,23 +1,23 @@
+// lib
 import React, { useEffect, useState } from "react"
-import axios from "axios";
+import { Table, Image } from "react-bootstrap";
+// component
 import Layout from '../../../layouts/layout';
-import "./user.css";
-import movies from "./movies";
 import MyPagination from '../../../components/datatable_pagination';
-import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
+// modal
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
-import { nextSortState, sleep, customStr } from "../../../../utils/utils";
-
-import { Table, Image } from "react-bootstrap";
 import BlockModal from "./modal/block_modal";
+// logic
+import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
+import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 import { getUsers } from "../../../../services/user_service";
 
 
 const UserPage = ({ appState }) => {
   // Table properties
-  let [totalInDB, setTotalInDB] = useState(movies.length);
+  let [totalInDB, setTotalInDB] = useState(200);
   let [page, setPage] = useState(1);
   let [pageSize, setPageSize] = useState(10);
   let [datas, setDatas] = useState([]);
@@ -38,8 +38,6 @@ const UserPage = ({ appState }) => {
     setIsLoading(true);
     let end = page * pageSize - 1;
     let start = (page - 1) * pageSize;
-
-    setDatas(movies.slice(start, end));
 
     let response = await getUsers(page, pageSize, keyword);
     console.log(response);

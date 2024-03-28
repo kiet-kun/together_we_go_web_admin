@@ -1,13 +1,17 @@
+// lib
 import React, { useEffect, useState } from "react"
+import { Table, Image } from "react-bootstrap";
+// component
 import Layout from '../../../layouts/layout';
 import MyPagination from '../../../components/datatable_pagination';
-import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
+// modal
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
-import { nextSortState, sleep, customStr } from "../../../../utils/utils";
-import { Table, Image } from "react-bootstrap";
 import BlockModal from "./modal/block_modal";
+// logic
+import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
+import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 import { getBookings } from "../../../../services/booking_service";
 
 const BookingPage = ({ appState }) => {
