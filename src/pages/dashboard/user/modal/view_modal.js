@@ -1,23 +1,48 @@
-import {Modal, Button, Col, Form, InputGroup, Row, Alert,} from 'react-bootstrap';
+import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
-import { formatDate } from '../../../../utils/utils';
+import { formatDate, genPassword } from '../../../../utils/utils';
+import { TOAST_TYPE } from '../../../../constanst';
+import { updateUser } from '../../../../services/user_service';
 
-const ViewModal = ({ show, data, handleClose, loadPage }) => {
+const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
   const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
   const [name, setName] = useState(data.firstName);
-  const [age, setAge] = useState("20");
+  const [age, setAge] = useState(data.age);
   const [gender, setGender] = useState(data.gender);
   const [phoneNumber, setPhoneNumber] = useState(data.phoneNumber);
   const [email, setEmail] = useState(data.email);
   const [address, setAddress] = useState(data.locationMainText);
   const [validated, setValidated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
-    console.log(date, name, gender, phoneNumber, email, address,);
+  const handleSubmit = async (event) => {
+    console.log(date, name, gender, phoneNumber, email, age);
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    }
+    else {
+      setIsLoading(true);
+      try {
+        event.preventDefault();
+
+        const response = await updateUser(data.id,{date, firstName : name, gender, phoneNumber, email, age, password});
+        console.log(response);
+        if (response.status == 200){
+          showToast('Cập nhật thành công',TOAST_TYPE.success);
+          loadPage();  
+          handleClose();   
+        }
+        else {
+          showToast(response.data['message'],TOAST_TYPE.danger);
+        }
+      } catch (error) {
+         showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+        console.log(error);     
+      }
+      setIsLoading(false);
     }
 
     setValidated(true);
@@ -46,7 +71,7 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
                  <Form.Control.Feedback type="invalid">
                   Please provide a valid city.
                 </Form.Control.Feedback>
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustom02">
                 <Form.Label>Tuổi</Form.Label>
@@ -57,7 +82,7 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                 <Form.Label>Giới tính</Form.Label>
@@ -80,7 +105,7 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   value={phoneNumber}
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustom08">
                 <Form.Label>Email</Form.Label>
@@ -91,7 +116,7 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
 
               <Form.Group as={Col} md="4" >
@@ -103,8 +128,38 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
                   value={date}
                   onChange={(e) => { setDate(e.target.value); console.log(e.target.value);}}
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
+            </Row>
+
+            <Row className="mb-3" >
+              <Form.Group  md="4" controlId="validationCustom01">
+                <Form.Label>Mật khẩu</Form.Label>
+                <div class="d-flex">
+                <Form.Control
+                  disabled
+                  type="text"
+                  value={password}
+                />
+                <div style={{width: '32px'}}></div>
+                <Button style={{width: '20vw'}}  onClick={(e) => {
+                  setPassword(genPassword());
+                }}>Tạo mật khẩu</Button> 
+
+<div style={{width: '32px'}}>    </div>
+                <Button  style={{width: '20vw'}} variant="secondary" onClick={(e) => {
+                  setPassword('');
+                }}>Hủy</Button> 
+                </div>
+
+            
+            
+              
+          
+                {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
+              </Form.Group>
+
+    
             </Row>
 
             <Row className="mb-3">
@@ -146,11 +201,23 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
             Đóng
         </Button>
 
-        <Button 
-          // onClick={handleClose} 
-          type="submit">
+        {
+            isLoading &&   <Button variant="primary" disabled>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Đang lưu...</span>
+            </Button>
+          }
+          {
+            !isLoading &&  <Button type="submit" >
             Lưu
-          </Button>
+            </Button>
+          }
       
         </Modal.Footer>
         </Form>

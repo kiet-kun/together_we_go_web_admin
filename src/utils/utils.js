@@ -28,3 +28,13 @@ exports.formatDate = (str) => {
    const day = String(currentDate.getDate()).padStart(2, '0');
    return `${year}-${month}-${day}`;
 }
+
+function getRandomInt(max) {
+   return Math.floor(Math.random() * max);
+ }
+
+exports.genPassword = () => {
+   let res = "";
+   for (let i = 0; i < 6 ; i++) res+= String(getRandomInt(10));
+   return res;
+}

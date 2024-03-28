@@ -45,3 +45,26 @@ export async function addUser(body) {
         return err.response;
     } 
 }
+
+export async function updateUser(id, body) {    
+    try {
+        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
+        const response = await axios.patch(
+            `${process.env.REACT_APP_API_LINK}/user/admin/${id}`, 
+            body,   
+            {
+               headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization' : token,
+                },
+            }
+        );
+        return response;
+    }
+    catch (err) {
+        console.log(err.response);
+        return err.response;
+    } 
+}
+
