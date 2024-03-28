@@ -1,13 +1,13 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-const DeleteModal = ({show, data, handleClose, loadPage }) => {
+const BlockModal = ({show, data, handleClose, loadPage }) => {
     return  <>
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Xác nhận</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Bạn muốn xóa người dùng {data.firstName}?</Modal.Body>
+      <Modal.Body>Bạn muốn khóa người dùng {data.firstName}?</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Đóng
@@ -20,4 +20,4 @@ const DeleteModal = ({show, data, handleClose, loadPage }) => {
   </>
 }
 
-export default DeleteModal;
+export default BlockModal;

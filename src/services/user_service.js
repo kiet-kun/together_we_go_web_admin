@@ -10,9 +10,10 @@ export async function getUsers(page, pageSize)  {
             {
                headers: {
                     'accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization' : token,
                 },
-                params: { 'page': page, 'pageSize': pageSize, 'token' : token },
+                params: { 'page': page, 'pageSize': pageSize, },
             }
         );
         return response;
@@ -20,7 +21,27 @@ export async function getUsers(page, pageSize)  {
     catch (err) {
         console.log(err.response);
         return err.response;
+    } 
+}
+
+export async function addUser(body) {    
+    try {
+        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
+        const response = await axios.post(
+            `${process.env.REACT_APP_API_LINK}/user/admin`, 
+            body,   
+            {
+               headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization' : token,
+                },
+            }
+        );
+        return response;
     }
-    
-    
+    catch (err) {
+        console.log(err.response);
+        return err.response;
+    } 
 }

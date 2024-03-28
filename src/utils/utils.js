@@ -7,5 +7,24 @@ exports.nextSortState = (state) => {
 }
 
 exports.sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
+   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+exports.customStr = (str, limit = 20) => {
+   // return "kiet";
+   str = String(str);
+   if (!str) return "Trống";
+   if (str.length <= limit) {
+      return str;
+  } else {
+      return str.substr(0, limit) + "...";
   }
+}
+
+exports.formatDate = (str) => {
+   const currentDate = new Date(str);
+   const year = currentDate.getFullYear();
+   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+   const day = String(currentDate.getDate()).padStart(2, '0');
+   return `${year}-${month}-${day}`;
+}
