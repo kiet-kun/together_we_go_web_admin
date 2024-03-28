@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { JWT } from '../constanst';
 
-export async function getUsers(page, pageSize)  {    
+export async function getUsers(page, pageSize, keyword)  {    
     try {
+        console.log(keyword);
         let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         
         const response = await axios.get(
@@ -13,7 +14,7 @@ export async function getUsers(page, pageSize)  {
                     'Content-Type': 'application/json',
                     'Authorization' : token,
                 },
-                params: { 'page': page, 'pageSize': pageSize, },
+                params: { 'page': page, 'pageSize': pageSize, keyword},
             }
         );
         return response;

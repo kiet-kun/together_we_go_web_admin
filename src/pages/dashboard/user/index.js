@@ -34,19 +34,18 @@ const UserPage = ({ showToast }) => {
   let [itemFoucus, setItemFocus] = useState(null);
 
   async function loadPage() {
-    console.log(page, pageSize);
+    console.log(page, pageSize, keyword);
     setIsLoading(true);
     let end = page * pageSize - 1;
     let start = (page - 1) * pageSize;
 
     setDatas(movies.slice(start, end));
-    await sleep(2 * 1000);
 
-    let response = await getUsers(page, pageSize);
+    let response = await getUsers(page, pageSize, keyword);
     console.log(response);
     if (response.status == 200) {
       setDatas(response.data.data)
-      showToast('Thành công', TOAST_TYPE.success)
+      // showToast('Thành công', TOAST_TYPE.success)
     }
     else {
       showToast('Lỗi', TOAST_TYPE.danger)
@@ -81,7 +80,9 @@ const UserPage = ({ showToast }) => {
     setBlockModalOpen(false);
   }
 
-  const handleSearch = (event) => setKeyword(event.target.value);
+  const handleSearch = (event) => {
+    console.log(event.target.value)
+    setKeyword(event.target.value);};
 
   const handleClickSortCreatedAt = (event) => {
     let value = nextSortState(sortStateCreatedAt);
@@ -90,7 +91,7 @@ const UserPage = ({ showToast }) => {
 
   useEffect(() => {
     loadPage();
-  }, [totalInDB, page, pageSize, sortStateCreatedAt]);
+  }, [totalInDB, page, pageSize, sortStateCreatedAt, keyword]);
 
   return (
     <>
@@ -107,7 +108,7 @@ const UserPage = ({ showToast }) => {
             <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search"
               onChange={handleSearch}
             />
-            <button class="btn btn-outline-success" type="submit" onSubmit={() => loadPage()}>Tìm kiếm</button>
+            {/* <button class="btn btn-outline-success"  onSubmit={() => loadPage()}>Tìm kiếm</button> */}
           </form>
 
           <div class="d-flex justify-content-end" style={{ marginBottom: '12px' }}>
@@ -176,9 +177,12 @@ const UserPage = ({ showToast }) => {
                     <td>{object.phoneNumber}</td>
                     <td>{customStr(object.locationMainText)}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" disabled>
+                        { !object.isBlock && <button type="button" class="btn btn-primary" disabled>
                             Bình thường
-                          </button>
+                          </button>}
+                          { object.isBlock && <button type="button" class="btn btn-danger" disabled>
+                            Bị khóa
+                          </button>}
                     </td>
                     <td class="">
                       <div class="d-flex justify-content-start">
