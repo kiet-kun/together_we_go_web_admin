@@ -1,4 +1,4 @@
-import { PAGE_NAME } from '../../constanst';
+import { PAGE_NAME } from '../../../constanst';
 import './index.css';
 import { NavLink } from 'react-router-dom';
 

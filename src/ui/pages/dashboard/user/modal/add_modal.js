@@ -1,9 +1,8 @@
 import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
-import { formatDate } from '../../../../utils/utils';
-import { TOAST_TYPE } from '../../../../constanst';
-import { addUser } from '../../../../services/user_service';
-
+import { formatDate } from '../../../../../utils/utils';
+import { TOAST_TYPE } from '../../../../../constanst';
+import { addUser } from '../../../../../services/user_service';
 const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
   const [date, setDate] = useState(formatDate(new Date().toString()));
   const [name, setName] = useState('');
@@ -16,43 +15,43 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (event) =>  {
-    // console.log(date, name, gender, phoneNumber, email, age, password);
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-    // else {
-    //   setIsLoading(true);
-    //   try {
-    //     event.preventDefault();
+    console.log(date, name, gender, phoneNumber, email, age, password);
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    else {
+      setIsLoading(true);
+      try {
+        event.preventDefault();
 
-    //     const response = await addUser({date, name, gender, phoneNumber, email, age, password});
-    //     console.log(response);
-    //     if (response.status == 200){
-    //       appState.showToast('Thêm thành công',TOAST_TYPE.success);
-    //       loadPage();  
-    //       handleClose();   
-    //     }
-    //     else {
-    //       appState.showToast(response.data['message'],TOAST_TYPE.danger);
-    //     }
-    //   } catch (error) {
-    //      appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
-    //     console.log(error);     
-    //   }
-    //   setIsLoading(false);
-    // }
+        const response = await addUser({date, name, gender, phoneNumber, email, age, password});
+        console.log(response);
+        if (response.status == 200){
+          appState.showToast('Thêm thành công',TOAST_TYPE.success);
+          loadPage();  
+          handleClose();   
+        }
+        else {
+          appState.showToast(response.data['message'],TOAST_TYPE.danger);
+        }
+      } catch (error) {
+        appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+        console.log(error);     
+      }
+      setIsLoading(false);
+    }
 
-    // setValidated(true);
+    setValidated(true);
   };
   return <>
     <Modal show={show} onHide={handleClose} size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>Thêm chuyến đi</Modal.Title>
+        <Modal.Title>Thêm người dùng mới</Modal.Title>
       </Modal.Header>
 
-      {/* <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -67,6 +66,7 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập
               </Form.Control.Feedback>
+              {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>Tuổi</Form.Label>
@@ -77,6 +77,7 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
               />
+              {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <Form.Label>Giới tính</Form.Label>
@@ -101,6 +102,7 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập
               </Form.Control.Feedback>
+              {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom08">
               <Form.Label>Email</Form.Label>
@@ -113,6 +115,7 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Control.Feedback type="invalid">
                 Email không hợp lệ
               </Form.Control.Feedback>
+              {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
             </Form.Group>
 
             <Form.Group as={Col} md="4" >
@@ -124,6 +127,7 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
                 value={date}
                 onChange={(e) => { setDate(e.target.value); console.log(e.target.value); }}
               />
+              {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
             </Form.Group>
           </Row>
 
@@ -139,6 +143,7 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập
               </Form.Control.Feedback>
+              {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
             </Form.Group>
           </Row>
 
@@ -169,7 +174,7 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
           }
          
         </Modal.Footer>
-      </Form> */}
+      </Form>
     </Modal>
   </>
 }

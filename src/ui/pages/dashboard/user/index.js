@@ -4,15 +4,15 @@ import Layout from '../../../layouts/layout';
 import "./user.css";
 import movies from "./movies";
 import MyPagination from '../../../components/datatable_pagination';
-import { SORT_STATE, TOAST_TYPE } from "../../../constanst";
+import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
-import { nextSortState, sleep, customStr } from "../../../utils/utils";
+import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 
 import { Table, Image } from "react-bootstrap";
 import BlockModal from "./modal/block_modal";
-import { getUsers } from "../../../services/user_service";
+import { getUsers } from "../../../../services/user_service";
 
 
 const UserPage = ({ appState }) => {

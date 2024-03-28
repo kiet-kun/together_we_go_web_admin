@@ -1,14 +1,16 @@
 import {
     useRoutes
 } from 'react-router-dom';
-import UserPage from "../pages/dashboard/user";
-import LoginPage from "../pages/auth/login";
-import HomePage from "../pages/dashboard/home";
+
 import React, { useEffect, useState } from "react"
-import NotiToast from '../components/noti_toast';
+import NotiToast from '../ui/components/noti_toast';
 import { PAGE_NAME, TOAST_TYPE } from '../constanst';
 import { useNavigate } from "react-router-dom";
-import BookingPage from '../pages/dashboard/booking';
+// PAGE
+import BookingPage from '../ui/pages/dashboard/booking';
+import UserPage from "../ui/pages/dashboard/user";
+import LoginPage from "../ui/pages/auth/login";
+import HomePage from "../ui/pages/dashboard/home";
 
 export const AppRoutes = () => {
     const [isShowToast, setIsShowToast] = useState(false);

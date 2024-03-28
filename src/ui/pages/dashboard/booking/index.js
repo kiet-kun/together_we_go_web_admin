@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Layout from '../../../layouts/layout';
 import MyPagination from '../../../components/datatable_pagination';
-import { SORT_STATE, TOAST_TYPE } from "../../../constanst";
+import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
-import { nextSortState, sleep, customStr } from "../../../utils/utils";
+import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 import { Table, Image } from "react-bootstrap";
 import BlockModal from "./modal/block_modal";
-import { getUsers } from "../../../services/user_service";
-import { getBookings } from "../../../services/booking_service";
+import { getBookings } from "../../../../services/booking_service";
 
 const BookingPage = ({ appState }) => {
   // Table properties

@@ -1,7 +1,7 @@
 import './login.css'
 import React, { useEffect, useState } from "react"
-import { LoginService } from '../../../services/auth';
-import { JWT, PAGE_NAME, TOAST_TYPE } from '../../../constanst';
+import { LoginService } from '../../../../services/auth';
+import { JWT, PAGE_NAME, TOAST_TYPE } from '../../../../constanst';
 
 const LoginPage = ({appState}) => {
     const [email, setEmail] = useState('');

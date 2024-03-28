@@ -1,51 +1,51 @@
 import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
-import { formatDate, genPassword } from '../../../../utils/utils';
-import { TOAST_TYPE } from '../../../../constanst';
-import { updateUser } from '../../../../services/user_service';
+import { formatDate, genPassword } from '../../../../../utils/utils';
+import { TOAST_TYPE } from '../../../../../constanst';
+import { updateUser } from '../../../../../services/user_service';
 
-const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
-  // const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
-  // const [name, setName] = useState(data.firstName);
-  // const [age, setAge] = useState(data.age);
-  // const [gender, setGender] = useState(data.gender);
-  // const [phoneNumber, setPhoneNumber] = useState(data.phoneNumber);
-  // const [email, setEmail] = useState(data.email);
-  // const [address, setAddress] = useState(data.locationMainText);
-  // const [validated, setValidated] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [password, setPassword] = useState('');
+const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
+  const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
+  const [name, setName] = useState(data.firstName);
+  const [age, setAge] = useState(data.age);
+  const [gender, setGender] = useState(data.gender);
+  const [phoneNumber, setPhoneNumber] = useState(data.phoneNumber);
+  const [email, setEmail] = useState(data.email);
+  const [address, setAddress] = useState(data.locationMainText);
+  const [validated, setValidated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (event) => {
-    // console.log(date, name, gender, phoneNumber, email, age);
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-    // else {
-    //   setIsLoading(true);
-    //   try {
-    //     event.preventDefault();
+    console.log(date, name, gender, phoneNumber, email, age);
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    else {
+      setIsLoading(true);
+      try {
+        event.preventDefault();
 
-    //     const response = await updateUser(data.id,{date, firstName : name, gender, phoneNumber, email, age, password});
-    //     console.log(response);
-    //     if (response.status == 200){
-    //       showToast('Cập nhật thành công',TOAST_TYPE.success);
-    //       loadPage();  
-    //       handleClose();   
-    //     }
-    //     else {
-    //       showToast(response.data['message'],TOAST_TYPE.danger);
-    //     }
-    //   } catch (error) {
-    //      showToast('Xảy ra lỗi',TOAST_TYPE.danger);
-    //     console.log(error);     
-    //   }
-    //   setIsLoading(false);
-    // }
+        const response = await updateUser(data.id,{date, firstName : name, gender, phoneNumber, email, age, password});
+        console.log(response);
+        if (response.status == 200){
+          appState.showToast('Cập nhật thành công',TOAST_TYPE.success);
+          loadPage();  
+          handleClose();   
+        }
+        else {
+          appState.showToast(response.data['message'],TOAST_TYPE.danger);
+        }
+      } catch (error) {
+        appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+        console.log(error);     
+      }
+      setIsLoading(false);
+    }
 
-    // setValidated(true);
+    setValidated(true);
   };
 
   return <>
@@ -55,9 +55,20 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
           <Modal.Title>Thông tin người dùng</Modal.Title>
         </Modal.Header>
 
-        {/* <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
-        
+        <Row className="mb-3" >
+              <Form.Group  md="4" controlId="validationCustom01">
+                <Form.Label>ID  <i class="bi bi-clipboard"></i></Form.Label>
+
+                <Form.Control
+                  disabled
+                  type="text"
+                  value={data.id.toUpperCase()}
+                />
+
+              </Form.Group>
+              </Row>
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Tên</Form.Label>
@@ -71,6 +82,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
                  <Form.Control.Feedback type="invalid">
                   Please provide a valid city.
                 </Form.Control.Feedback>
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustom02">
                 <Form.Label>Tuổi</Form.Label>
@@ -81,6 +93,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
                 />
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                 <Form.Label>Giới tính</Form.Label>
@@ -103,6 +116,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   value={phoneNumber}
                 />
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustom08">
                 <Form.Label>Email</Form.Label>
@@ -113,6 +127,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
 
               <Form.Group as={Col} md="4" >
@@ -124,6 +139,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
                   value={date}
                   onChange={(e) => { setDate(e.target.value); console.log(e.target.value);}}
                 />
+                {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </Form.Group>
             </Row>
 
@@ -146,6 +162,12 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
                   setPassword('');
                 }}>Hủy</Button> 
                 </div>
+
+            
+            
+              
+          
+                {/* <Form.Control.Feedback>Hợp lệ</Form.Control.Feedback> */}
               </Form.Group>
 
     
@@ -209,7 +231,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
           }
       
         </Modal.Footer>
-        </Form> */}
+        </Form>
       </Modal>
 
   </>

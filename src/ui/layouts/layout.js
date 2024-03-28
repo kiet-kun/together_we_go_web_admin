@@ -2,7 +2,7 @@ import LayoutHeader from './header/index.js'
 import './layout.css';
 import SideBar from './sidebar/index.js';
 import LayoutFooter from './footer/index.js';
-import { setTheme, THEME } from '../utils/theme.js';
+import { setTheme, THEME } from '../../utils/theme.js';
 
 const Layout = ({ children }) => {
   return (

@@ -1,9 +1,9 @@
 import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
-import { TOAST_TYPE } from '../../../../constanst';
+import { TOAST_TYPE } from '../../../../../constanst';
 import React, { useEffect, useState } from "react"
-import { updateUser } from '../../../../services/user_service';
+import { updateUser } from '../../../../../services/user_service';
 
-const BlockModal = ({show, data, handleClose, loadPage, appState }) => {
+const BlockModal = ({show, data, handleClose, loadPage, showToast }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,15 +21,15 @@ const BlockModal = ({show, data, handleClose, loadPage, appState }) => {
         const response = await updateUser(data.id,{isBlock: !data.isBlock});
         console.log(response);
         if (response.status == 200){
-          appState.showToast('Cập nhật thành công',TOAST_TYPE.success);
+          showToast('Cập nhật thành công',TOAST_TYPE.success);
           loadPage();  
           handleClose();   
         }
         else {
-          appState.showToast(response.data['message'],TOAST_TYPE.danger);
+          showToast(response.data['message'],TOAST_TYPE.danger);
         }
       } catch (error) {
-        appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+         showToast('Xảy ra lỗi',TOAST_TYPE.danger);
         console.log(error);     
       }
       setIsLoading(false);
@@ -44,7 +44,7 @@ const BlockModal = ({show, data, handleClose, loadPage, appState }) => {
         <Modal.Title>Xác nhận</Modal.Title>
       </Modal.Header>
 
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      {/* <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Modal.Body>Bạn muốn {(data.isBlock) ? "khôi phục" : "khóa"} người dùng {data.firstName}?</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -69,7 +69,7 @@ const BlockModal = ({show, data, handleClose, loadPage, appState }) => {
           }
       
       </Modal.Footer>
-      </Form>
+      </Form> */}
     </Modal>
   </>
 }
