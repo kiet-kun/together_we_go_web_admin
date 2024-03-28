@@ -1,9 +1,9 @@
 import './login.css'
 import React, { useEffect, useState } from "react"
 import { LoginService } from '../../../services/auth';
-import { JWT, TOAST_TYPE } from '../../../constanst';
+import { JWT, PAGE_NAME, TOAST_TYPE } from '../../../constanst';
 
-const LoginPage = ({showToast, navigate}) => {
+const LoginPage = ({appState}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -30,21 +30,21 @@ const LoginPage = ({showToast, navigate}) => {
         const response = await LoginService(email, password);
       
         if (response.status == 200){
-          showToast('Đăng nhập thành công',TOAST_TYPE.success);
+          appState.showToast('Đăng nhập thành công',TOAST_TYPE.success);
           // alert('Đăng nhập thành công');
           localStorage.setItem(JWT.ACCESS_TOKEN, response.data.data[JWT.ACCESS_TOKEN]);
           localStorage.setItem(JWT.REFRESH_TOKEN, response.data.data[JWT.REFRESH_TOKEN]);
          
           setTimeout(() => {
-            navigate("/trang-chu");
+            appState.handleNavigation(PAGE_NAME.home);
           }, 2000);
         }
         else {
-          showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
+          appState.showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
           // alert('Đăng nhập thất bại');
         }
       } catch (error) {
-         showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
+        appState.showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
           console.log(error);     
       }
       setLoading(false);

@@ -4,7 +4,7 @@ import { formatDate, genPassword } from '../../../../utils/utils';
 import { TOAST_TYPE } from '../../../../constanst';
 import { updateUser } from '../../../../services/user_service';
 
-const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
+const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
   const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
   const [name, setName] = useState(data.firstName);
   const [age, setAge] = useState(data.age);
@@ -31,15 +31,15 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
         const response = await updateUser(data.id,{date, firstName : name, gender, phoneNumber, email, age, password});
         console.log(response);
         if (response.status == 200){
-          showToast('Cập nhật thành công',TOAST_TYPE.success);
+          appState.showToast('Cập nhật thành công',TOAST_TYPE.success);
           loadPage();  
           handleClose();   
         }
         else {
-          showToast(response.data['message'],TOAST_TYPE.danger);
+          appState.showToast(response.data['message'],TOAST_TYPE.danger);
         }
       } catch (error) {
-         showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+        appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
         console.log(error);     
       }
       setIsLoading(false);

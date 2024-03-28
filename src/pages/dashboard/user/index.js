@@ -15,7 +15,7 @@ import BlockModal from "./modal/block_modal";
 import { getUsers } from "../../../services/user_service";
 
 
-const UserPage = ({ showToast }) => {
+const UserPage = ({ appState }) => {
   // Table properties
   let [totalInDB, setTotalInDB] = useState(movies.length);
   let [page, setPage] = useState(1);
@@ -48,7 +48,7 @@ const UserPage = ({ showToast }) => {
       // showToast('Thành công', TOAST_TYPE.success)
     }
     else {
-      showToast('Lỗi', TOAST_TYPE.danger)
+      appState.showToast('Lỗi', TOAST_TYPE.danger)
     }
     setIsLoading(false);
   }
@@ -217,7 +217,7 @@ const UserPage = ({ showToast }) => {
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
             setPage={setPage} loadPage={loadPage}
             setPageSize={setPageSize}
-            showToast={showToast}
+            appState={appState}
           ></MyPagination>
 
           {/* Modal */}
@@ -225,26 +225,26 @@ const UserPage = ({ showToast }) => {
             isViewModalOpen && <ViewModal 
             show={isViewModalOpen} data={itemFoucus} handleClose={handleClose}
             loadPage={loadPage}
-            showToast={showToast}
+            appState={appState}
             ></ViewModal>
           }
           {
             isDeleteModalOpen && <DeleteModal show={isDeleteModalOpen} data={itemFoucus} 
             handleClose={handleClose}
-            showToast={showToast}
+            appState={appState}
             loadPage={loadPage}></DeleteModal>
           }
           {
             isAddModalOpen && <AddModal show={isAddModalOpen} data={itemFoucus} 
             handleClose={handleClose}
-            showToast={showToast}
+            appState={appState}
             loadPage={loadPage}></AddModal>
           }
 
           {
             isBlockModalOpen && <BlockModal show={isBlockModalOpen} data={itemFoucus} 
             handleClose={handleClose}
-            showToast={showToast}
+            appState={appState}
             loadPage={loadPage}></BlockModal>
           }
         </div>
