@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react"
 import NotiToast from '../components/noti_toast';
 import { PAGE_NAME } from '../constanst';
 import { useNavigate } from "react-router-dom";
+import BookingPage from '../pages/dashboard/booking';
 
 export const AppRoutes = () => {
     const [isShowToast, setIsShowToast] = useState(false);
@@ -28,6 +29,7 @@ export const AppRoutes = () => {
         {path: PAGE_NAME.login, element: <LoginPage showToast={showToast} navigate={navigate} />},
         {path: PAGE_NAME.home, element: <HomePage  showToast={showToast} navigate={navigate}/>},
         {path: PAGE_NAME.user, element: <UserPage showToast={showToast} navigate={navigate}/>},
+        {path: PAGE_NAME.booking, element: <BookingPage showToast={showToast} navigate={navigate}/>},
     ]);
 
     return <>

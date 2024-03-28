@@ -1,3 +1,4 @@
+import { PAGE_NAME } from '../../constanst';
 import './index.css';
 import { NavLink } from 'react-router-dom';
 
@@ -14,12 +15,12 @@ const SideBar = () => {
             icon:<i class="bi bi-speedometer2 pe-none me-2" width="16" height="16"></i>
         },
         {
-            path:"/quan-ly-nguoi-dung",
+            path: PAGE_NAME.user,
             name:"Tài khoản",
             icon:<i class="bi bi-person pe-none me-2" width="16" height="16"></i>
         },
         {
-            path:"#",
+            path: PAGE_NAME.booking,
             name:"Chuyến đi",
             icon:<i class="bi bi-postcard pe-none me-2" width="16" height="16"></i>
         },

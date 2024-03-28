@@ -17,7 +17,8 @@ export const TOAST_TYPE = {
 export const PAGE_NAME = {
     login: '/dang-nhap',
     home: '/trang-chu',
-    user: '/quan-ly-nguoi-dung'
+    user: '/quan-ly-nguoi-dung',
+    booking: '/quan-ly-chuyen-di'
 }
 
 export const SORT_STATE = {
