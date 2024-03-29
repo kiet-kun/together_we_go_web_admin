@@ -1,6 +1,7 @@
 // lib
 import React, { useEffect, useState } from "react"
 import { Table, Collapse, Button, Form, Row, Col } from "react-bootstrap";
+import DateTimePicker from 'react-datetime-picker';
 // component
 import Layout from '../../../layouts/layout';
 import MyPagination from '../../../components/datatable_pagination';
@@ -12,14 +13,7 @@ import AddModal from "./modal/add_modal";
 import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
 import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 import { getBookings } from "../../../../services/booking_service";
-import DatePicker from "react-datepicker";
 
-import "react-datepicker/dist/react-datepicker.css";
-
-import TimePicker from 'react-time-picker';
-import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 const BookingPage = ({ appState }) => {
   // Table properties
@@ -29,7 +23,6 @@ const BookingPage = ({ appState }) => {
   let [datas, setDatas] = useState([]);
   let [sortOptions, setSortOptions] = useState({});
   let [isLoading, setIsLoading] = useState(false);
-  let [keyword, setKeyword] = useState('');
   let [sortStateCreatedAt, setSortStateCreatedAt] = useState(SORT_STATE.none);
   let [sortStatePoint, setSortStatePoint] = useState(SORT_STATE.none);
   // Modal properties
@@ -40,15 +33,28 @@ const BookingPage = ({ appState }) => {
   let [itemFoucus, setItemFocus] = useState(null);
   // filter
   const [isOpenFilter, setIsOpenFilter] = useState(false);
-
+  const [keyword, setKeyword] = useState('');
+  const [authorId, setAuthorId] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [status, setStatus] = useState('');
+  const [bookingType, setBookingType] = useState('');
+  const [startAddress, setStartAddress] = useState('');
+  const [endAddress, setEndAddress] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
 
   async function loadPage() {
     console.log(page, pageSize, keyword);
     setIsLoading(true);
-    let end = page * pageSize - 1;
-    let start = (page - 1) * pageSize;
 
-    let response = await getBookings(page, pageSize);
+    let response = await getBookings(page, pageSize, {
+          keyword, authorId,
+    minPrice,maxPrice,
+    status, bookingType,
+    startAddress, endAddress,
+    startTime, endTime,
+    });
     console.log(response);
     if (response.status == 200) {
       setDatas(response.data.data)
@@ -99,11 +105,7 @@ const BookingPage = ({ appState }) => {
 
   useEffect(() => {
     loadPage();
-  }, [totalInDB, page, pageSize, sortStateCreatedAt, keyword]);
-
-
-  const [value, onChange] = useState('10:00');
-  const [startDate, setStartDate] = useState(new Date());
+  }, [totalInDB, page, pageSize, ]);
 
   return (
     <>
@@ -133,37 +135,29 @@ const BookingPage = ({ appState }) => {
               <i class="bi bi-filter pe-none" width="16" height="16" />
             </Button>
           </form>
-          
+
           {/* Filter */}
           <Collapse in={isOpenFilter}>
             <div id="example-collapse-text">
               <Form>
 
-              <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Thời gian:</Form.Label>
-              <div className="d-flex">
-                
-                      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-                      <TimePicker onChange={onChange} value={value} />
-                </div>
-              </Form.Group>
+                <Row className="mb-3">
+                  <Form.Group as={Col} md="4" controlId="validationCustom02">
+                    <Form.Label>Thời gian bắt đầu:</Form.Label>
+                    <DateTimePicker onChange={setStartTime} value={startTime} />
+                  </Form.Group>
 
-              <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Thời gian:</Form.Label>
-                <div className="d-flex">
-          
-                      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-                      <TimePicker onChange={onChange} value={value} />
-                </div>
-             
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                  <Form.Group as={Col} md="4" controlId="validationCustom02">
+                    <Form.Label>Thời gian kết thúc:</Form.Label>
+               
+                  <DateTimePicker onChange={setEndTime} value={endTime} />
+                  </Form.Group>
+                  <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                     <Form.Label>Trạng thái</Form.Label>
                     <Form.Select aria-label="Default select example"
-                      // value={status}
-                      // onChange={(e) => setStatus(e.target.value)}
-                      >
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    >
                       <option value=""></option>
                       <option value="2">Đang mở</option>
                       <option value="1">Đã hoàn thành</option>
@@ -172,69 +166,71 @@ const BookingPage = ({ appState }) => {
                 </Row>
 
                 <Row className="mb-3">
-                <Form.Group as={Col} md="4" controlId="validationCustom02">
+                  <Form.Group as={Col} md="4" controlId="validationCustom02">
                     <Form.Label>Giá nhỏ nhất</Form.Label>
                     <Form.Control
                       required
                       type="number"
                       placeholder="Giá"
-                      // value={price}
-                      // onChange={(e) => setPrice(e.target.value)}
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
                     />
                   </Form.Group>
 
-                  
+
                   <Form.Group as={Col} md="4" controlId="validationCustom02">
                     <Form.Label>Giá lớn nhất</Form.Label>
                     <Form.Control
                       required
                       type="number"
                       placeholder="Giá"
-                      // value={price}
-                      // onChange={(e) => setPrice(e.target.value)}
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
                     />
                   </Form.Group>
 
                   <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                     <Form.Label>Loại</Form.Label>
                     <Form.Select aria-label="Default select example"
-                      // value={bookingType}
-                      // onChange={(e) => setBookingType(e.target.value)}
-                      >
+                    value={bookingType}
+                    onChange={(e) => setBookingType(e.target.value)}
+                    >
                       <option value=""></option>
                       <option value="Tìm tài xế">Tìm tài xế</option>
                       <option value="Tìm hành khách">Tìm hành khách</option>
                     </Form.Select>
                   </Form.Group>
 
-                  
+
                 </Row>
                 <Row className="mb-3">
                   <Form.Group as={Col} md="4" controlId="validationCustom09">
                     <Form.Label>Địa điểm đi</Form.Label>
-                    <Form.Control as="textarea" rows={1} 
-                    // value={startPointAddress}
-                      // onChange={(e) => setStartPointAddress(e.target.value)}
+                    <Form.Control as="textarea" rows={1}
+                    value={startAddress}
+                    onChange={(e) => setStartAddress(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group as={Col} md="4" controlId="validationCustom09">
                     <Form.Label>Địa điểm đến</Form.Label>
-                    <Form.Control as="textarea" rows={1} 
-                    // value={endPointAddress}
-                      // onChange={(e) => setEndPointAddress(e.target.value)}
+                    <Form.Control as="textarea" rows={1}
+                    value={endAddress}
+                    onChange={(e) => setEndAddress(e.target.value)}
                     />
                   </Form.Group>
 
                   <Form.Group as={Col} md="4" controlId="validationCustom09">
                     <Form.Label>ID người đăng</Form.Label>
-                    <Form.Control type="text" 
-                    // value={endPointAddress}
-                      // onChange={(e) => setEndPointAddress(e.target.value)}
+                    <Form.Control type="text"
+                      value={authorId}
+                      onChange={(e) => setAuthorId(e.target.value)}
                     />
                   </Form.Group>
                 </Row>
 
               </Form>
+
+              <Button onClick={(e) => loadPage()}>Tìm kiếm</Button>
             </div>
           </Collapse>
 
