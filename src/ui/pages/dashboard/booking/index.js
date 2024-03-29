@@ -12,6 +12,14 @@ import AddModal from "./modal/add_modal";
 import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
 import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 import { getBookings } from "../../../../services/booking_service";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 const BookingPage = ({ appState }) => {
   // Table properties
@@ -93,9 +101,14 @@ const BookingPage = ({ appState }) => {
     loadPage();
   }, [totalInDB, page, pageSize, sortStateCreatedAt, keyword]);
 
+
+  const [value, onChange] = useState('10:00');
+  const [startDate, setStartDate] = useState(new Date());
+
   return (
     <>
       <Layout>
+
         <div>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -126,29 +139,40 @@ const BookingPage = ({ appState }) => {
             <div id="example-collapse-text">
               <Form>
 
+              <Row className="mb-3">
+              <Form.Group as={Col} md="4" controlId="validationCustom02">
+              <Form.Label>Thời gian:</Form.Label>
+              <div className="d-flex">
+                
+                      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                      <TimePicker onChange={onChange} value={value} />
+                </div>
+              </Form.Group>
+
+              <Form.Group as={Col} md="4" controlId="validationCustom02">
+              <Form.Label>Thời gian:</Form.Label>
+                <div className="d-flex">
+          
+                      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                      <TimePicker onChange={onChange} value={value} />
+                </div>
+             
+              </Form.Group>
+              <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                    <Form.Label>Trạng thái</Form.Label>
+                    <Form.Select aria-label="Default select example"
+                      // value={status}
+                      // onChange={(e) => setStatus(e.target.value)}
+                      >
+                      <option value=""></option>
+                      <option value="2">Đang mở</option>
+                      <option value="1">Đã hoàn thành</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Row>
+
                 <Row className="mb-3">
-                  <Form.Group as={Col} md="4" controlId="validationCustom07">
-                    <Form.Label>Thời gian bắt đầu</Form.Label>
-                    <Form.Control
-
-                      type="text"
-                      placeholder="Thời gian bắt đầu"
-                      // value={formatDateWithTime(time)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group as={Col} md="4" controlId="validationCustom07">
-                    <Form.Label>Thời gian kết thúc</Form.Label>
-                    <Form.Control
-
-                      type="text"
-                      placeholder="Thời gian bắt đầu"
-                      // value={formatDateWithTime(time)}
-                    />
-                  </Form.Group>
-
-
-                  <Form.Group as={Col} md="4" controlId="validationCustom02">
+                <Form.Group as={Col} md="4" controlId="validationCustom02">
                     <Form.Label>Giá nhỏ nhất</Form.Label>
                     <Form.Control
                       required
@@ -177,34 +201,33 @@ const BookingPage = ({ appState }) => {
                       // value={bookingType}
                       // onChange={(e) => setBookingType(e.target.value)}
                       >
+                      <option value=""></option>
                       <option value="Tìm tài xế">Tìm tài xế</option>
                       <option value="Tìm hành khách">Tìm hành khách</option>
                     </Form.Select>
                   </Form.Group>
 
-                  <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <Form.Label>Trạng thái</Form.Label>
-                    <Form.Select aria-label="Default select example"
-                      // value={status}
-                      // onChange={(e) => setStatus(e.target.value)}
-                      >
-                      <option value="2">Đang mở</option>
-                      <option value="1">Đã hoàn thành</option>
-                    </Form.Select>
-                  </Form.Group>
+                  
                 </Row>
-
                 <Row className="mb-3">
-                  <Form.Group as={Col} md="6" controlId="validationCustom09">
+                  <Form.Group as={Col} md="4" controlId="validationCustom09">
                     <Form.Label>Địa điểm đi</Form.Label>
                     <Form.Control as="textarea" rows={1} 
                     // value={startPointAddress}
                       // onChange={(e) => setStartPointAddress(e.target.value)}
                     />
                   </Form.Group>
-                  <Form.Group as={Col} md="6" controlId="validationCustom09">
+                  <Form.Group as={Col} md="4" controlId="validationCustom09">
                     <Form.Label>Địa điểm đến</Form.Label>
                     <Form.Control as="textarea" rows={1} 
+                    // value={endPointAddress}
+                      // onChange={(e) => setEndPointAddress(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group as={Col} md="4" controlId="validationCustom09">
+                    <Form.Label>ID người đăng</Form.Label>
+                    <Form.Control type="text" 
                     // value={endPointAddress}
                       // onChange={(e) => setEndPointAddress(e.target.value)}
                     />
@@ -222,9 +245,6 @@ const BookingPage = ({ appState }) => {
               <i class="bi bi-plus-square pe-none" width="16" height="16" />
             </button>
           </div>
-
-
-
 
           <MyPagination
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
