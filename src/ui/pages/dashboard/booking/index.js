@@ -1,6 +1,6 @@
 // lib
 import React, { useEffect, useState } from "react"
-import { Table, Image } from "react-bootstrap";
+import { Table, Collapse, Button, Form, Row, Col } from "react-bootstrap";
 // component
 import Layout from '../../../layouts/layout';
 import MyPagination from '../../../components/datatable_pagination';
@@ -8,7 +8,6 @@ import MyPagination from '../../../components/datatable_pagination';
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
-import BlockModal from "./modal/block_modal";
 // logic
 import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
 import { nextSortState, sleep, customStr } from "../../../../utils/utils";
@@ -31,6 +30,9 @@ const BookingPage = ({ appState }) => {
   let [isAddModalOpen, setAddModalOpen] = useState(false);
   let [isBlockModalOpen, setBlockModalOpen] = useState(false);
   let [itemFoucus, setItemFocus] = useState(null);
+  // filter
+  const [isOpenFilter, setIsOpenFilter] = useState(false);
+
 
   async function loadPage() {
     console.log(page, pageSize, keyword);
@@ -64,12 +66,12 @@ const BookingPage = ({ appState }) => {
   }
 
   const openAddModel = () => setAddModalOpen(true);
-  const openBlockModel = (item)  => {
+  const openBlockModel = (item) => {
     setItemFocus(item);
     itemFoucus = item;
     setBlockModalOpen(true);
   }
-  
+
   const handleClose = () => {
     setViewModalOpen(false);
     setDeleteModalOpen(false);
@@ -79,7 +81,8 @@ const BookingPage = ({ appState }) => {
 
   const handleSearch = (event) => {
     console.log(event.target.value)
-    setKeyword(event.target.value);};
+    setKeyword(event.target.value);
+  };
 
   const handleClickSortCreatedAt = (event) => {
     let value = nextSortState(sortStateCreatedAt);
@@ -97,7 +100,7 @@ const BookingPage = ({ appState }) => {
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Người dùng</li>
+              <li class="breadcrumb-item active" aria-current="page">Chuyến đi</li>
             </ol>
           </nav>
 
@@ -106,13 +109,122 @@ const BookingPage = ({ appState }) => {
               onChange={handleSearch}
             />
             {/* <button class="btn btn-outline-success"  onSubmit={() => loadPage()}>Tìm kiếm</button> */}
+
+
+            <Button
+              onClick={() => setIsOpenFilter(!isOpenFilter)}
+              aria-controls="example-collapse-text"
+
+              aria-expanded={isOpenFilter}
+            >
+              <i class="bi bi-filter pe-none" width="16" height="16" />
+            </Button>
           </form>
+          
+          {/* Filter */}
+          <Collapse in={isOpenFilter}>
+            <div id="example-collapse-text">
+              <Form>
+
+                <Row className="mb-3">
+                  <Form.Group as={Col} md="4" controlId="validationCustom07">
+                    <Form.Label>Thời gian bắt đầu</Form.Label>
+                    <Form.Control
+
+                      type="text"
+                      placeholder="Thời gian bắt đầu"
+                      // value={formatDateWithTime(time)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group as={Col} md="4" controlId="validationCustom07">
+                    <Form.Label>Thời gian kết thúc</Form.Label>
+                    <Form.Control
+
+                      type="text"
+                      placeholder="Thời gian bắt đầu"
+                      // value={formatDateWithTime(time)}
+                    />
+                  </Form.Group>
+
+
+                  <Form.Group as={Col} md="4" controlId="validationCustom02">
+                    <Form.Label>Giá nhỏ nhất</Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      placeholder="Giá"
+                      // value={price}
+                      // onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  
+                  <Form.Group as={Col} md="4" controlId="validationCustom02">
+                    <Form.Label>Giá lớn nhất</Form.Label>
+                    <Form.Control
+                      required
+                      type="number"
+                      placeholder="Giá"
+                      // value={price}
+                      // onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                    <Form.Label>Loại</Form.Label>
+                    <Form.Select aria-label="Default select example"
+                      // value={bookingType}
+                      // onChange={(e) => setBookingType(e.target.value)}
+                      >
+                      <option value="Tìm tài xế">Tìm tài xế</option>
+                      <option value="Tìm hành khách">Tìm hành khách</option>
+                    </Form.Select>
+                  </Form.Group>
+
+                  <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                    <Form.Label>Trạng thái</Form.Label>
+                    <Form.Select aria-label="Default select example"
+                      // value={status}
+                      // onChange={(e) => setStatus(e.target.value)}
+                      >
+                      <option value="2">Đang mở</option>
+                      <option value="1">Đã hoàn thành</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Row>
+
+                <Row className="mb-3">
+                  <Form.Group as={Col} md="6" controlId="validationCustom09">
+                    <Form.Label>Địa điểm đi</Form.Label>
+                    <Form.Control as="textarea" rows={1} 
+                    // value={startPointAddress}
+                      // onChange={(e) => setStartPointAddress(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group as={Col} md="6" controlId="validationCustom09">
+                    <Form.Label>Địa điểm đến</Form.Label>
+                    <Form.Control as="textarea" rows={1} 
+                    // value={endPointAddress}
+                      // onChange={(e) => setEndPointAddress(e.target.value)}
+                    />
+                  </Form.Group>
+                </Row>
+
+              </Form>
+            </div>
+          </Collapse>
 
           <div class="d-flex justify-content-end" style={{ marginBottom: '12px' }}>
+
+
             <button type="button px-5" class="btn btn-success" style={{ width: '72px' }} onClick={() => openAddModel()}>
               <i class="bi bi-plus-square pe-none" width="16" height="16" />
             </button>
           </div>
+
+
+
 
           <MyPagination
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
@@ -122,7 +234,7 @@ const BookingPage = ({ appState }) => {
 
           {/* Table */}
 
-          <div className="card container data-table" 
+          <div className="card container data-table"
           // style={{width: '300px'}}
           >
             <Table responsive>
@@ -149,7 +261,7 @@ const BookingPage = ({ appState }) => {
 
                   </th>
                   <th>Điểm đi</th>
-                  <th>Điểm đến</th>     
+                  <th>Điểm đến</th>
                   <th>Thời gian bắt đầu</th>
                   <th>Giá</th>
                   <th>Loại</th>
@@ -172,18 +284,18 @@ const BookingPage = ({ appState }) => {
                     <th>{customStr(object.id, 10)}</th>
                     <td>{customStr(object.startPointMainText + object.startPointAddress, 10)}</td>
                     <td>{customStr(object.endPointMainText + object.endPointAddress, 10)}</td>
-                    <td>{object.time}</td>                    
-                    <td>{object.price}</td>            
+                    <td>{object.time}</td>
+                    <td>{object.price}</td>
                     <td>{object.bookingType}</td>
                     <td>{object.authorId.firstName}</td>
                     <td>{object.createdAt}</td>
                     <td>
-                        { object.status == 2 && <button type="button" class="btn btn-primary" disabled>
-                            Đang mở
-                          </button>}
-                          { object.status == 1  && <button type="button" class="btn btn-info" disabled>
-                            Hoàn thành
-                          </button>}
+                      {object.status == 2 && <button type="button" class="btn btn-primary" disabled>
+                        Đang mở
+                      </button>}
+                      {object.status == 1 && <button type="button" class="btn btn-info" disabled>
+                        Hoàn thành
+                      </button>}
                     </td>
                     <td class="">
                       <div class="d-flex justify-content-start">
@@ -199,10 +311,6 @@ const BookingPage = ({ appState }) => {
                             <i class="bi bi-trash pe-none" width="16" height="16" />
                           </button>
                         </div>
-
-                        <button type="button" class="btn btn-light" onClick={() => openBlockModel(object)}>
-                            <i class="bi bi-ban pe-none" width="13" height="13" />
-                          </button>
                       </div>
                     </td>
                   </tr>
@@ -223,30 +331,23 @@ const BookingPage = ({ appState }) => {
 
           {/* Modal */}
           {
-            isViewModalOpen && <ViewModal 
-            show={isViewModalOpen} data={itemFoucus} handleClose={handleClose}
-            loadPage={loadPage}
-            appState={appState}
+            isViewModalOpen && <ViewModal
+              show={isViewModalOpen} data={itemFoucus} handleClose={handleClose}
+              loadPage={loadPage}
+              appState={appState}
             ></ViewModal>
           }
           {
-            isDeleteModalOpen && <DeleteModal show={isDeleteModalOpen} data={itemFoucus} 
-            handleClose={handleClose}
-            appState={appState}
-            loadPage={loadPage}></DeleteModal>
+            isDeleteModalOpen && <DeleteModal show={isDeleteModalOpen} data={itemFoucus}
+              handleClose={handleClose}
+              appState={appState}
+              loadPage={loadPage}></DeleteModal>
           }
           {
-            isAddModalOpen && <AddModal show={isAddModalOpen} data={itemFoucus} 
-            handleClose={handleClose}
-            appState={appState}
-            loadPage={loadPage}></AddModal>
-          }
-
-          {
-            isBlockModalOpen && <BlockModal show={isBlockModalOpen} data={itemFoucus} 
-            handleClose={handleClose}
-            appState={appState}
-            loadPage={loadPage}></BlockModal>
+            isAddModalOpen && <AddModal show={isAddModalOpen} data={itemFoucus}
+              handleClose={handleClose}
+              appState={appState}
+              loadPage={loadPage}></AddModal>
           }
         </div>
       </Layout>

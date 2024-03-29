@@ -54,14 +54,18 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
     
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Thông tin người dùng</Modal.Title>
+          <Modal.Title>Thông tin người dùng - {data.id}</Modal.Title>
         </Modal.Header>
 
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
-        <Row className="mb-3" >
+        {/* <Row className="mb-3" >
               <Form.Group  md="4" controlId="validationCustom01">
-                <Form.Label>ID  <i class="bi bi-clipboard"></i></Form.Label>
+                <Form.Label>ID  
+                  <div onClick={(e) => {appState.handleClipBoard(data.id)}}>
+                  <i class="bi bi-clipboard"></i>
+                  </div>
+                  </Form.Label>
 
                 <Form.Control
                   disabled
@@ -70,7 +74,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                 />
 
               </Form.Group>
-              </Row>
+              </Row> */}
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Tên</Form.Label>

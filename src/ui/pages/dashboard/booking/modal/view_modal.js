@@ -2,21 +2,25 @@
 import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
 // logic
-import { formatDate, genPassword } from '../../../../../utils/utils';
+import { formatDate, genPassword, formatDateWithTime } from '../../../../../utils/utils';
 import { TOAST_TYPE } from '../../../../../constanst';
 import { updateUser } from '../../../../../services/user_service';
 
 const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
-  // const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
-  // const [name, setName] = useState(data.firstName);
-  // const [age, setAge] = useState(data.age);
-  // const [gender, setGender] = useState(data.gender);
-  // const [phoneNumber, setPhoneNumber] = useState(data.phoneNumber);
-  // const [email, setEmail] = useState(data.email);
-  // const [address, setAddress] = useState(data.locationMainText);
-  // const [validated, setValidated] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [password, setPassword] = useState('');
+  const [status, setStatus] = useState(data.status);
+  const [price, setPrice] = useState(data.price);
+  const [bookingType, setBookingType] = useState(data.bookingType);
+  const [time, setTime] = useState(data.time);
+  const [content, setContent] = useState(data.content);
+  const [startPointAddress, setStartPointAddress] = useState(data.startPointAddress);
+  const [endPointAddress, setEndPointAddress] = useState(data.endPointAddress);
+  const [distance, setDistance] = useState(data.distance);
+  const [duration, setDuration] = useState(data.duration);
+  const [createdAt, setCreatedAt] = useState(data.createdAt);
+
+  const [validated, setValidated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleSubmit = async (event) => {
     // console.log(date, name, gender, phoneNumber, email, age);
@@ -54,114 +58,136 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
     
       <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Thông tin người dùng</Modal.Title>
+          <Modal.Title>Thông tin chuyến đi</Modal.Title>
         </Modal.Header>
 
-        {/* <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
-        
-            <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom01">
-                <Form.Label>Tên</Form.Label>
+        <Row className="mb-3">
+              <Form.Group as={Col} md="4" controlId="validationCustom07">
+                <Form.Label>Thời gian bắt đầu</Form.Label>
                 <Form.Control
-                  required
+   
                   type="text"
-                  placeholder="Tên"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Thời gian bắt đầu"
+                  value={formatDateWithTime(time)}
                 />
-                 <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
               </Form.Group>
+
+             
               <Form.Group as={Col} md="4" controlId="validationCustom02">
-                <Form.Label>Tuổi</Form.Label>
+                <Form.Label>Giá</Form.Label>
                 <Form.Control
                   required
                   type="number"
-                  placeholder="Tuổi"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
+                  placeholder="Giá"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                <Form.Label>Giới tính</Form.Label>
+                <Form.Label>Loại</Form.Label>
                 <Form.Select aria-label="Default select example" 
-                  value={gender}   
-                  onChange={(e) => setGender(e.target.value)}>
-                  <option value="male">Nam</option>
-                  <option value="female">Nữ</option>
+                  value={bookingType}   
+                  onChange={(e) => setBookingType(e.target.value)}>
+                  <option value="Tìm tài xế">Tìm tài xế</option>
+                  <option value="Tìm hành khách">Tìm hành khách</option>
+                </Form.Select>
+              </Form.Group>
+            </Row>
+            
+            <Row className="mb-3">
+              <Form.Group as={Col} md="4" controlId="validationCustom07">
+                <Form.Label>Tổng thời gian di chuyển</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={duration}
+                />
+              </Form.Group>
+
+             
+              <Form.Group as={Col} md="4" controlId="validationCustom02">
+                <Form.Label>Khoảng cách</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={data.distance}
+                />
+              </Form.Group>
+              <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                <Form.Label>Trạng thái</Form.Label>
+                <Form.Select aria-label="Default select example" 
+                  value={status}   
+                  onChange={(e) => setStatus(e.target.value)}>
+                  <option value="2">Đang mở</option>
+                  <option value="1">Đã hoàn thành</option>
                 </Form.Select>
               </Form.Group>
             </Row>
 
             <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom07">
-                <Form.Label>SĐT</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Số điện thoại"
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  value={phoneNumber}
-                />
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom08">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} md="4" >
-                <Form.Label>Ngày sinh</Form.Label>
-
-                <Form.Control
-                  required
-                  type="date"
-                  value={date}
-                  onChange={(e) => { setDate(e.target.value); console.log(e.target.value);}}
-                />
-              </Form.Group>
-            </Row>
-
-            <Row className="mb-3" >
-              <Form.Group  md="4" controlId="validationCustom01">
-                <Form.Label>Mật khẩu</Form.Label>
-                <div class="d-flex">
+              <Form.Group as={Col} md="4" controlId="validationCustom01">
+                <Form.Label>Tên</Form.Label>
                 <Form.Control
                   disabled
                   type="text"
-                  value={password}
+                  placeholder="Tên"
+                  value={data.authorId.firstName}
                 />
-                <div style={{width: '32px'}}></div>
-                <Button style={{width: '20vw'}}  onClick={(e) => {
-                  setPassword(genPassword());
-                }}>Tạo mật khẩu</Button> 
-
-<div style={{width: '32px'}}>    </div>
-                <Button  style={{width: '20vw'}} variant="secondary" onClick={(e) => {
-                  setPassword('');
-                }}>Hủy</Button> 
-                </div>
               </Form.Group>
 
-    
+              <Form.Group as={Col} md="4" controlId="validationCustom01">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  disabled
+                  type="text"
+                  value={data.authorId.email}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} md="4" controlId="validationCustom11">
+                <Form.Label>Thời gian tạo</Form.Label>
+                <Form.Control
+                  disable
+                  type="text"
+                  value={formatDateWithTime(createdAt)}
+                />
+              </Form.Group>
+
+
             </Row>
 
             <Row className="mb-3">
               <Form.Group  md="6" controlId="validationCustom09">
-                <Form.Label>Vị trí</Form.Label>
-                <Form.Control as="textarea" rows={3} disabled />
+                <Form.Label>Địa điểm đi</Form.Label>
+                <Form.Control as="textarea" rows={1} value={startPointAddress}
+                onChange={(e) => setStartPointAddress(e.target.value)}
+                />
               </Form.Group>
               
             </Row>
 
             <Row className="mb-3">
+              <Form.Group  md="6" controlId="validationCustom09">
+                <Form.Label>Địa điểm đến</Form.Label>
+                <Form.Control as="textarea" rows={1} value={endPointAddress} 
+                onChange={(e) => setEndPointAddress(e.target.value)}
+                />
+              </Form.Group>
+              
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group  md="6" controlId="validationCustom09">
+                <Form.Label>Nội dung</Form.Label>
+                <Form.Control as="textarea" rows={2} value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+              </Form.Group>
+              
+            </Row>   
+
+            {/* <Row className="mb-3">
               <Form.Group  md="6" controlId="validationCustom10">
                 <Form.Label></Form.Label>
               </Form.Group>
@@ -180,7 +206,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
                 </div>
                 
                 
-            </Alert> 
+            </Alert>  */}
   
      
     
@@ -211,7 +237,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, showToast }) => {
           }
       
         </Modal.Footer>
-        </Form> */}
+        </Form>
       </Modal>
 
   </>

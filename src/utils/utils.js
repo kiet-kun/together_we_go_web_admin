@@ -38,3 +38,13 @@ exports.genPassword = () => {
    for (let i = 0; i < 6 ; i++) res+= String(getRandomInt(10));
    return res;
 }
+
+exports.formatDateWithTime = (str) => {
+   const currentDate = new Date(str);
+   const year = currentDate.getFullYear();
+   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+   const day = String(currentDate.getDate()).padStart(2, '0');
+   const hour = String(currentDate.getHours()).padStart(2, '0');
+   const minus = String(currentDate.getMinutes()).padStart(2, '0');
+   return `${hour}:${minus} ${day}-${month}-${year}`;
+}

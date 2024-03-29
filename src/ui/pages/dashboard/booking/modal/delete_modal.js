@@ -45,12 +45,11 @@ const DeleteModal = ({ show, data, handleClose, loadPage, showToast }) => {
       <Modal.Header closeButton>
         <Modal.Title>Xác nhận</Modal.Title>
       </Modal.Header>
-      {/* <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
           <Alert key="info" variant="danger">
             Bạn muốn xóa chuyến đi {data.id}?
-            Tất cả dữ liệu liên quan đến người dùng này sẽ bị xóa:
-            đánh giá
+            Tất cả dữ liệu liên quan đến chuyến đi này sẽ bị xóa
           </Alert>
         </Modal.Body>
         <Modal.Footer>
@@ -75,7 +74,7 @@ const DeleteModal = ({ show, data, handleClose, loadPage, showToast }) => {
             </Button>
           }
         </Modal.Footer>
-      </Form> */}
+      </Form>
     </Modal>
   </>
 }
