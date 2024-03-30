@@ -115,7 +115,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                   type="text"
                   placeholder="Thời gian bắt đầu"
                   value={duration}
-                  onChange={setDuration}
+                  onChange={(e) => setDuration(e.target.value)}
                 />
               </Form.Group>
 
@@ -126,7 +126,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                   required
                   type="text"
                   value={distance}
-                  onChange={setDistance}
+                  onChange={(e) =>setDistance(e.target.value)}
                 />
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustomUsername">
@@ -200,7 +200,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                   required
                   type="text"
                   value={startPointLat}
-                  onChange={setStartPointLat}
+                  onChange={(e) =>setStartPointLat(e.target.value)}
                 />
               </Form.Group>
 
@@ -210,7 +210,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                 required
                   type="text"
                   value={startPointLong}
-                  onChange={setStartPointLong}
+                  onChange={(e) =>setStartPointLong(e.target.value)}
                 />
               </Form.Group>
 
@@ -219,7 +219,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                 <Form.Control
                   type="text" required
                   value={startPointId}
-                  onChange={setStartPointId}
+                  onChange={(e) =>setStartPointId(e.target.value)}
                 />
               </Form.Group>
 
@@ -250,7 +250,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                 <Form.Control
                   type="text" required
                   value={endPointLat}
-                  onChange={setEndPointLat}
+                  onChange={(e) =>setEndPointLat(e.target.value)}
                 />
               </Form.Group>
 
@@ -259,7 +259,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                 <Form.Control
                   type="text" required
                   value={endPointLong}
-                  onChange={setEndPointLong}
+                  onChange={(e) =>setEndPointLong(e.target.value)}
                 />
               </Form.Group>
 
@@ -268,7 +268,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
                 <Form.Control
                   type="text" required
                   value={endPointId}
-                  onChange={setEndPointId}
+                  onChange={(e) =>setEndPointId(e.target.value)}
                 />
               </Form.Group>
 
