@@ -111,9 +111,11 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom07">
                 <Form.Label>Tổng thời gian di chuyển</Form.Label>
                 <Form.Control
+                  required
                   type="text"
                   placeholder="Thời gian bắt đầu"
                   value={duration}
+                  onChange={setDuration}
                 />
               </Form.Group>
 
@@ -121,8 +123,10 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom02">
                 <Form.Label>Khoảng cách</Form.Label>
                 <Form.Control
+                  required
                   type="text"
-                  value={data.distance}
+                  value={distance}
+                  onChange={setDistance}
                 />
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustomUsername">
@@ -174,7 +178,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
             <Row className="mb-3">
               <Form.Group  as={Col} md="6" controlId="validationCustom09">
                 <Form.Label>Khu vực đi</Form.Label>
-                <Form.Control as="textarea" rows={1} value={startPointAddress} 
+                <Form.Control required as="textarea" rows={1} value={startPointAddress} 
                 onChange={(e) => setStartPointAddress(e.target.value)}
                 
                 />
@@ -182,7 +186,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               
               <Form.Group  as={Col} md="6" controlId="validationCustom09">
                 <Form.Label>Địa điểm đi</Form.Label>
-                <Form.Control as="textarea" rows={1} value={startPointMainText} 
+                <Form.Control required as="textarea" rows={1} value={startPointMainText} 
                 onChange={(e) => setStartPointMainText(e.target.value)}
                 />
               </Form.Group>
@@ -193,6 +197,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Kinh độ địa điểm đi</Form.Label>
                 <Form.Control
+                  required
                   type="text"
                   value={startPointLat}
                   onChange={setStartPointLat}
@@ -202,6 +207,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Kinh độ địa điểm đi</Form.Label>
                 <Form.Control
+                required
                   type="text"
                   value={startPointLong}
                   onChange={setStartPointLong}
@@ -211,7 +217,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom11">
                 <Form.Label>ID địa điểm đi</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="text" required
                   value={startPointId}
                   onChange={setStartPointId}
                 />
@@ -223,14 +229,14 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
             <Row className="mb-3">
               <Form.Group as={Col} md="6" controlId="validationCustom09">
                 <Form.Label>Khu vực đến</Form.Label>
-                <Form.Control as="textarea" rows={1} value={endPointAddress} 
+                <Form.Control required as="textarea" rows={1} value={endPointAddress} 
                 onChange={(e) => setEndPointAddress(e.target.value)}
                 />
               </Form.Group>
               
               <Form.Group as={Col}  md="6" controlId="validationCustom09">
                 <Form.Label>Địa điểm đến</Form.Label>
-                <Form.Control as="textarea" rows={1} value={endPointMainText} 
+                <Form.Control required as="textarea" rows={1} value={endPointMainText} 
                 onChange={(e) => setEndPointMainText(e.target.value)}
                 />
               </Form.Group>
@@ -242,7 +248,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Kinh độ địa điểm đến</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="text" required
                   value={endPointLat}
                   onChange={setEndPointLat}
                 />
@@ -251,7 +257,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Kinh độ địa điểm đến</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="text" required
                   value={endPointLong}
                   onChange={setEndPointLong}
                 />
@@ -260,7 +266,7 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
               <Form.Group as={Col} md="4" controlId="validationCustom11">
                 <Form.Label>ID địa điểm đến</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="text" required
                   value={endPointId}
                   onChange={setEndPointId}
                 />
@@ -272,35 +278,12 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
             <Row className="mb-3">
               <Form.Group  md="6" controlId="validationCustom09">
                 <Form.Label>Nội dung</Form.Label>
-                <Form.Control as="textarea" rows={2} value={content}
+                <Form.Control required as="textarea" rows={2} value={content}
                   onChange={(e) => setContent(e.target.value)}
                 />
               </Form.Group>
               
             </Row>   
-
-            {/* <Row className="mb-3">
-              <Form.Group  md="6" controlId="validationCustom10">
-                <Form.Label></Form.Label>
-              </Form.Group>
-            </Row>
-
-            <Alert key="info" variant="info">
-                Trạng thái : {data.online ? "Online" : "Offline"}
-            </Alert> 
-
-            <Alert key="info" variant="info">
-                <div class="d-flex justify-content-between">
-                  <div>
-                      Số chuyến đi quan tâm (4)
-                  </div>
-                  <Alert.Link href="#">Xem chi tiết</Alert.Link>
-                </div>
-                
-                
-            </Alert>  */}
-  
-     
     
         </Modal.Body>
 
