@@ -2,7 +2,7 @@
 import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner } from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
 // logic
-import { deleteUser } from '../../../../../services/user_service';
+import { deleteBooking } from '../../../../../services/booking_service';
 import { TOAST_TYPE } from '../../../../../constanst';
 
 const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {
@@ -10,34 +10,34 @@ const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-    // else {
-    //   setIsLoading(true);
-    //   try {
-    //     event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    else {
+      setIsLoading(true);
+      try {
+        event.preventDefault();
 
-    //     const response = await deleteUser(data.id);
-    //     console.log(response);
-    //     if (response.status == 200) {
-    //       appState.showToast('Xóa thành công', TOAST_TYPE.success);
-    //       loadPage();
-    //       handleClose();
-    //     }
-    //     else {
-    //       appState.showToast(response.data['message'], TOAST_TYPE.danger);
-    //     }
-    //   } catch (error) {
-    //     appState.showToast('Xảy ra lỗi', TOAST_TYPE.danger);
-    //     console.log(error);
-    //   }
-    //   setIsLoading(false);
-    // }
+        const response = await deleteBooking(data.id);
+        console.log(response);
+        if (response.status == 200) {
+          appState.showToast('Xóa thành công', TOAST_TYPE.success);
+          loadPage();
+          handleClose();
+        }
+        else {
+          appState.showToast(response.data['message'], TOAST_TYPE.danger);
+        }
+      } catch (error) {
+        appState.showToast('Xảy ra lỗi', TOAST_TYPE.danger);
+        console.log(error);
+      }
+      setIsLoading(false);
+    }
 
-    // setValidated(true);
+    setValidated(true);
   };
 
   return <>
@@ -48,7 +48,7 @@ const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
           <Alert key="info" variant="danger">
-            Bạn muốn xóa chuyến đi {data.id}?
+            Bạn muốn xóa chuyến đi?
             Tất cả dữ liệu liên quan đến chuyến đi này sẽ bị xóa
           </Alert>
         </Modal.Body>
