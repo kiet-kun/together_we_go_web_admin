@@ -53,7 +53,7 @@ export async function updateBooking(id, body)  {
     try {
         let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         
-        const response = await axios.patch(
+        const response = await axios.put(
             `${process.env.REACT_APP_API_LINK}/booking/${id}`,
             body,    
             {

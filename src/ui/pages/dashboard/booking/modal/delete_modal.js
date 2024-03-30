@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"
 import { deleteUser } from '../../../../../services/user_service';
 import { TOAST_TYPE } from '../../../../../constanst';
 
-const DeleteModal = ({ show, data, handleClose, loadPage, showToast }) => {
+const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,15 +23,15 @@ const DeleteModal = ({ show, data, handleClose, loadPage, showToast }) => {
     //     const response = await deleteUser(data.id);
     //     console.log(response);
     //     if (response.status == 200) {
-    //       showToast('Xóa thành công', TOAST_TYPE.success);
+    //       appState.showToast('Xóa thành công', TOAST_TYPE.success);
     //       loadPage();
     //       handleClose();
     //     }
     //     else {
-    //       showToast(response.data['message'], TOAST_TYPE.danger);
+    //       appState.showToast(response.data['message'], TOAST_TYPE.danger);
     //     }
     //   } catch (error) {
-    //     showToast('Xảy ra lỗi', TOAST_TYPE.danger);
+    //     appState.showToast('Xảy ra lỗi', TOAST_TYPE.danger);
     //     console.log(error);
     //   }
     //   setIsLoading(false);
