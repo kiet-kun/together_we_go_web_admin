@@ -1,16 +1,17 @@
-const { SORT_STATE } = require("../constanst")
+import { SORT_STATE } from "../constanst"
+import { toast } from 'react-toastify';
 
-exports.nextSortState = (state) => {
+export const nextSortState = (state) => {
    if (state == SORT_STATE.none) return SORT_STATE.increasing;
    if (state == SORT_STATE.increasing) return SORT_STATE.decreasing;
    return SORT_STATE.none;
 }
 
-exports.sleep = (ms) => {
+export const sleep = (ms) => {
    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-exports.customStr = (str, limit = 20) => {
+export const customStr = (str, limit = 20) => {
    // return "kiet";
    str = String(str);
    if (!str) return "Trống";
@@ -21,7 +22,7 @@ exports.customStr = (str, limit = 20) => {
   }
 }
 
-exports.formatDate = (str) => {
+export const formatDate = (str) => {
    const currentDate = new Date(str);
    const year = currentDate.getFullYear();
    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -33,13 +34,13 @@ function getRandomInt(max) {
    return Math.floor(Math.random() * max);
  }
 
-exports.genPassword = () => {
+ export const genPassword = () => {
    let res = "";
    for (let i = 0; i < 6 ; i++) res+= String(getRandomInt(10));
    return res;
 }
 
-exports.formatDateWithTime = (str) => {
+export const formatDateWithTime = (str) => {
    const currentDate = new Date(str);
    const year = currentDate.getFullYear();
    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -47,4 +48,13 @@ exports.formatDateWithTime = (str) => {
    const hour = String(currentDate.getHours()).padStart(2, '0');
    const minus = String(currentDate.getMinutes()).padStart(2, '0');
    return `${hour}:${minus} ${day}-${month}-${year}`;
+}
+
+export const notifyAfterCallApi = (response, successText = 'Thành công', errorText = 'Thất bại') => {
+   if (response.status == 200) {
+      toast.success(successText);
+   }
+   else {
+      toast.error(errorText);
+   }
 }

@@ -37,17 +37,12 @@ export const AppRoutes = () => {
       navigate(page_name);
     }
 
-    let _appState = {
-      showToast,
-      handleClipBoard,
-      handleNavigation,
-    }
 
     let element = useRoutes([
-        {path: PAGE_NAME.login, element: <LoginPage appState={_appState} />},
-        {path: PAGE_NAME.home, element: <HomePage  appState={_appState}/>},
-        {path: PAGE_NAME.user, element: <UserPage appState={_appState}/>},
-        {path: PAGE_NAME.booking, element: <BookingPage appState={_appState}/>},
+        {path: PAGE_NAME.login, element: <LoginPage/>},
+        {path: PAGE_NAME.home, element: <HomePage />},
+        {path: PAGE_NAME.user, element: <UserPage/>},
+        {path: PAGE_NAME.booking, element: <BookingPage/>},
     ]);
 
     return <>

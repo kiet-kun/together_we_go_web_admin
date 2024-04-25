@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react"
 // logic
 import { deleteBooking } from '../../../../../services/booking_service';
 import { TOAST_TYPE } from '../../../../../constanst';
+import { toast } from 'react-toastify';
 
-const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {
+const DeleteModal = ({ show, data, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,15 +24,15 @@ const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {
         const response = await deleteBooking(data.id);
         console.log(response);
         if (response.status == 200) {
-          appState.showToast('Xóa thành công', TOAST_TYPE.success);
+          toast.success('Xóa thành công');
           loadPage();
           handleClose();
         }
         else {
-          appState.showToast(response.data['message'], TOAST_TYPE.danger);
+          toast.error(response.data['message']);
         }
       } catch (error) {
-        appState.showToast('Xảy ra lỗi', TOAST_TYPE.danger);
+        toast.error('Xảy ra lỗi');
         console.log(error);
       }
       setIsLoading(false);

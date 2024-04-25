@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react"
 import { formatDate } from '../../../../../utils/utils';
 import { TOAST_TYPE } from '../../../../../constanst';
 import { addUser } from '../../../../../services/user_service';
+import { toast } from 'react-toastify';
 
-const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
+const AddModal = ({ show, data, handleClose, loadPage }) => {
   const [date, setDate] = useState(formatDate(new Date().toString()));
   const [name, setName] = useState('');
   const [age, setAge] = useState("20");
@@ -32,15 +33,15 @@ const AddModal = ({ show, data, handleClose, loadPage, appState }) => {
         const response = await addUser({date, name, gender, phoneNumber, email, age, password});
         console.log(response);
         if (response.status == 200){
-          appState.showToast('Thêm thành công',TOAST_TYPE.success);
+          toast.success('Thêm thành công');
           loadPage();  
           handleClose();   
         }
         else {
-          appState.showToast(response.data['message'],TOAST_TYPE.danger);
+          toast.error(response.data['message']);
         }
       } catch (error) {
-        appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+        toast.error('Xảy ra lỗi');
         console.log(error);     
       }
       setIsLoading(false);

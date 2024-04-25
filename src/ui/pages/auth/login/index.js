@@ -5,8 +5,9 @@ import { JWT, PAGE_NAME, TOAST_TYPE } from '../../../../constanst';
 import { useTranslation } from "react-i18next";
 import DropdownLanguage from '../../../components/dropDownLanguage';
 import { ToastContainer, toast } from 'react-toastify';
+import { notifyAfterCallApi } from '../../../../utils/utils';
 
-const LoginPage = ({appState}) => {
+const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -16,8 +17,6 @@ const LoginPage = ({appState}) => {
       setLoading(false);
     }, []);
 
- 
-
     const handleChangeEmail = event => {
         setEmail(event.target.value);   
     };
@@ -26,37 +25,27 @@ const LoginPage = ({appState}) => {
         setPassword(event.target.value);
     };
 
-    const  handleLogin = async event => {
-      toast("Wow so easy!", {
-        // theme: "dark",
-      })
-      setLoading(true);
+    const handleLogin = async event => {
       try {
+        setLoading(true);
         event.preventDefault();
 
         const response = await LoginService(email, password);
-      
+        notifyAfterCallApi(response, "Đăng nhập thành công", 
+          "Đăng nhập thất bại");
         if (response.status == 200){
-          appState.showToast('Đăng nhập thành công',TOAST_TYPE.success);
-          // alert('Đăng nhập thành công');
           localStorage.setItem(JWT.ACCESS_TOKEN, response.data.data[JWT.ACCESS_TOKEN]);
           localStorage.setItem(JWT.REFRESH_TOKEN, response.data.data[JWT.REFRESH_TOKEN]);
-         
-          setTimeout(() => {
-            appState.handleNavigation(PAGE_NAME.home);
-          }, 2000);
-        }
-        else {
-          appState.showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
-          // alert('Đăng nhập thất bại');
+
+          // setTimeout(() => {
+          //   appState.handleNavigation(PAGE_NAME.home);
+          // }, 2000);
         }
       } catch (error) {
-        appState.showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
-          console.log(error);    
-          
-      
-      }
-      setLoading(false);
+        console.log(error);   
+      } finally {
+        setLoading(false);
+      }      
     }
 
     return (

@@ -4,40 +4,38 @@ import React, { useEffect, useState } from "react"
 // logic
 import { TOAST_TYPE } from '../../../../../constanst';
 import { deleteUser } from '../../../../../services/user_service';
+import { toast } from 'react-toastify';
 
-const DeleteModal = ({ show, data, handleClose, loadPage, appState }) => {
+const DeleteModal = ({ show, data, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else {
-      setIsLoading(true);
-      try {
+    try {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else {
+        setIsLoading(true);
         event.preventDefault();
 
         const response = await deleteUser(data.id);
-        console.log(response);
         if (response.status == 200) {
-          appState.showToast('Xóa thành công', TOAST_TYPE.success);
           loadPage();
           handleClose();
         }
-        else {
-          appState.showToast(response.data['message'], TOAST_TYPE.danger);
-        }
-      } catch (error) {
-        appState.showToast('Xảy ra lỗi', TOAST_TYPE.danger);
-        console.log(error);
       }
-      setIsLoading(false);
     }
-
-    setValidated(true);
+    catch (err) {
+      console.log(err);
+    }
+    finally {
+      setIsLoading(false);
+      setValidated(true);
+    }
+    
   };
 
   return <>

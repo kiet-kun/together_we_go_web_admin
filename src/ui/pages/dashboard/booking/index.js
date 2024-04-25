@@ -13,9 +13,9 @@ import AddModal from "./modal/add_modal";
 import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
 import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 import { getBookings } from "../../../../services/booking_service";
+import { toast } from 'react-toastify';
 
-
-const BookingPage = ({ appState }) => {
+const BookingPage = () => {
   // Table properties
   let [totalInDB, setTotalInDB] = useState(200);
   let [page, setPage] = useState(1);
@@ -61,7 +61,7 @@ const BookingPage = ({ appState }) => {
       // showToast('Thành công', TOAST_TYPE.success)
     }
     else {
-      appState.showToast('Lỗi', TOAST_TYPE.danger)
+      toast.error('Lỗi')
     }
     setIsLoading(false);
   }
@@ -342,7 +342,6 @@ const BookingPage = ({ appState }) => {
             totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
             setPage={setPage} loadPage={loadPage}
             setPageSize={setPageSize}
-            appState={appState}
           ></MyPagination>
 
           {/* Modal */}
@@ -350,19 +349,16 @@ const BookingPage = ({ appState }) => {
             isViewModalOpen && <ViewModal
               show={isViewModalOpen} data={itemFoucus} handleClose={handleClose}
               loadPage={loadPage}
-              appState={appState}
             ></ViewModal>
           }
           {
             isDeleteModalOpen && <DeleteModal show={isDeleteModalOpen} data={itemFoucus}
               handleClose={handleClose}
-              appState={appState}
               loadPage={loadPage}></DeleteModal>
           }
           {
             isAddModalOpen && <AddModal show={isAddModalOpen} data={itemFoucus}
               handleClose={handleClose}
-              appState={appState}
               loadPage={loadPage}></AddModal>
           }
         </div>

@@ -6,8 +6,9 @@ import DateTimePicker from 'react-datetime-picker';
 import { formatDate, formatDateWithTime } from '../../../../../utils/utils';
 import { TOAST_TYPE } from '../../../../../constanst';
 import { addBooking } from '../../../../../services/booking_service';
+import { toast } from 'react-toastify';
 
-const AddModal = ({ show, handleClose, loadPage, appState }) => {
+const AddModal = ({ show, handleClose, loadPage }) => {
   const [status, setStatus] = useState('');
   const [price, setPrice] = useState('');
   const [bookingType, setBookingType] = useState('');
@@ -50,15 +51,15 @@ const AddModal = ({ show, handleClose, loadPage, appState }) => {
           endPointLat, endPointLong, endPointId, endPointMainText, endPointAddress,});
         console.log(response);
         if (response.status == 200){
-          appState.showToast('Thêm thành công',TOAST_TYPE.success);
+          toast.success('Thêm thành công');
           loadPage();  
           handleClose();   
         }
         else {
-          appState.showToast(response.data['message'],TOAST_TYPE.danger);
+          toast.error(response.data['message']);
         }
       } catch (error) {
-         appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+        toast.error('Xảy ra lỗi');
         console.log(error);     
       }
       setIsLoading(false);

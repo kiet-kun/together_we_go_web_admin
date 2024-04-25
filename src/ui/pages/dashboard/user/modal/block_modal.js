@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react"
 // logic
 import { TOAST_TYPE } from '../../../../../constanst';
 import { updateUser } from '../../../../../services/user_service';
+import { toast } from 'react-toastify';
 
-const BlockModal = ({show, data, handleClose, loadPage, appState }) => {
+const BlockModal = ({show, data, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,15 +24,15 @@ const BlockModal = ({show, data, handleClose, loadPage, appState }) => {
         const response = await updateUser(data.id,{isBlock: !data.isBlock});
         console.log(response);
         if (response.status == 200){
-          appState.showToast('Cập nhật thành công',TOAST_TYPE.success);
+          toast.success('Cập nhật thành công');
           loadPage();  
           handleClose();   
         }
         else {
-          appState.showToast(response.data['message'],TOAST_TYPE.danger);
+          toast.error(response.data['message']);
         }
       } catch (error) {
-        appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
+        toast.error('Xảy ra lỗi');
         console.log(error);     
       }
       setIsLoading(false);

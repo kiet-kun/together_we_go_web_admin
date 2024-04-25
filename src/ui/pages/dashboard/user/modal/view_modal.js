@@ -2,11 +2,12 @@
 import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
 // logic
-import { formatDate, genPassword } from '../../../../../utils/utils';
+import { formatDate, genPassword, notifyAfterCallApi } from '../../../../../utils/utils';
 import { TOAST_TYPE } from '../../../../../constanst';
 import { updateUser } from '../../../../../services/user_service';
+import { toast } from 'react-toastify';
 
-const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
+const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
   const [name, setName] = useState(data.firstName);
   const [age, setAge] = useState(data.age);
@@ -19,35 +20,34 @@ const ViewModal = ({ show, data, handleClose, loadPage, appState }) => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (event) => {
-    console.log(date, name, gender, phoneNumber, email, age);
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else {
-      setIsLoading(true);
-      try {
+    try {
+      console.log(date, name, gender, phoneNumber, email, age);
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
         event.preventDefault();
-
+        event.stopPropagation();
+      }
+      else {
+        setIsLoading(true);
+        event.preventDefault();
+  
         const response = await updateUser(data.id,{date, firstName : name, gender, phoneNumber, email, age, password});
         console.log(response);
+        notifyAfterCallApi(response);
         if (response.status == 200){
-          appState.showToast('Cập nhật thành công',TOAST_TYPE.success);
           loadPage();  
           handleClose();   
-        }
-        else {
-          appState.showToast(response.data['message'],TOAST_TYPE.danger);
-        }
-      } catch (error) {
-        appState.showToast('Xảy ra lỗi',TOAST_TYPE.danger);
-        console.log(error);     
+        }        
       }
+    } catch (error) {
+      console.log(error);     
+    }
+    finally {
       setIsLoading(false);
+      setValidated(true);
     }
 
-    setValidated(true);
+   
   };
 
   return <>
