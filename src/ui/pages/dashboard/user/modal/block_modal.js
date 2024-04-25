@@ -5,40 +5,38 @@ import React, { useEffect, useState } from "react"
 import { TOAST_TYPE } from '../../../../../constanst';
 import { updateUser } from '../../../../../services/user_service';
 import { toast } from 'react-toastify';
+import { notifyAfterCallApi } from '../../../../../utils/utils';
 
 const BlockModal = ({show, data, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else {
-      setIsLoading(true);
-      try {
+    try {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else {
+        setIsLoading(true);
         event.preventDefault();
 
         const response = await updateUser(data.id,{isBlock: !data.isBlock});
         console.log(response);
+        notifyAfterCallApi(response);
         if (response.status == 200){
-          toast.success('Cập nhật thành công');
           loadPage();  
           handleClose();   
         }
-        else {
-          toast.error(response.data['message']);
-        }
-      } catch (error) {
-        toast.error('Xảy ra lỗi');
-        console.log(error);     
-      }
+      }  
+    } catch (error) {
+      console.log(error); 
+    } finally {
       setIsLoading(false);
+      setValidated(true);
     }
-
-    setValidated(true);
+    
   };
 
     return  <>

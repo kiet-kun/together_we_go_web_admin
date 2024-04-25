@@ -1,3 +1,4 @@
+import { error } from "jquery";
 import { SORT_STATE } from "../constanst"
 import { toast } from 'react-toastify';
 
@@ -55,6 +56,8 @@ export const notifyAfterCallApi = (response, successText = 'Thành công', error
       toast.success(successText);
    }
    else {
+      if (response.data && 
+         response.data.message) errorText = response.data.message
       toast.error(errorText);
    }
 }

@@ -3,10 +3,9 @@ import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bo
 import React, { useEffect, useState } from "react"
 import DateTimePicker from 'react-datetime-picker';
 // logic
-import { formatDate, genPassword, formatDateWithTime } from '../../../../../utils/utils';
-import { TOAST_TYPE } from '../../../../../constanst';
+import { formatDate, genPassword, 
+  formatDateWithTime, notifyAfterCallApi } from '../../../../../utils/utils';
 import { updateBooking } from '../../../../../services/booking_service';
-import { toast } from 'react-toastify';
 
 const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [status, setStatus] = useState(data.status);
@@ -36,15 +35,14 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
 
 
   const handleSubmit = async (event) => {
-
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else {
-      setIsLoading(true);
-      try {
+    try {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else {
+        setIsLoading(true);
         event.preventDefault();
 
         const response = await updateBooking(data.id,
@@ -54,22 +52,19 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
             endPointLat, endPointLong, endPointId, endPointMainText, endPointAddress,
         });
         console.log(response);
+        notifyAfterCallApi(response);
         if (response.status == 200){
-          toast.success('Cập nhật thành công');
           loadPage();  
           handleClose();   
         }
-        else {
-          toast.error(response.data['message']);
-        }
-      } catch (error) {
-        toast.error('Xảy ra lỗi');
-        console.log(error);     
       }
+    } catch (error) {
+      console.log(error);      
+    } finally {
       setIsLoading(false);
+      setValidated(true);
     }
-
-    setValidated(true);
+    
   };
 
   return <>

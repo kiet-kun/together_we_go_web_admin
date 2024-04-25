@@ -22,6 +22,7 @@ const DeleteModal = ({ show, data, handleClose, loadPage }) => {
         event.preventDefault();
 
         const response = await deleteUser(data.id);
+        notifyAfterCallApi(response);
         if (response.status == 200) {
           loadPage();
           handleClose();
@@ -34,8 +35,7 @@ const DeleteModal = ({ show, data, handleClose, loadPage }) => {
     finally {
       setIsLoading(false);
       setValidated(true);
-    }
-    
+    } 
   };
 
   return <>

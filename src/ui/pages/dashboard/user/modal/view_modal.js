@@ -46,8 +46,6 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
       setIsLoading(false);
       setValidated(true);
     }
-
-   
   };
 
   return <>

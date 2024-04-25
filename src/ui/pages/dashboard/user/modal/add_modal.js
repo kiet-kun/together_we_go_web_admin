@@ -2,7 +2,7 @@
 import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
 // logic
-import { formatDate } from '../../../../../utils/utils';
+import { formatDate, notifyAfterCallApi } from '../../../../../utils/utils';
 import { TOAST_TYPE } from '../../../../../constanst';
 import { addUser } from '../../../../../services/user_service';
 import { toast } from 'react-toastify';
@@ -19,35 +19,33 @@ const AddModal = ({ show, data, handleClose, loadPage }) => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (event) =>  {
-    console.log(date, name, gender, phoneNumber, email, age, password);
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else {
-      setIsLoading(true);
-      try {
+    try {
+      console.log(date, name, gender, phoneNumber, email, age, password);
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else {
+        setIsLoading(true);
         event.preventDefault();
 
         const response = await addUser({date, name, gender, phoneNumber, email, age, password});
         console.log(response);
+        notifyAfterCallApi(response);
         if (response.status == 200){
-          toast.success('Thêm thành công');
           loadPage();  
           handleClose();   
-        }
-        else {
-          toast.error(response.data['message']);
-        }
-      } catch (error) {
-        toast.error('Xảy ra lỗi');
-        console.log(error);     
+        } 
+        
       }
+    } catch (error) {
+      console.log(error); 
+    } finally {
       setIsLoading(false);
+      setValidated(true);
     }
-
-    setValidated(true);
+    
   };
   return <>
     <Modal show={show} onHide={handleClose} size="lg">
