@@ -10,7 +10,7 @@ import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
 // logic
-import { SORT_STATE, TOAST_TYPE } from "../../../../constanst";
+import { SORT_STATE,  } from "../../../../constanst";
 import { nextSortState, sleep, customStr } from "../../../../utils/utils";
 import { getBookings } from "../../../../services/booking_service";
 import { toast } from 'react-toastify';
@@ -58,7 +58,7 @@ const BookingPage = () => {
     console.log(response);
     if (response.status == 200) {
       setDatas(response.data.data)
-      // showToast('Thành công', TOAST_TYPE.success)
+      // showToast('Thành công', .success)
     }
     else {
       toast.error('Lỗi')

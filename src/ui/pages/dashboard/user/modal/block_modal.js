@@ -2,7 +2,7 @@
 import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
 // logic
-import { TOAST_TYPE } from '../../../../../constanst';
+import {  } from '../../../../../constanst';
 import { updateUser } from '../../../../../services/user_service';
 import { toast } from 'react-toastify';
 import { notifyAfterCallApi } from '../../../../../utils/utils';

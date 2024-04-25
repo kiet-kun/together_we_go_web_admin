@@ -1,18 +1,19 @@
 import './login.css'
 import React, { useEffect, useState } from "react"
 import { LoginService } from '../../../../services/auth';
-import { JWT, PAGE_NAME, TOAST_TYPE } from '../../../../constanst';
+import { JWT, PAGE_NAME,  } from '../../../../constanst';
 import { useTranslation } from "react-i18next";
 import DropdownLanguage from '../../../components/dropDownLanguage';
 import { ToastContainer, toast } from 'react-toastify';
 import { notifyAfterCallApi } from '../../../../utils/utils';
+import useAppNavigate from '../../../../hooks/useAppNavigate';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const { t, i18n } = useTranslation();
-
+    const [appNavigate]  = useAppNavigate();
     useEffect(() => {
       setLoading(false);
     }, []);
@@ -37,9 +38,9 @@ const LoginPage = () => {
           localStorage.setItem(JWT.ACCESS_TOKEN, response.data.data[JWT.ACCESS_TOKEN]);
           localStorage.setItem(JWT.REFRESH_TOKEN, response.data.data[JWT.REFRESH_TOKEN]);
 
-          // setTimeout(() => {
-          //   appState.handleNavigation(PAGE_NAME.home);
-          // }, 2000);
+          setTimeout(() => {
+            appNavigate(PAGE_NAME.home);
+          }, 2000);
         }
       } catch (error) {
         console.log(error);   

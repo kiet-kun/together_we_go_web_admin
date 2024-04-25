@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import DateTimePicker from 'react-datetime-picker';
 // logic
 import { formatDate, formatDateWithTime, notifyAfterCallApi } from '../../../../../utils/utils';
-import { TOAST_TYPE } from '../../../../../constanst';
+import {  } from '../../../../../constanst';
 import { addBooking } from '../../../../../services/booking_service';
 import { toast } from 'react-toastify';
 

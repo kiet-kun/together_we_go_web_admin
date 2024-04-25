@@ -3,9 +3,10 @@ import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bo
 import React, { useEffect, useState } from "react"
 // logic
 import { formatDate, genPassword, notifyAfterCallApi } from '../../../../../utils/utils';
-import { TOAST_TYPE } from '../../../../../constanst';
+import {  } from '../../../../../constanst';
 import { updateUser } from '../../../../../services/user_service';
 import { toast } from 'react-toastify';
+import useClipBoard from '../../../../../hooks/useClipBoard';
 
 const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
@@ -18,6 +19,8 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
+
+  const [handleClipBoard] = useClipBoard();
 
   const handleSubmit = async (event) => {
     try {
@@ -57,10 +60,10 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
 
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
-        {/* <Row className="mb-3" >
+        <Row className="mb-3" >
               <Form.Group  md="4" controlId="validationCustom01">
                 <Form.Label>ID  
-                  <div onClick={(e) => {appState.handleClipBoard(data.id)}}>
+                  <div onClick={(e) => {handleClipBoard(data.id)}}>
                   <i class="bi bi-clipboard"></i>
                   </div>
                   </Form.Label>
@@ -72,7 +75,7 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
                 />
 
               </Form.Group>
-              </Row> */}
+              </Row>
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Tên</Form.Label>

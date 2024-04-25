@@ -3,7 +3,7 @@ import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner} from 'react-
 import React, { useEffect, useState } from "react"
 // logic
 import { formatDate, notifyAfterCallApi } from '../../../../../utils/utils';
-import { TOAST_TYPE } from '../../../../../constanst';
+import {  } from '../../../../../constanst';
 import { addUser } from '../../../../../services/user_service';
 import { toast } from 'react-toastify';
 

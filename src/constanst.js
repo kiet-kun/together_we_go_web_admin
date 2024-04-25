@@ -3,17 +3,6 @@ export const JWT = {
     REFRESH_TOKEN : 'refresh_token'
 }
 
-export const TOAST_TYPE = {
-    primary :  'primary',
-    secondary : 'secondary',
-    success : 'success',
-    danger : 'danger',
-    warning : 'warning',
-    info : 'info',
-    light : 'light',
-    dark : 'dark'
-}
-
 export const PAGE_NAME = {
     login: '/dang-nhap',
     home: '/trang-chu',
