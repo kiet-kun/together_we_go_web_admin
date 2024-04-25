@@ -9,7 +9,7 @@ import { notifyAfterCallApi } from '@/utils/utils';
 import useAppNavigate from '@/hooks/useAppNavigate';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from '@/store/authentication/authenticationSlice'
+import { saveToken } from '@/store/authentication/authenticationSlice'
 
 
 const LoginPage = () => {
@@ -20,9 +20,7 @@ const LoginPage = () => {
     const [appNavigate]  = useAppNavigate();
 
     const dispatch = useDispatch()
-    const count = useSelector((state) => state.counter.value)
-
-
+   
     useEffect(() => {
       setLoading(false);
     }, []);
@@ -44,6 +42,10 @@ const LoginPage = () => {
         notifyAfterCallApi(response, "Đăng nhập thành công", 
           "Đăng nhập thất bại");
         if (response.status == 200){
+          dispatch(saveToken({
+            [JWT.ACCESS_TOKEN]: response.data.data[JWT.ACCESS_TOKEN],
+            [JWT.REFRESH_TOKEN]: response.data.data[JWT.REFRESH_TOKEN],
+          }))
           localStorage.setItem(JWT.ACCESS_TOKEN, response.data.data[JWT.ACCESS_TOKEN]);
           localStorage.setItem(JWT.REFRESH_TOKEN, response.data.data[JWT.REFRESH_TOKEN]);
 

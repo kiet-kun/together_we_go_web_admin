@@ -1,29 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {JWT} from "@/constanst"
 
 export const authenticationSlice = createSlice({
-  name: 'counter',
+  name: 'authentication',
   initialState: {
-    value: 0,
+    [JWT.ACCESS_TOKEN]: '',
+    [JWT.REFRESH_TOKEN]: '',
   },
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes.
-      // Also, no return statement is required from these functions.
-      state.value += 1
-    },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    saveToken: (state, action) => {
+      state[JWT.ACCESS_TOKEN] = action.payload[JWT.ACCESS_TOKEN]
+      state[JWT.REFRESH_TOKEN] = action.payload[JWT.REFRESH_TOKEN]
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = authenticationSlice.actions
+export const { saveToken } = authenticationSlice.actions
 
 export default authenticationSlice.reducer

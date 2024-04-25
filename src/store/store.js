@@ -10,7 +10,7 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({ 
-    'counter' : authenticationReducer,
+    'authentication' : authenticationReducer,
 })
  
 const persistedReducer = persistReducer(persistConfig, rootReducer)
