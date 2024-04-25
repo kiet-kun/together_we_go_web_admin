@@ -12,6 +12,7 @@ import 'react-clock/dist/Clock.css';
 import { initTheme, THEME, toggleTheme, setTheme, resetTheme  } from './utils/theme'
 import { AppRoutes } from './routes/route';
 import { BrowserRouter } from 'react-router-dom';
+import './utils/i18n';
 
 initTheme()
 

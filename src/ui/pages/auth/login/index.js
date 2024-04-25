@@ -2,11 +2,14 @@ import './login.css'
 import React, { useEffect, useState } from "react"
 import { LoginService } from '../../../../services/auth';
 import { JWT, PAGE_NAME, TOAST_TYPE } from '../../../../constanst';
+import { useTranslation } from "react-i18next";
+import DropdownLanguage from '../../../components/dropDownLanguage';
 
 const LoginPage = ({appState}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
       setLoading(false);
@@ -111,6 +114,8 @@ const LoginPage = ({appState}) => {
         
     <main class="form-signin w-100 m-auto">
       <form >
+        <DropdownLanguage></DropdownLanguage>
+         <p>{t("login")}</p>
         <img class="mb-4" src="/assets/image/twg_logo.png" alt="" width="72" height="57"/>
         <h1 class="h3 mb-3 fw-normal">Trang đăng nhập</h1>
     
