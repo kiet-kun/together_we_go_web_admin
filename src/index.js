@@ -12,7 +12,11 @@ import 'react-clock/dist/Clock.css';
 import { initTheme, THEME, toggleTheme, setTheme, resetTheme  } from './utils/theme'
 import { AppRoutes } from './routes/route';
 import { BrowserRouter } from 'react-router-dom';
+// change language
 import './utils/i18n';
+// notification
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 initTheme()
 

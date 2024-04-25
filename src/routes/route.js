@@ -11,6 +11,7 @@ import BookingPage from '../ui/pages/dashboard/booking';
 import UserPage from "../ui/pages/dashboard/user";
 import LoginPage from "../ui/pages/auth/login";
 import HomePage from "../ui/pages/dashboard/home";
+import { ToastContainer, toast } from 'react-toastify';
 
 export const AppRoutes = () => {
     const [isShowToast, setIsShowToast] = useState(false);
@@ -50,7 +51,10 @@ export const AppRoutes = () => {
     ]);
 
     return <>
+          <div>
+         <ToastContainer />
             {element}
             {isShowToast && <NotiToast message={messageToast} type={typeToast}></NotiToast>}
+            </div>
     </>;
 }

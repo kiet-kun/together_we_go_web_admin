@@ -4,6 +4,7 @@ import { LoginService } from '../../../../services/auth';
 import { JWT, PAGE_NAME, TOAST_TYPE } from '../../../../constanst';
 import { useTranslation } from "react-i18next";
 import DropdownLanguage from '../../../components/dropDownLanguage';
+import { ToastContainer, toast } from 'react-toastify';
 
 const LoginPage = ({appState}) => {
     const [email, setEmail] = useState('');
@@ -26,6 +27,9 @@ const LoginPage = ({appState}) => {
     };
 
     const  handleLogin = async event => {
+      toast("Wow so easy!", {
+        // theme: "dark",
+      })
       setLoading(true);
       try {
         event.preventDefault();
@@ -48,7 +52,9 @@ const LoginPage = ({appState}) => {
         }
       } catch (error) {
         appState.showToast('Đăng nhập thất bại',TOAST_TYPE.danger);
-          console.log(error);     
+          console.log(error);    
+          
+      
       }
       setLoading(false);
     }
