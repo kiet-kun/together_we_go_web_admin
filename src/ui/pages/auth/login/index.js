@@ -120,7 +120,7 @@ const LoginPage = () => {
         
     <main class="form-signin w-100 m-auto">
       <form >
-      <div>
+      {/* <div>
       <Button
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
@@ -138,7 +138,7 @@ const LoginPage = () => {
         </Button>
      </div>
         <DropdownLanguage></DropdownLanguage>
-         <p>{t("login")}</p>
+         <p>{t("login")}</p> */}
         <img class="mb-4" src="/assets/image/twg_logo.png" alt="" width="72" height="57"/>
         <h1 class="h3 mb-3 fw-normal">Trang đăng nhập</h1>
     
