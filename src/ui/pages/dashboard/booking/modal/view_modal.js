@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react"
 import DateTimePicker from 'react-datetime-picker';
 // logic
 import { formatDate, genPassword, 
-  formatDateWithTime, notifyAfterCallApi } from '../../../../../utils/utils';
-import { updateBooking } from '../../../../../services/booking_service';
+  formatDateWithTime, notifyAfterCallApi } from '@/utils/utils';
+import { updateBooking } from '@/services/booking_service';
 
 const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [status, setStatus] = useState(data.status);

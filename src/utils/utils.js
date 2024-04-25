@@ -1,5 +1,5 @@
 import { error } from "jquery";
-import { SORT_STATE } from "../constanst"
+import { SORT_STATE } from "@/constanst"
 import { toast } from 'react-toastify';
 
 export const nextSortState = (state) => {

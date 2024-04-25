@@ -2,17 +2,17 @@
 import React, { useEffect, useState } from "react"
 import { Table, Image } from "react-bootstrap";
 // component
-import Layout from '../../../layouts/layout';
-import MyPagination from '../../../components/datatable_pagination';
+import Layout from '@/ui/layouts/layout';
+import MyPagination from '@/ui/components/datatable_pagination';
 // modal
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
 import BlockModal from "./modal/block_modal";
 // logic
-import { SORT_STATE,  } from "../../../../constanst";
-import { nextSortState, sleep, customStr } from "../../../../utils/utils";
-import { getUsers } from "../../../../services/user_service";
+import { SORT_STATE,  } from "@/constanst";
+import { nextSortState, sleep, customStr } from "@/utils/utils";
+import { getUsers } from "@/services/user_service";
 import { toast } from 'react-toastify';
 
 const UserPage = () => {

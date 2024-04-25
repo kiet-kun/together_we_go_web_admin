@@ -2,9 +2,8 @@
 import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
 // logic
-import { formatDate, notifyAfterCallApi } from '../../../../../utils/utils';
-import {  } from '../../../../../constanst';
-import { addUser } from '../../../../../services/user_service';
+import { formatDate, notifyAfterCallApi } from '@/utils/utils';
+import { addUser } from '@/services/user_service';
 import { toast } from 'react-toastify';
 
 const AddModal = ({ show, data, handleClose, loadPage }) => {

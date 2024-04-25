@@ -3,9 +3,8 @@ import { Modal, Button, Col, Form, InputGroup, Row, Alert, Spinner} from 'react-
 import React, { useEffect, useState } from "react"
 import DateTimePicker from 'react-datetime-picker';
 // logic
-import { formatDate, formatDateWithTime, notifyAfterCallApi } from '../../../../../utils/utils';
-import {  } from '../../../../../constanst';
-import { addBooking } from '../../../../../services/booking_service';
+import { formatDate, formatDateWithTime, notifyAfterCallApi } from '@/utils/utils';
+import { addBooking } from '@/services/booking_service';
 import { toast } from 'react-toastify';
 
 const AddModal = ({ show, handleClose, loadPage }) => {

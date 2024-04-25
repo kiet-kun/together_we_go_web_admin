@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { JWT } from '../constanst';
+import { JWT } from '@/constanst';
 
 export async function getBookings(page, pageSize, filter)  {    
     try {

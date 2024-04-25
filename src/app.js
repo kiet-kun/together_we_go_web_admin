@@ -17,16 +17,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './store/store.js'
+import { Suspense } from "react";
 
 function App() {
   return (
     <>
+     <Suspense>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ToastContainer />
           <AppRoutes></AppRoutes>
         </PersistGate>
       </Provider>
+      </Suspense>
     </>
   );
 }

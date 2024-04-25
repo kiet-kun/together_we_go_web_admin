@@ -2,11 +2,10 @@
 import {Modal, Button, Col, Form, InputGroup, Row, Alert,Spinner} from 'react-bootstrap';
 import React, { useEffect, useState } from "react"
 // logic
-import { formatDate, genPassword, notifyAfterCallApi } from '../../../../../utils/utils';
-import {  } from '../../../../../constanst';
-import { updateUser } from '../../../../../services/user_service';
+import { formatDate, genPassword, notifyAfterCallApi } from '@/utils/utils';
+import { updateUser } from '@/services/user_service';
 import { toast } from 'react-toastify';
-import useClipBoard from '../../../../../hooks/useClipBoard';
+import useClipBoard from '@/hooks/useClipBoard';
 
 const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));

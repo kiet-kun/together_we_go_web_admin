@@ -1,15 +1,15 @@
 import './login.css'
 import React, { useEffect, useState } from "react"
-import { LoginService } from '../../../../services/auth';
-import { JWT, PAGE_NAME,  } from '../../../../constanst';
+import { LoginService } from '@/services/auth';
+import { JWT, PAGE_NAME,  } from '@/constanst';
 import { useTranslation } from "react-i18next";
-import DropdownLanguage from '../../../components/dropDownLanguage';
+import DropdownLanguage from '@/ui/components/dropDownLanguage';
 import { ToastContainer, toast } from 'react-toastify';
-import { notifyAfterCallApi } from '../../../../utils/utils';
-import useAppNavigate from '../../../../hooks/useAppNavigate';
+import { notifyAfterCallApi } from '@/utils/utils';
+import useAppNavigate from '@/hooks/useAppNavigate';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from '../../../../store/authentication/authenticationSlice'
+import { decrement, increment } from '@/store/authentication/authenticationSlice'
 
 
 const LoginPage = () => {

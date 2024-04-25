@@ -3,16 +3,16 @@ import React, { useEffect, useState } from "react"
 import { Table, Collapse, Button, Form, Row, Col } from "react-bootstrap";
 import DateTimePicker from 'react-datetime-picker';
 // component
-import Layout from '../../../layouts/layout';
-import MyPagination from '../../../components/datatable_pagination';
+import Layout from '@/ui/layouts/layout';
+import MyPagination from '@/ui/components/datatable_pagination';
 // modal
 import ViewModal from "./modal/view_modal";
 import DeleteModal from "./modal/delete_modal";
 import AddModal from "./modal/add_modal";
 // logic
-import { SORT_STATE,  } from "../../../../constanst";
-import { nextSortState, sleep, customStr } from "../../../../utils/utils";
-import { getBookings } from "../../../../services/booking_service";
+import { SORT_STATE,  } from "@/constanst";
+import { nextSortState, sleep, customStr } from "@/utils/utils";
+import { getBookings } from "@/services/booking_service";
 import { toast } from 'react-toastify';
 
 const BookingPage = () => {

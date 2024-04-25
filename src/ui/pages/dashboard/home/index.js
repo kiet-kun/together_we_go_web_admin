@@ -1,4 +1,4 @@
-import Layout from '../../../layouts/layout';
+import Layout from '@/ui/layouts/layout';
 import "./home.css";
 import Chart from 'chart.js/auto';
 import { Line, Bar, Doughnut } from "react-chartjs-2";

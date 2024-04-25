@@ -3,12 +3,12 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import { PAGE_NAME } from '../constanst';
+import { PAGE_NAME } from '@/constanst';
 // PAGE
-import BookingPage from '../ui/pages/dashboard/booking';
-import UserPage from "../ui/pages/dashboard/user";
-import LoginPage from "../ui/pages/auth/login";
-import HomePage from "../ui/pages/dashboard/home";
+import BookingPage from '@/ui/pages/dashboard/booking';
+import UserPage from "@/ui/pages/dashboard/user";
+import LoginPage from "@/ui/pages/auth/login";
+import HomePage from "@/ui/pages/dashboard/home";
 
 export const AppRoutes = () => {
   return <>

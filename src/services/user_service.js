@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { JWT } from '../constanst';
+import { JWT } from '@/constanst';
 import { toast } from 'react-toastify';
 
 export async function getUsers(page, pageSize, keyword)  {    
