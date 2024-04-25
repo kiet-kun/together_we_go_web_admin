@@ -7,6 +7,10 @@ import DropdownLanguage from '../../../components/dropDownLanguage';
 import { ToastContainer, toast } from 'react-toastify';
 import { notifyAfterCallApi } from '../../../../utils/utils';
 import useAppNavigate from '../../../../hooks/useAppNavigate';
+import { Button } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from '../../../../store/authentication/authenticationSlice'
+
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -14,6 +18,11 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const { t, i18n } = useTranslation();
     const [appNavigate]  = useAppNavigate();
+
+    const dispatch = useDispatch()
+    const count = useSelector((state) => state.counter.value)
+
+
     useEffect(() => {
       setLoading(false);
     }, []);
@@ -51,7 +60,8 @@ const LoginPage = () => {
 
     return (
        <>
-      
+        
+
         <div class="d-flex align-items-center py-4 bg-body-tertiary" style={{width: '100vw',height: '100vh'}}>
        
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -110,6 +120,23 @@ const LoginPage = () => {
         
     <main class="form-signin w-100 m-auto">
       <form >
+      <div>
+      <Button
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}
+        >
+          Increment
+        </Button>
+        <span>{count}</span>
+        <Button
+          aria-label="Decrement value"
+          onClick={() => {
+            dispatch(decrement());
+          }}
+        >
+          Decrement
+        </Button>
+     </div>
         <DropdownLanguage></DropdownLanguage>
          <p>{t("login")}</p>
         <img class="mb-4" src="/assets/image/twg_logo.png" alt="" width="72" height="57"/>

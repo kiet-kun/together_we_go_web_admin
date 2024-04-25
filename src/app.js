@@ -6,20 +6,27 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
-import { initTheme, THEME, toggleTheme, setTheme, resetTheme  } from './utils/theme'
+import { initTheme, THEME, toggleTheme, setTheme, resetTheme } from './utils/theme'
 import { AppRoutes } from './routes/route';
-import { BrowserRouter } from 'react-router-dom';
 // change language
 import './utils/i18n';
 // notification
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// redux - state management
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from './store/store.js'
 
 function App() {
   return (
     <>
-     <ToastContainer />
-       <AppRoutes></AppRoutes>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ToastContainer />
+          <AppRoutes></AppRoutes>
+        </PersistGate>
+      </Provider>
     </>
   );
 }
