@@ -14,6 +14,8 @@ import { SORT_STATE,  } from "@/constanst";
 import { nextSortState, sleep, customStr } from "@/utils/utils";
 import { getBookings } from "@/services/booking_service";
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux'
+import {JWT } from '@/constanst';
 
 const BookingPage = () => {
   // Table properties
@@ -44,6 +46,8 @@ const BookingPage = () => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
 
+  const user = useSelector((state) => state.authentication.user)
+
   async function loadPage() {
     console.log(page, pageSize, keyword);
     setIsLoading(true);
@@ -54,7 +58,7 @@ const BookingPage = () => {
     status, bookingType,
     startAddress, endAddress,
     startTime, endTime,
-    });
+    }, user[JWT.ACCESS_TOKEN]);
     console.log(response);
     if (response.status == 200) {
       setDatas(response.data.data)

@@ -152,7 +152,7 @@ const LoginPage = () => {
           (isLoading)  ?
           <button class="btn btn-primary w-100 py-2" type="button" disabled="">
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-            <span role="status">isLoading...</span>
+            <span role="status">Loading...</span>
           </button>
         :
         <button class="btn btn-primary w-100 py-2" onClick={handleLogin}>Đăng nhập</button> 

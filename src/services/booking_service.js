@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { JWT } from '@/constanst';
 
-export async function getBookings(page, pageSize, filter)  {    
-    try {
-        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
-        
+export async function getBookings(page, pageSize, filter, token)  {    
+    try {      
         const response = await axios.get(
             `${process.env.REACT_APP_API_LINK}/booking`,    
             {
@@ -26,9 +24,8 @@ export async function getBookings(page, pageSize, filter)  {
     } 
 }
 
-export async function addBooking(body)  {    
+export async function addBooking(body, token)  {    
     try {
-        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         
         const response = await axios.post(
             `${process.env.REACT_APP_API_LINK}/booking`,    
@@ -49,7 +46,7 @@ export async function addBooking(body)  {
     } 
 }
 
-export async function updateBooking(id, body)  {    
+export async function updateBooking(id, body, token)  {    
     try {
         let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         
@@ -72,7 +69,7 @@ export async function updateBooking(id, body)  {
     } 
 }
 
-export async function deleteBooking(id)  {    
+export async function deleteBooking(id, token)  {    
     try {
         let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         

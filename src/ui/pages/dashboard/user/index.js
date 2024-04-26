@@ -14,7 +14,8 @@ import { SORT_STATE,  } from "@/constanst";
 import { nextSortState, sleep, customStr } from "@/utils/utils";
 import { getUsers } from "@/services/user_service";
 import { toast } from 'react-toastify';
-
+import { useSelector, useDispatch } from 'react-redux'
+import {JWT } from '@/constanst';
 const UserPage = () => {
   // Table properties
   let [totalInDB, setTotalInDB] = useState(200);
@@ -32,23 +33,30 @@ const UserPage = () => {
   let [isAddModalOpen, setAddModalOpen] = useState(false);
   let [isBlockModalOpen, setBlockModalOpen] = useState(false);
   let [itemFoucus, setItemFocus] = useState(null);
+  const user = useSelector((state) => state.authentication.user)
 
   async function loadPage() {
-    console.log(page, pageSize, keyword);
-    setIsLoading(true);
-    let end = page * pageSize - 1;
-    let start = (page - 1) * pageSize;
+    try {
+      console.log(page, pageSize, keyword);
+      setIsLoading(true);
+      let end = page * pageSize - 1;
+      let start = (page - 1) * pageSize;
 
-    let response = await getUsers(page, pageSize, keyword);
-    console.log(response);
-    if (response.status == 200) {
-      setDatas(response.data.data)
-      // showToast('Thành công', .success)
+      let response = await getUsers(page, pageSize, keyword, user[JWT.ACCESS_TOKEN]);
+      console.log(response);
+      if (response.status == 200) {
+        setDatas(response.data.data)
+        // showToast('Thành công', .success)
+      }
+      else {
+        toast.error('Lỗi')
+      }
+      setIsLoading(false);
     }
-    else {
+    catch (e) {
+      console.log(e)
       toast.error('Lỗi')
-    }
-    setIsLoading(false);
+    } 
   }
 
   function openViewModel(item) {

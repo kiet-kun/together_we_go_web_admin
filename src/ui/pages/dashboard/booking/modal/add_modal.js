@@ -6,6 +6,8 @@ import DateTimePicker from 'react-datetime-picker';
 import { formatDate, formatDateWithTime, notifyAfterCallApi } from '@/utils/utils';
 import { addBooking } from '@/services/booking_service';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux'
+import {JWT } from '@/constanst';
 
 const AddModal = ({ show, handleClose, loadPage }) => {
   const [status, setStatus] = useState('');
@@ -33,6 +35,8 @@ const AddModal = ({ show, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const user = useSelector((state) => state.authentication.user)
+
   const handleSubmit = async (event) =>  {
     try {
       const form = event.currentTarget;
@@ -47,7 +51,8 @@ const AddModal = ({ show, handleClose, loadPage }) => {
         const response = await addBooking({ 
           status, price, bookingType ,time, content, distance,duration,
           startPointLat, startPointLong, startPointId, startPointMainText, startPointAddress,
-          endPointLat, endPointLong, endPointId, endPointMainText, endPointAddress,});
+          endPointLat, endPointLong, endPointId, endPointMainText, endPointAddress,}
+          , user[JWT.ACCESS_TOKEN]);
         console.log(response);
         notifyAfterCallApi(response);
         if (response.status == 200){

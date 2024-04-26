@@ -2,10 +2,9 @@ import axios from 'axios';
 import { JWT } from '@/constanst';
 import { toast } from 'react-toastify';
 
-export async function getUsers(page, pageSize, keyword)  {    
+export async function getUsers(page, pageSize, keyword, token)  {    
     try {
         console.log(keyword);
-        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         
         const response = await axios.get(
             `${process.env.REACT_APP_API_LINK}/user/admin`,    
@@ -26,9 +25,8 @@ export async function getUsers(page, pageSize, keyword)  {
     } 
 }
 
-export async function addUser(body) {    
+export async function addUser(body, token) {    
     try {
-        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         const response = await axios.post(
             `${process.env.REACT_APP_API_LINK}/user/admin`, 
             body,   
@@ -48,9 +46,8 @@ export async function addUser(body) {
     } 
 }
 
-export async function updateUser(id, body) {    
+export async function updateUser(id, body, token) {    
     try {
-        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         const response = await axios.patch(
             `${process.env.REACT_APP_API_LINK}/user/admin/${id}`, 
             body,   
@@ -71,9 +68,8 @@ export async function updateUser(id, body) {
 }
 
 
-export async function deleteUser(id) {    
+export async function deleteUser(id, token) {    
     try {
-        let token  = localStorage.getItem(JWT.ACCESS_TOKEN);
         const response = await axios.delete(
             `${process.env.REACT_APP_API_LINK}/user/admin/65cdd939ac2277107f5aa3b6`, 
             {

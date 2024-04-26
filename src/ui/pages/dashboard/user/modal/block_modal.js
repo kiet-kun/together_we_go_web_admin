@@ -5,11 +5,13 @@ import React, { useEffect, useState } from "react"
 import { updateUser } from '@/services/user_service';
 import { toast } from 'react-toastify';
 import { notifyAfterCallApi } from '@/utils/utils';
-
+import { useSelector, useDispatch } from 'react-redux'
+import {JWT } from '@/constanst';
 const BlockModal = ({show, data, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const user = useSelector((state) => state.authentication.user)
+  
   const handleSubmit = async (event) => {
     try {
       const form = event.currentTarget;
@@ -21,7 +23,7 @@ const BlockModal = ({show, data, handleClose, loadPage }) => {
         setIsLoading(true);
         event.preventDefault();
 
-        const response = await updateUser(data.id,{isBlock: !data.isBlock});
+        const response = await updateUser(data.id,{isBlock: !data.isBlock}, user[JWT.ACCESS_TOKEN]);
         console.log(response);
         notifyAfterCallApi(response);
         if (response.status == 200){

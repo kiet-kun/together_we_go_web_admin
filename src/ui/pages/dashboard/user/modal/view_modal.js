@@ -6,7 +6,8 @@ import { formatDate, genPassword, notifyAfterCallApi } from '@/utils/utils';
 import { updateUser } from '@/services/user_service';
 import { toast } from 'react-toastify';
 import useClipBoard from '@/hooks/useClipBoard';
-
+import { useSelector, useDispatch } from 'react-redux'
+import {JWT } from '@/constanst';
 const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [date, setDate] = useState(formatDate(new Date(data.createdAt).toString()));
   const [name, setName] = useState(data.firstName);
@@ -20,6 +21,7 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
   const [password, setPassword] = useState('');
 
   const [handleClipBoard] = useClipBoard();
+  const user = useSelector((state) => state.authentication.user)
 
   const handleSubmit = async (event) => {
     try {
@@ -33,7 +35,9 @@ const ViewModal = ({ show, data, handleClose, loadPage }) => {
         setIsLoading(true);
         event.preventDefault();
   
-        const response = await updateUser(data.id,{date, firstName : name, gender, phoneNumber, email, age, password});
+        const response = await updateUser(data.id,
+          {date, firstName : name, gender, phoneNumber, email, age, password},
+          user[JWT.ACCESS_TOKEN]);
         console.log(response);
         notifyAfterCallApi(response);
         if (response.status == 200){

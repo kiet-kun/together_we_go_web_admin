@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react"
 import { deleteUser } from '@/services/user_service';
 import { toast } from 'react-toastify';
 import { notifyAfterCallApi } from '@/utils/utils';
-
+import { useSelector, useDispatch } from 'react-redux'
+import {JWT } from '@/constanst';
 const DeleteModal = ({ show, data, handleClose, loadPage }) => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const user = useSelector((state) => state.authentication.user)
 
   const handleSubmit = async (event) => {
     try {
@@ -21,7 +23,7 @@ const DeleteModal = ({ show, data, handleClose, loadPage }) => {
         setIsLoading(true);
         event.preventDefault();
 
-        const response = await deleteUser(data.id);
+        const response = await deleteUser(data.id, user[JWT.ACCESS_TOKEN]);
         notifyAfterCallApi(response);
         if (response.status == 200) {
           loadPage();
