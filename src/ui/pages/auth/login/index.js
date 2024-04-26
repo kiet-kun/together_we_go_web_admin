@@ -9,21 +9,32 @@ import { notifyAfterCallApi } from '@/utils/utils';
 import useAppNavigate from '@/hooks/useAppNavigate';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux'
-import { saveToken } from '@/store/authentication/authenticationSlice'
+import { login } from '../../../../store/authentication/authenticationSlice';
 
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
+    // const [isLoading, setisLoading] = useState(false);
     const { t, i18n } = useTranslation();
     const [appNavigate]  = useAppNavigate();
 
+    const { isLoading, user, IsError, errorMessage } = useSelector(
+      (state) => state.authentication
+    )
     const dispatch = useDispatch()
    
     useEffect(() => {
-      setLoading(false);
-    }, []);
+      if (user) {
+        toast.success('Đăng nhập thành công')
+        setTimeout(() => {
+          appNavigate(PAGE_NAME.home);
+        }, 1000);
+      }
+      else {
+        toast.success(errorMessage);
+      }      
+    }, [user]);
 
     const handleChangeEmail = event => {
         setEmail(event.target.value);   
@@ -34,30 +45,8 @@ const LoginPage = () => {
     };
 
     const handleLogin = async event => {
-      try {
-        setLoading(true);
-        event.preventDefault();
-
-        const response = await LoginService(email, password);
-        notifyAfterCallApi(response, "Đăng nhập thành công", 
-          "Đăng nhập thất bại");
-        if (response.status == 200){
-          dispatch(saveToken({
-            [JWT.ACCESS_TOKEN]: response.data.data[JWT.ACCESS_TOKEN],
-            [JWT.REFRESH_TOKEN]: response.data.data[JWT.REFRESH_TOKEN],
-          }))
-          localStorage.setItem(JWT.ACCESS_TOKEN, response.data.data[JWT.ACCESS_TOKEN]);
-          localStorage.setItem(JWT.REFRESH_TOKEN, response.data.data[JWT.REFRESH_TOKEN]);
-
-          setTimeout(() => {
-            appNavigate(PAGE_NAME.home);
-          }, 2000);
-        }
-      } catch (error) {
-        console.log(error);   
-      } finally {
-        setLoading(false);
-      }      
+      event.preventDefault();
+      dispatch(login({email, password}))  
     }
 
     return (
@@ -160,10 +149,10 @@ const LoginPage = () => {
           </label>
         </div>
         {
-          (loading)  ?
+          (isLoading)  ?
           <button class="btn btn-primary w-100 py-2" type="button" disabled="">
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-            <span role="status">Loading...</span>
+            <span role="status">isLoading...</span>
           </button>
         :
         <button class="btn btn-primary w-100 py-2" onClick={handleLogin}>Đăng nhập</button> 
