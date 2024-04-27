@@ -11,11 +11,11 @@ const menuItem = [
         name: "Trang chủ",
         icon: "bi-house-door"
     },
-    {
-        path: "#",
-        name: "Thống kê",
-        icon: "bi-speedometer2"
-    },
+    // {
+    //     path: "#",
+    //     name: "Thống kê",
+    //     icon: "bi-speedometer2"
+    // },
     {
         path: PAGE_NAME.user,
         name: "Tài khoản",
@@ -81,9 +81,9 @@ const SideBar = () => {
                     <strong>{user.name}</strong>
                 </a>
                 <ul class="dropdown-menu text-small shadow">
-                    <li><a class="dropdown-item" href="#">Cài đặt</a></li>
+                    {/* <li><a class="dropdown-item" href="#">Cài đặt</a></li>
                     <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-                    <li><hr class="dropdown-divider" /></li>
+                    <li><hr class="dropdown-divider" /></li> */}
                     <li><a class="dropdown-item" href="/dang-nhap">Đăng xuất</a></li>
                 </ul>
             </div>
@@ -119,9 +119,9 @@ const SideBar = () => {
                         <img src={user.avatarUrl} alt="" width="32" height="32" class="rounded-circle me-2" />
                     </a>
                     <ul class="dropdown-menu text-small shadow">
-                        <li><a class="dropdown-item" href="#">Cài đặt</a></li>
+                        {/* <li><a class="dropdown-item" href="#">Cài đặt</a></li>
                         <li><a class="dropdown-item" href="#">Thông tin các nhân</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        <li><hr class="dropdown-divider" /></li> */}
                         <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                     </ul>
                 </div>

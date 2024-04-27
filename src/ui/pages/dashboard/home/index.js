@@ -7,6 +7,7 @@ import HighchartsReact from 'highcharts-react-official';
 import React, { useEffect, useState , useRef} from "react"
 import axios from 'axios';
 import mapData from './mapData';
+import Table from 'react-bootstrap/Table';
 
 // Load Highcharts modules
 require('highcharts/indicators/indicators')(Highcharts)
@@ -15,97 +16,26 @@ require('highcharts/indicators/macd')(Highcharts)
 require('highcharts/modules/exporting')(Highcharts)
 require('highcharts/modules/map')(Highcharts)
 
-const optionMaps = {
-  chart: {
-    type: 'spline'
-  },
-  title: {
-    text: 'My chart'
-  },
-  series: [
-    {
-      data: [1, 2, 1, 4, 3, 6]
-    }
-  ]
-};
 
 const dataLine = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  labels: ["02/2024", "03/2024", "04/2024", "05/2024", "06/2024", "07/2024"],
   datasets: [
     {
-      label: "First dataset",
+      label: "Lượt truy cập",
       data: [33, 53, 85, 41, 44, 65],
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
     },
-    {
-      label: "Second dataset",
-      data: [33, 25, 35, 51, 54, 76],
-      fill: false,
-      borderColor: "#742774"
-    }
+    // {
+    //   label: "Second dataset",
+    //   data: [33, 25, 35, 51, 54, 76],
+    //   fill: false,
+    //   borderColor: "#742774"
+    // }
   ]
 };
 
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Bar Chart',
-    },
-  },
-};
-
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: ['1', '2', '3', '4', '5', '6', '7'],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: ['1', '2', '3', '4', '5', '6', '7'],
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
-
-export const dataDoughnut = {
-  labels: ['Sáng', 'Trưa', 'Chiều', 'Tối',],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        // 'rgba(153, 102, 255, 0.2)',
-        // 'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        // 'rgba(153, 102, 255, 1)',
-        // 'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
 
 const dataMap = [
   ['vn-3655', 10], ['vn-qn', 11], ['vn-kh', 12], ['vn-tg', 13],
@@ -174,6 +104,33 @@ const initOptions = {
  },
 };
 
+const cardItems = [
+  {
+      name: "Người dùng",
+      total: 1000,
+      icon: "bi-person-fill",
+      compare: 2,
+  },
+  {
+    name: "Chuyến đang mở",
+    total: 52,
+    icon: "bi-opencollective",
+    compare: -1,
+},
+{
+  name: "Chuyến hoàn thành",
+  total: 500,
+  icon: "bi-check-circle-fill",
+  compare: 1,
+},
+{
+  name: "Lượt truy cập",
+  total: 123,
+  icon: "bi-activity",
+  compare: 12,
+},
+]
+
 const HomePage = () => {
   let [isLoading, setIsLoading] = useState(false);
   const chartRef = useRef(null);
@@ -200,126 +157,48 @@ const HomePage = () => {
             <li class="breadcrumb-item active" aria-current="page">Trang chủ</li>
           </ol>
         </nav>
-        {/* <p style={{textAlign : 'center', marginBottom: '16px'}}>Thành viên phát triển</p>
-                <div style={{display: 'flex', justifyContent : 'space-around', height : '40vh'}}>
-                    <div class="card my-card">
-                    <img src="/assets/image/developer.jpg" class="card-img-top image" alt="..."/>
-                    <div class="card-body" style={{minWidth : '220px'}}>
-                        <h5 class="card-title" style={{textAlign : 'center'}}>Lê Minh Quân</h5>
-                        <p class="card-text" style={{textAlign : 'center'}}>Frontend developer</p>
-                        <div>
-                            <a href="#" class="btn btn-primary" style={{width: '100%'}}>Đến Github</a>
-                        </div>
-                    </div>
-                    </div>
-
-                    <div class="card my-card">
-                    <img src="/assets/image/developer.jpg" class="card-img-top image" alt="..."/>
-                    <div class="card-body" style={{minWidth : '220px'}}>
-                        <h5 class="card-title" style={{textAlign : 'center'}}>Nguyễn Hoàng Kiệt</h5>
-                        <p class="card-text" style={{textAlign : 'center'}}>Backend developer</p>
-                        <div>
-                            <a href="#" class="btn btn-primary" style={{width: '100%'}}>Đến Github</a>
-                        </div>
-                        
-                    </div>
-                    
-                    </div>
-                </div> */}
+        
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
-     
-              <div className="col">
-                <div className='card'>
-                  <div className="d-flex flex-column align-items-center justify-content-between">
-                    <i class={`bi bi-person-fill pe-none p-3 fs-1 `} width="24" height="24"></i>
-                    <div className='pb-3'>
-                      <h6>Người dùng</h6>
-                      <div className='text-center'>5</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col">
-                <div className='card'>
-                  <div className="d-flex flex-column align-items-center justify-content-between">
-                    <i class={`bi bi-opencollective pe-none p-3 fs-1`} width="24" height="24"></i>
-                    <div className='pb-3'>
-                      <h6>Chuyến đang mở</h6>
-                      <div className='text-center'>5</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="col">
-                <div className='card'>
-                  <div className="d-flex flex-column align-items-center justify-content-between">
-                    <i class={`bi bi-check-circle-fill pe-none p-3 fs-1`} width="24" height="24"></i>
-                    <div className='pb-3'>
-                      <h6>Chuyến hoàn thành</h6>
-                      <div className='text-center'>5</div>
+              {
+                cardItems.map((item,i) => (
+                  <div className="col">
+                  <div className='card'>
+                    <div className="d-flex flex-column align-items-center justify-content-between">
+                      <div className='card my-2 bg-light'>
+                      <i class={`bi ${item.icon} pe-none px-2 fs-1 text-primary`} width="24" height="24"></i>
+                      </div>
+                      
+                      <div className='pb-2'>
+                        <h6 className='text-center '>{item.name}</h6>
+                        <h6 className='text-center fs-4 fw-bold'>{item.total}</h6>
+                        {
+                          (item.compare >= 0) 
+                          && <p className='text-center fw-bold text-success'>+ {item.compare}.00%</p>
+                        }
+                        {
+                          (item.compare <= 0) 
+                          && <p className='text-center fw-bold text-danger'>+ {item.compare}.00%</p>
+                        }
+                        
+                        <p className='text-center '>Kể từ tháng trước</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="col">
-                <div className='card'>
-                  <div className="d-flex flex-column align-items-center justify-content-between">
-                    <i class={`bi bi-activity pe-none p-3 fs-1`} width="24" height="24"></i>
-                    <div className='pb-3'>
-                      <h6>Lượt truy cập hôm nay</h6>
-                      <div className='text-center'>5</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                ))
+              }
+              
 
         </div>
 
-
-        <div className="d-flex justify-content-between flex-wrap pb-5">
-
-
-
-
-
-
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', height: '750px', justifyContent: 'space-between' }}>
-
-
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <div class="card" style={{ width: '30%', padding: '36px' }}>
-              <Doughnut data={dataDoughnut} />;
-            </div>
-
-            <div class="card" style={{ width: '65%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <div style={{ width: '90%' }}>
-                <Line data={dataLine} />
-              </div>
-
-            </div>
-
-
-          </div>
-
-          <div class="card" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div style={{ width: '70%' }}>
-              <Bar options={options} data={data} />;
-            </div>
-
-          </div>
-
-
-            
-          
-        </div>
-
-                {
+        
+        <div class="row row-cols-1 row-cols-lg-2 g-3 py-5">
+        <div class="col col-lg-6">
+                <div class="card container py-4">
+                <h5>Top tỉnh thành có lượt truy cập cao trong tháng 04/2024</h5>
+              {
                   !isLoading && <div class="">
                     <HighchartsReact 
                     options = { initOptions }
@@ -329,7 +208,52 @@ const HomePage = () => {
                     />
                     </div>
                 }
-     
+                     
+                     <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tỉnh</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Hồ Chí Minh</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Bình Dương</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Cần Thơ</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Đà Nẳng</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Hà Nội</td>
+        </tr>
+      </tbody>
+    </Table>
+                </div>
+         
+              </div>
+              <div class="col col-lg-6">
+                  <div class="card container py-4">
+                  <h5 className='pb-3'>Thống kê lượt truy cập</h5>
+                  <Line data={dataLine} />
+                  
+                  </div>
+           
+              </div>
+          
+        </div>
+       
+
       </Layout>
 
 
