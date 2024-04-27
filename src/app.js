@@ -18,6 +18,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './store/store.js'
 import { Suspense } from "react";
+import { ErrorBoundary } from 'react-error-boundary';
 
 function App() {
   return (

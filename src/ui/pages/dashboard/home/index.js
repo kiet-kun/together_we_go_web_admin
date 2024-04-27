@@ -2,6 +2,32 @@ import Layout from '@/ui/layouts/layout';
 import "./home.css";
 import Chart from 'chart.js/auto';
 import { Line, Bar, Doughnut } from "react-chartjs-2";
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useState , useRef} from "react"
+import axios from 'axios';
+import mapData from './mapData';
+
+// Load Highcharts modules
+require('highcharts/indicators/indicators')(Highcharts)
+require('highcharts/indicators/pivot-points')(Highcharts)
+require('highcharts/indicators/macd')(Highcharts)
+require('highcharts/modules/exporting')(Highcharts)
+require('highcharts/modules/map')(Highcharts)
+
+const optionMaps = {
+  chart: {
+    type: 'spline'
+  },
+  title: {
+    text: 'My chart'
+  },
+  series: [
+    {
+      data: [1, 2, 1, 4, 3, 6]
+    }
+  ]
+};
 
 const dataLine = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -55,33 +81,117 @@ const data = {
 };
 
 export const dataDoughnut = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  labels: ['Sáng', 'Trưa', 'Chiều', 'Tối',],
   datasets: [
     {
       label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      data: [12, 19, 3, 5],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
         'rgba(255, 206, 86, 0.2)',
         'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
+        // 'rgba(153, 102, 255, 0.2)',
+        // 'rgba(255, 159, 64, 0.2)',
       ],
       borderColor: [
         'rgba(255, 99, 132, 1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 206, 86, 1)',
         'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
+        // 'rgba(153, 102, 255, 1)',
+        // 'rgba(255, 159, 64, 1)',
       ],
       borderWidth: 1,
     },
   ],
 };
 
+const dataMap = [
+  ['vn-3655', 10], ['vn-qn', 11], ['vn-kh', 12], ['vn-tg', 13],
+  ['vn-bv', 14], ['vn-bu', 15], ['vn-hc', 16], ['vn-br', 17],
+  ['vn-st', 18], ['vn-pt', 19], ['vn-yb', 20], ['vn-hd', 21],
+  ['vn-bn', 22], ['vn-317', 23], ['vn-nb', 24], ['vn-hm', 25],
+  ['vn-ho', 26], ['vn-vc', 27], ['vn-318', 28], ['vn-bg', 29],
+  ['vn-tb', 30], ['vn-ld', 31], ['vn-bp', 32], ['vn-py', 33],
+  ['vn-bd', 34], ['vn-724', 35], ['vn-qg', 36], ['vn-331', 37],
+  ['vn-dt', 38], ['vn-la', 39], ['vn-3623', 40], ['vn-337', 41],
+  ['vn-bl', 42], ['vn-vl', 43], ['vn-tn', 44], ['vn-ty', 45],
+  ['vn-li', 46], ['vn-311', 47], ['vn-hg', 48], ['vn-nd', 49],
+  ['vn-328', 50], ['vn-na', 51], ['vn-qb', 52], ['vn-723', 53],
+  ['vn-nt', 54], ['vn-6365', 55], ['vn-299', 56], ['vn-300', 57],
+  ['vn-qt', 58], ['vn-tt', 59], ['vn-da', 60], ['vn-ag', 61],
+  ['vn-cm', 62], ['vn-tv', 63], ['vn-cb', 64], ['vn-kg', 65],
+  ['vn-lo', 66], ['vn-db', 67], ['vn-ls', 68], ['vn-th', 69],
+  ['vn-307', 70], ['vn-tq', 71], ['vn-bi', 72], ['vn-333', 73]
+];
+
+const initOptions = {
+  title: {
+    text: ''
+  },
+  colorAxis: {
+    min: 0,
+    stops: [
+      [0, '#EFEFFF'],
+      [0.67, '#4444FF'],
+      [1, '#000022']
+    ]
+  },
+  tooltip: {
+    pointFormatter: function() {
+      try {
+        return this.properties['woe-label'].split(',')[0];
+      } catch (error) {
+        return ''
+      }
+      
+    }
+  },
+  series: [{
+    mapData: mapData,
+    dataLabels: {
+      formatter: function() {
+        try {
+          return this.point.properties['woe-label'].split(',')[0];
+        } catch (error) {
+          return ''
+        }
+        
+      }
+    },
+    // name: 'Norway',
+    data: dataMap
+  }],
+  mapNavigation: {
+    enabled: true,
+    buttonOptions: {
+        theme: {
+           r: 8, // change border radius here
+        },
+        verticalAlign: 'bottom'
+    }
+ },
+};
+
 const HomePage = () => {
+  let [isLoading, setIsLoading] = useState(false);
+  const chartRef = useRef(null);
+  // let [, setTopology] = useState({});
+
+  useEffect( () => {
+    // setIsLoading(true);
+    // // let data = await axios.get('https://code.highcharts.com/mapdata/countries/vn/vn-all.topo.json');
+    // // setTopology(data);
+    // setIsLoading(false);
+    if (chartRef && chartRef.current) {
+      chartRef.current.chart.series[0].update({
+        mapData,
+      });
+    }
+  }, []);
+
+
   return (
     <>
       <Layout>
@@ -117,6 +227,67 @@ const HomePage = () => {
                     </div>
                 </div> */}
 
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+     
+              <div className="col">
+                <div className='card'>
+                  <div className="d-flex flex-column align-items-center justify-content-between">
+                    <i class={`bi bi-person-fill pe-none p-3 fs-1 `} width="24" height="24"></i>
+                    <div className='pb-3'>
+                      <h6>Người dùng</h6>
+                      <div className='text-center'>5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col">
+                <div className='card'>
+                  <div className="d-flex flex-column align-items-center justify-content-between">
+                    <i class={`bi bi-opencollective pe-none p-3 fs-1`} width="24" height="24"></i>
+                    <div className='pb-3'>
+                      <h6>Chuyến đang mở</h6>
+                      <div className='text-center'>5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col">
+                <div className='card'>
+                  <div className="d-flex flex-column align-items-center justify-content-between">
+                    <i class={`bi bi-check-circle-fill pe-none p-3 fs-1`} width="24" height="24"></i>
+                    <div className='pb-3'>
+                      <h6>Chuyến hoàn thành</h6>
+                      <div className='text-center'>5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col">
+                <div className='card'>
+                  <div className="d-flex flex-column align-items-center justify-content-between">
+                    <i class={`bi bi-activity pe-none p-3 fs-1`} width="24" height="24"></i>
+                    <div className='pb-3'>
+                      <h6>Lượt truy cập hôm nay</h6>
+                      <div className='text-center'>5</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+
+        <div className="d-flex justify-content-between flex-wrap pb-5">
+
+
+
+
+
+
+        </div>
+
         <div style={{ display: 'flex', flexDirection: 'column', height: '750px', justifyContent: 'space-between' }}>
 
 
@@ -144,10 +315,21 @@ const HomePage = () => {
           </div>
 
 
-
-
+            
+          
         </div>
 
+                {
+                  !isLoading && <div class="">
+                    <HighchartsReact 
+                    options = { initOptions }
+                    highcharts = { Highcharts }
+                    constructorType = { 'mapChart' }
+                    ref={chartRef}
+                    />
+                    </div>
+                }
+     
       </Layout>
 
 
