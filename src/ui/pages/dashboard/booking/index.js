@@ -49,25 +49,30 @@ const BookingPage = () => {
   const user = useSelector((state) => state.authentication.user)
 
   async function loadPage() {
-    console.log(page, pageSize, keyword);
-    setIsLoading(true);
+    try {
+      console.log(page, pageSize, keyword);
+      setIsLoading(true);
 
-    let response = await getBookings(page, pageSize, {
-          keyword, authorId,
-    minPrice,maxPrice,
-    status, bookingType,
-    startAddress, endAddress,
-    startTime, endTime,
-    }, user[JWT.ACCESS_TOKEN]);
-    console.log(response);
-    if (response.status == 200) {
-      setDatas(response.data.data)
-      // showToast('Thành công', .success)
-    }
-    else {
-      toast.error('Lỗi')
-    }
-    setIsLoading(false);
+      let response = await getBookings(page, pageSize, {
+            keyword, authorId,
+      minPrice,maxPrice,
+      status, bookingType,
+      startAddress, endAddress,
+      startTime, endTime,
+      }, user[JWT.ACCESS_TOKEN]);
+      console.log(response);
+      if (response.status == 200) {
+        setDatas(response.data.data)
+        // showToast('Thành công', .success)
+      }
+      else {
+        toast.error('Lỗi')
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }   
   }
 
   function openViewModel(item) {
@@ -301,7 +306,7 @@ const BookingPage = () => {
                 {datas.length > 0 && datas.map(function (object, i) {
                   // return <ObjectRow obj={object} key={i} />;
                   return <tr>
-                    <th>{customStr(object.id, 10)}</th>
+                    <th>{(object.id) ? customStr(object.id, 10) : '#'}</th>
                     <td>{customStr(object.startPointMainText + object.startPointAddress, 10)}</td>
                     <td>{customStr(object.endPointMainText + object.endPointAddress, 10)}</td>
                     <td>{object.time}</td>
