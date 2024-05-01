@@ -18,7 +18,7 @@ import { nextSortState, sleep, customStr } from "@/utils/utils";
 import { getBookings } from "@/services/booking_service";
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux'
-import { JWT } from '@/constanst';
+import { JWT, PAGE_NAME } from '@/constanst';
 
 const BookingPage = () => {
   // Table properties
@@ -30,6 +30,15 @@ const BookingPage = () => {
   let [isLoading, setIsLoading] = useState(false);
   let [sortStateCreatedAt, setSortStateCreatedAt] = useState(SORT_STATE.none);
   let [sortStatePoint, setSortStatePoint] = useState(SORT_STATE.none);
+  let [isShowId, setIsShowId] = useState(true);
+  let [isShowStartAddress, setIsShowStartAddress] = useState(true);
+  let [isShowEndAddress, setIsShowEndAddress] = useState(true);
+  let [isShowTime, setIsShowTime] = useState(true);
+  let [isShowPrice, setIsShowPrice] = useState(true);
+  let [isShowBookingType, setIsShowBookingType] = useState(true);
+  let [isShowAuthor, setIsShowAuthor] = useState(true);
+  let [isShowCreatedAt, setIsShowCreatedAt] = useState(true);
+  let [isShowState, setIsShowState] = useState(true);
   // Modal properties
   let [isViewModalOpen, setViewModalOpen] = useState(false);
   let [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -149,134 +158,120 @@ const BookingPage = () => {
   return (
     <>
       <Layout>
-
         <div>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href={"#" + PAGE_NAME.home}>Trang chủ</a></li>
               <li class="breadcrumb-item active" aria-current="page">Chuyến đi</li>
             </ol>
           </nav>
 
           {/* Filter */}
           <Form>
-
-            {/* <Collapse in={isOpenFilter}>
-              <div id="example-collapse-text">
-                <Form>
-
-                <Row className="mb-3">
-                  <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <Form.Label>Thời gian bắt đầu:</Form.Label>
-                    <DateTimePicker onChange={setStartTime} value={startTime} />
-                  </Form.Group>
-
-                  <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <Form.Label>Thời gian kết thúc:</Form.Label>
-               
-                  <DateTimePicker onChange={setEndTime} value={endTime} />
-                  </Form.Group>
-                  <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <Form.Label>Trạng thái</Form.Label>
-                    <Form.Select aria-label="Default select example"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    >
-                      <option value=""></option>
-                      <option value="2">Đang mở</option>
-                      <option value="1">Đã hoàn thành</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Row>
-
-                <Row className="mb-3">
-                  <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <Form.Label>Giá nhỏ nhất</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      placeholder="Giá"
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value)}
-                    />
-                  </Form.Group>
-
-
-                  <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <Form.Label>Giá lớn nhất</Form.Label>
-                    <Form.Control
-                      required
-                      type="number"
-                      placeholder="Giá"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <Form.Label>Loại</Form.Label>
-                    <Form.Select aria-label="Default select example"
-                    value={bookingType}
-                    onChange={(e) => setBookingType(e.target.value)}
-                    >
-                      <option value=""></option>
-                      <option value="Tìm tài xế">Tìm tài xế</option>
-                      <option value="Tìm hành khách">Tìm hành khách</option>
-                    </Form.Select>
-                  </Form.Group>
-
-
-                </Row>
-                <Row className="mb-3">
-                  <Form.Group as={Col} md="4" controlId="validationCustom09">
-                    <Form.Label>Địa điểm đi</Form.Label>
-                    <Form.Control as="textarea" rows={1}
-                    value={startAddress}
-                    onChange={(e) => setStartAddress(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group as={Col} md="4" controlId="validationCustom09">
-                    <Form.Label>Địa điểm đến</Form.Label>
-                    <Form.Control as="textarea" rows={1}
-                    value={endAddress}
-                    onChange={(e) => setEndAddress(e.target.value)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group as={Col} md="4" controlId="validationCustom09">
-                    <Form.Label>ID người đăng</Form.Label>
-                    <Form.Control type="text"
-                      value={authorId}
-                      onChange={(e) => setAuthorId(e.target.value)}
-                    />
-                  </Form.Group>
-                </Row>
-
-              </Form>
-
-                <Button onClick={(e) => loadPage()}>Tìm kiếm</Button>
-              </div>
-            </Collapse> */}
-
             <div class="d-flex justify-content-between py-3 ">
               <form class="d-flex" style={{ width: "300px" }} role="search">
                 <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search"
                   onChange={handleSearch}
                 />
-                {/* <button class="btn btn-outline-success"  onSubmit={() => loadPage()}>Tìm kiếm</button> */}
-
-
-                {/* <Button
-                onClick={() => setIsOpenFilter(!isOpenFilter)}
-                aria-controls="example-collapse-text"
-
-                aria-expanded={isOpenFilter}
-              >
-                <i class="bi bi-filter pe-none" width="16" height="16" />
-              </Button> */}
               </form>
 
               <div class="d-flex justify-content-end ">
+                <div class="mx-2">
+                  <Dropdown>
+                    <Dropdown.Toggle id="dropdown-custom-components">
+                      <i class="bi bi-layout-three-columns" width="16" height="16" />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu  >
+                      <div className="ms-2">
+                        <Form.Group>
+                          <Form.Check // prettier-ignore
+                            type="switch"
+                            // id="custom-switch"
+                            label="Id"
+                            checked={isShowId}
+                            onClick={(e) => setIsShowId(!isShowId)}
+                          />
+                        </Form.Group>
+
+                      </div>
+
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Điểm đi"
+                          checked={isShowStartAddress}
+                          onClick={(e) => setIsShowStartAddress(!isShowStartAddress)}
+                        />
+                      </div>
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Điểm đến"
+                          checked={isShowEndAddress}
+                          onClick={(e) => setIsShowEndAddress(!isShowEndAddress)}
+                        />
+                      </div>
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Thời gian bắt đầu"
+                          checked={isShowTime}
+                          onClick={(e) => setIsShowTime(!isShowTime)}
+                        />
+                      </div>
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Giá"
+                          checked={isShowPrice}
+                          onClick={(e) => setIsShowPrice(!isShowPrice)}
+                        />
+                      </div>
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Loại"
+                          checked={isShowBookingType}
+                          onClick={(e) => setIsShowBookingType(!isShowBookingType)}
+                        />
+                      </div>
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Người tạo"
+                          checked={isShowAuthor}
+                          onClick={(e) => setIsShowAuthor(!isShowAuthor)}
+                        />
+                      </div>
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Thời gian tạo"
+                          checked={isShowCreatedAt}
+                          onClick={(e) => setIsShowCreatedAt(!isShowCreatedAt)}
+                        />
+                      </div>
+                      <div className="ms-2">
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          label="Trạng thái"
+                          checked={isShowState}
+                          onClick={(e) => setIsShowState(!isShowState)}
+                        />
+                      </div>
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+                </div>
                 {
                   (!isShowMinPriceFilter ||
                     !isShowMaxPriceFilter ||
@@ -334,7 +329,6 @@ const BookingPage = () => {
                           <Dropdown.Item eventKey="1" onClick={(e) => setIsShowEndTimeFilter(true)}>
                             Thời gian kết thúc</Dropdown.Item>
                         }
-
                       </Dropdown.Menu>
                     </Dropdown>
 
@@ -348,11 +342,6 @@ const BookingPage = () => {
                   <Button variant="outline-success"><i class="bi bi-download pe-none" width="16" height="16" /> Xuất file</Button>
                 </div>
 
-
-
-                {/* <button type="button px-5" class="btn btn-success" style={{ width: '72px' }} >
-                  <i class="bi bi-plus-square pe-none" width="16" height="16" />
-                </button> */}
               </div>
             </div>
 
@@ -600,7 +589,7 @@ const BookingPage = () => {
           </Form>
 
           {
-            (!isLoading  && datas.length > 0) &&
+            (!isLoading && datas.length > 0) &&
             <>
               <MyPagination
                 totalInDB={totalInDB} page={page} pageSize={pageSize} isLoading={isLoading}
@@ -616,57 +605,73 @@ const BookingPage = () => {
                 <Table responsive>
                   <thead>
                     <tr>
-                      <th>
-                        <div class="d-inline">ID</div>
-                        <div class="d-inline" onClick={handleClickSortCreatedAt}>
-                          {sortStateCreatedAt == SORT_STATE.increasing &&
+                      {
+                        isShowId &&
+                        <th>
+                          <div class="d-inline">ID</div>
+                          <div class="d-inline" onClick={handleClickSortCreatedAt}>
+                            {sortStateCreatedAt == SORT_STATE.increasing &&
 
-                            <i class="bi bi-sort-up" style={{ width: '16px', height: '16px' }}></i>
-
-
-                          }
-                          {sortStateCreatedAt == SORT_STATE.decreasing &&
-                            <i class="bi bi-sort-up-alt" style={{ width: '16px', height: '16px' }}></i>
-                          }
-                          {sortStateCreatedAt == SORT_STATE.none &&
-                            <i class="bi bi-funnel" style={{ width: '16px', height: '16px' }}></i>
-                          }
-                        </div>
+                              <i class="bi bi-sort-up" style={{ width: '16px', height: '16px' }}></i>
 
 
-
-                      </th>
-                      <th>Điểm đi</th>
-                      <th>Điểm đến</th>
-                      <th>Thời gian bắt đầu</th>
-                      <th>Giá</th>
-                      <th>Loại</th>
-                      <th>Người tạo</th>
-                      <th>Thời gian tạo</th>
-                      <th>Trạng thái</th>
+                            }
+                            {sortStateCreatedAt == SORT_STATE.decreasing &&
+                              <i class="bi bi-sort-up-alt" style={{ width: '16px', height: '16px' }}></i>
+                            }
+                            {sortStateCreatedAt == SORT_STATE.none &&
+                              <i class="bi bi-funnel" style={{ width: '16px', height: '16px' }}></i>
+                            }
+                          </div>
+                        </th>
+                      }
+                      {
+                        isShowStartAddress &&
+                        <th>Điểm đi</th>
+                      }
+                      {
+                        isShowEndAddress && <th>Điểm đến</th>}
+                      {
+                        isShowTime && <th>Thời gian bắt đầu</th>}
+                      {
+                        isShowPrice && <th>Giá</th>}
+                      {
+                        isShowBookingType && <th>Loại</th>}
+                      {
+                        isShowAuthor && <th>Người tạo</th>}
+                      {
+                        isShowCreatedAt && <th>Thời gian tạo</th>}
+                      {
+                        isShowState && <th>Trạng thái</th>}
                       <th></th>
+
                     </tr>
                   </thead>
                   <tbody>
                     {datas.length > 0 && datas.map(function (object, i) {
                       // return <ObjectRow obj={object} key={i} />;
                       return <tr>
-                        <th>{(object.id) ? customStr(object.id, 10) : '#'}</th>
-                        <td>{customStr(object.startPointMainText + object.startPointAddress, 10)}</td>
-                        <td>{customStr(object.endPointMainText + object.endPointAddress, 10)}</td>
-                        <td>{object.time}</td>
-                        <td>{object.price}</td>
-                        <td>{object.bookingType}</td>
-                        <td>{object.authorId.firstName}</td>
-                        <td>{object.createdAt}</td>
-                        <td>
+                        {isShowId &&
+                          <th>{(object.id) ? customStr(object.id, 10) : '#'}</th>
+                        }
+                        {isShowStartAddress &&
+                          <td>{customStr(object.startPointMainText + object.startPointAddress, 10)}</td>}
+                        {isShowEndAddress &&
+                          <td>{customStr(object.endPointMainText + object.endPointAddress, 10)}</td>}
+                        {isShowTime && <td>{object.time}</td>}
+                        {isShowPrice && <td>{object.price}</td>}
+                        {isShowBookingType && <td>{object.bookingType}</td>}
+                        {isShowAuthor && <td>{object.authorId.firstName}</td>}
+                        {isShowCreatedAt && <td>{object.createdAt}</td>}
+                        {isShowState && <td>
                           {object.status == 2 && <button type="button" class="btn btn-primary" disabled>
                             Đang mở
                           </button>}
                           {object.status == 1 && <button type="button" class="btn btn-info" disabled>
                             Hoàn thành
                           </button>}
-                        </td>
+
+                        </td>}
                         <td class="">
                           <div class="d-flex justify-content-start">
                             <div class="">
@@ -689,7 +694,6 @@ const BookingPage = () => {
                 </Table>
               </div>
 
-
               <div class="pt-3"></div>
 
               <MyPagination
@@ -700,13 +704,12 @@ const BookingPage = () => {
           }
 
           {
-            (datas.length == 0) && <div className="card py-2 px-2">Không có dữ liệu</div>
+            (!isLoading && datas.length == 0) && <div className="card py-2 px-2">Không có dữ liệu</div>
           }
 
           {
             (isLoading) && <div className="card py-2 px-2">Loading</div>
           }
-
 
           {/* Modal */}
           {
