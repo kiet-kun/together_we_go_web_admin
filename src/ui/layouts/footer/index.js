@@ -1,6 +1,6 @@
 const LayoutFooter = () => {
     return  <>
-    <div class="container px-5">
+    <div class=" px-5">
 
   <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
     <div class="col mb-3">
