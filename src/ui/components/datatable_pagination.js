@@ -65,7 +65,7 @@ const MyPagination = ({
   };
 
   return (
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mb-3">
       <div class="">
         <select 
           onChange={handleChangeSelect}
@@ -76,11 +76,16 @@ const MyPagination = ({
         </select>
       </div>
 
+      <div className="d-flex align-items-center">
 
-      <nav class="" aria-label="Page navigation example">
+        <div className="page-link me-3 ">
+        {(page - 1) * pageSize}-{(page - 1) * pageSize + pageSize} trong {totalInDB}
+        </div>
 
+      <nav className="" aria-label="Page navigation example">
+   
 
-        <ul class="pagination justify-content-end">
+        <ul class=" pagination justify-content-end mb-0">
           <li class="page-item">
             <button className="page-link" onClick={handleBackButtonClick}>
               Trước
@@ -88,6 +93,7 @@ const MyPagination = ({
 
           </li>
 
+          
 
           {pageItems.map((value) => {
             const className =
@@ -114,7 +120,7 @@ const MyPagination = ({
 
         </ul>
       </nav>
-
+      </div>
 
     </div>
 

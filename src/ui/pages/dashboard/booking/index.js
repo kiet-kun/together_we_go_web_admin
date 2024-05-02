@@ -22,7 +22,7 @@ import { JWT, PAGE_NAME } from '@/constanst';
 
 const BookingPage = () => {
   // Table properties
-  let [totalInDB, setTotalInDB] = useState(200);
+  let [totalInDB, setTotalInDB] = useState(0);
   let [page, setPage] = useState(1);
   let [pageSize, setPageSize] = useState(10);
   let [datas, setDatas] = useState([]);
@@ -93,6 +93,7 @@ const BookingPage = () => {
       console.log(response);
       if (response.status == 200) {
         setDatas(response.data.data)
+        setTotalInDB(response.data.total)
         // showToast('Thành công', .success)
       }
       else {
@@ -145,7 +146,7 @@ const BookingPage = () => {
 
   useEffect(() => {
     loadPage();
-  }, [totalInDB, page, pageSize, keyword, minPrice,
+  }, [ page, pageSize, keyword, minPrice,
     maxPrice,
     status,
     bookingType,
@@ -338,9 +339,9 @@ const BookingPage = () => {
                   <Button variant="outline-success" onClick={() => openAddModel()}><i class="bi bi-plus pe-none" width="16" height="16" /> Thêm mới</Button>
                 </div>
 
-                <div class="ms-2">
+                {/* <div class="ms-2">
                   <Button variant="outline-success"><i class="bi bi-download pe-none" width="16" height="16" /> Xuất file</Button>
-                </div>
+                </div> */}
 
               </div>
             </div>
@@ -355,7 +356,10 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Trạng thái   </div>
-                          <Button variant="light" onClick={(e) => setIsShowStatusFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowStatusFilter(false)
+                            setStatus('')
+                          }}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
@@ -387,7 +391,9 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Địa điểm đến</div>
-                          <Button variant="light" onClick={(e) => setIsShowEndAddressFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowEndAddressFilter(false);
+                            setEndAddress('')}}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
@@ -414,7 +420,8 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Địa điểm đi</div>
-                          <Button variant="light" onClick={(e) => setIsShowStartAddressFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowStartAddressFilter(false); setStartAddress('')}}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
@@ -441,7 +448,9 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Loại</div>
-                          <Button variant="light" onClick={(e) => setIsShowBookingTypeFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowBookingTypeFilter(false);
+                          setBookingType('')}}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
@@ -473,7 +482,10 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Giá tối thiểu</div>
-                          <Button variant="light" onClick={(e) => setIsShowMinPriceFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowMinPriceFilter(false)
+                            setMinPrice('')
+                            }}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
@@ -503,7 +515,10 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Giá tối đa</div>
-                          <Button variant="light" onClick={(e) => setIsShowMaxPriceFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowMaxPriceFilter(false)
+                            setMaxPrice('')
+                            }}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
@@ -533,7 +548,10 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Thời gian bắt đầu</div>
-                          <Button variant="light" onClick={(e) => setIsShowStartTimeFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowStartTimeFilter(false)
+                            setStartTime('')
+                            }}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
@@ -563,7 +581,10 @@ const BookingPage = () => {
                       <Form.Label>
                         <div class="d-flex align-items-center ">
                           <div class="me-2">Thời gian kết thúc</div>
-                          <Button variant="light" onClick={(e) => setIsShowEndTimeFilter(false)}>
+                          <Button variant="light" onClick={(e) => {
+                            setIsShowEndTimeFilter(false);
+                            setEndTime('')
+                            }}>
                             <i class="bi bi-dash-circle pe-none" width="16" height="16" />
                           </Button>
                         </div>
