@@ -329,7 +329,7 @@ const HomePage = () => {
         <div class="row row-cols-1 row-cols-lg-2 g-3 py-5">
           <div class="col col-lg-6">
             <div class="card container py-4">
-              <h5>Top tỉnh thành có lượt truy cập cao trong tháng {getCurrentMonth()}/2024</h5>
+              <h5>Top tỉnh thành có lượt truy cập cao trong tháng 07/2024</h5>
               {
                 (dataMap.length > 0) && <div class="">
                   <HighchartsReact
